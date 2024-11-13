@@ -20,14 +20,14 @@ const MovieCarousel = () => {
     return () => clearInterval(interval); // Clear interval on unmount
   }, [movies.length]);
 
+  const currentMovie = movies[currentMovieIndex];
+
   return (
     <div className="movie-carousel">
-      <img
-        src={movies[currentMovieIndex].image}
-        alt={movies[currentMovieIndex].title}
-        className="movie-image slide-in"
-      />
-      <div className="movie-title">{movies[currentMovieIndex].title}</div>
+      <div key={currentMovie.id} className="movie-container slide-in">
+        <img src={currentMovie.image} alt={currentMovie.title} className="movie-image" />
+        <div className="movie-title">{currentMovie.title}</div>
+      </div>
     </div>
   );
 };

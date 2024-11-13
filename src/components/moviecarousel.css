@@ -1,17 +1,28 @@
 /* movieCarousel.css */
 .movie-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #222;
+  }
+  
+  .movie-container {
     position: relative;
     width: 800px;
     height: 400px;
-    overflow: hidden;
     border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
   }
   
   .movie-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    position: absolute;
   }
   
   .movie-title {
