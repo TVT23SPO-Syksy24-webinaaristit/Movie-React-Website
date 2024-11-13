@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import './navbar.css';
+import { useNavigate } from "react-router-dom";
+import './Navbar.css';
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isThemeDark, setIsThemeDark] = useState(false);
   const [isFlagDropdownOpen, setIsFlagDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -27,8 +29,8 @@ const Navbar = () => {
 
       {isDropdownOpen && (
         <div className="dropdown">
-          <button className="dropdown-btn">Home</button>
-          <button className="dropdown-btn">Movies</button>
+          <button className="dropdown-btn" onClick={() => navigate("/")}>Home</button>
+          <button className="dropdown-btn" onClick={() => navigate("/movies")}>Movies</button>
           <button className="dropdown-btn">Groups</button>
           <button className="dropdown-btn">Profile</button>
         </div>

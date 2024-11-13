@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './moviecarousel.css';
+import './MovieCarousel.css';
 
 const MovieCarousel = () => {
   const movies = [
