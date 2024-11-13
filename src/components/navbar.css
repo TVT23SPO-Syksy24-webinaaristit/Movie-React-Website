@@ -1,3 +1,4 @@
+/* navbar.css */
 .navbar {
   display: flex;
   align-items: center;
@@ -63,10 +64,11 @@
   gap: 15px;
 }
 
-.profile-icon img, .flag-icon, .flag-options img {
+.profile-icon {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  background-color: #666;
   cursor: pointer;
 }
 
@@ -82,6 +84,11 @@
   position: relative;
 }
 
+.flag-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
 .flag-options {
   position: absolute;
   top: 40px;
@@ -95,7 +102,12 @@
   padding: 8px;
 }
 
-.flag-options img:hover {
+.flag {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.flag:hover {
   transform: scale(1.1);
 }
 

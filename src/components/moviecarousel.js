@@ -25,7 +25,9 @@ const MovieCarousel = () => {
   return (
     <div className="movie-carousel">
       <div key={currentMovie.id} className="movie-container slide-in">
-        <img src={currentMovie.image} alt={currentMovie.title} className="movie-image" />
+        <div className="movie-image">
+          <div className="placeholder-text">Movie Placeholder</div>
+        </div>
         <div className="movie-title">{currentMovie.title}</div>
       </div>
     </div>
