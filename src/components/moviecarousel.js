@@ -3,9 +3,9 @@ import './moviecarousel.css';
 
 const MovieCarousel = () => {
   const movies = [
-    { id: 1, title: 'Movie 1', image: 'https://via.placeholder.com/800x400?text=Movie+1' },
-    { id: 2, title: 'Movie 2', image: 'https://via.placeholder.com/800x400?text=Movie+2' },
-    { id: 3, title: 'Movie 3', image: 'https://via.placeholder.com/800x400?text=Movie+3' }
+    { id: 1, title: 'Movie 1'},
+    { id: 2, title: 'Movie 2'},
+    { id: 3, title: 'Movie 3'}
   ];
 
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
