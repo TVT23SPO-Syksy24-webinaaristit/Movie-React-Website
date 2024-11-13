@@ -35,9 +35,7 @@ const Navbar = () => {
       )}
 
       <div className="right-icons">
-        <div className="profile-icon">
-          <img src="https://via.placeholder.com/30" alt="Profile" />
-        </div>
+        <div className="profile-icon"></div>
         
         <button className="theme-toggle" onClick={toggleTheme}>
           {isThemeDark ? '🌙' : '☀️'}
@@ -48,11 +46,11 @@ const Navbar = () => {
           onMouseEnter={() => setIsFlagDropdownOpen(true)}
           onMouseLeave={() => setIsFlagDropdownOpen(false)}
         >
-          <img src="https://via.placeholder.com/30?text=🌐" alt="Language" className="flag-icon" />
+          <div className="flag-icon">🌐</div>
           {isFlagDropdownOpen && (
             <div className="flag-options">
-              <img src="https://via.placeholder.com/30?text=🇺🇸" alt="English" />
-              <img src="https://via.placeholder.com/30?text=🇫🇷" alt="Finnish" />
+              <div className="flag">🇺🇸</div>
+              <div className="flag">🇫🇮</div>
             </div>
           )}
         </div>
