@@ -5,8 +5,10 @@ import Footer from "../components/Footer";
 import MovieFilters from "../components/MovieFilters";
 import MovieSearch from "../components/MovieSearch";
 import MovieResults from "../components/MovieResults";
+import { useFilters } from "../contexts/useFilters";
 
 function Movies() {
+    const { filters, setFilter } = useFilters();
     return (
         <div className="Movies">
             <Navbar />

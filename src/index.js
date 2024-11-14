@@ -5,6 +5,7 @@ import Home from './screens/Home.js';
 import Movies from './screens/Movies.js';
 // import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MovieFilterProvider from './contexts/MovieFilterProvider.js';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/movies",
-    element: <Movies />
+    element: (
+    <MovieFilterProvider>
+      <Movies />
+    </MovieFilterProvider>
+    )
   }
 ]);
 
