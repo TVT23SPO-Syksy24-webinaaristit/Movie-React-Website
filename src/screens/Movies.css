@@ -1,0 +1,9 @@
+.moviesearchfield {
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    width: 100%;
+    max-width: 300px;
+  }
