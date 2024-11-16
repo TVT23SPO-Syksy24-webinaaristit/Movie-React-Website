@@ -50,7 +50,7 @@ function Screenings(){
                     <select>
                         {
                             areas.map(area => (
-                                <option>{area.name}</option>
+                                <option key={area.id}>{area.name}</option>
                             ))
                         }
                     </select>
