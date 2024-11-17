@@ -32,6 +32,20 @@ function Screenings(){
         }
         return json
     }, [])
+
+    const getFinnkinoScreenings = (area,date) =>{
+        fetch("https://www.finnkino.fi/xml/Schedule/?area="+area+"&dt="+date)
+        .then(response => response.text())
+        .then(xml =>{
+            const screeningsjson = parseXML(xml);
+            console.log(screeningsjson.Schedule.Shows.Show);
+            setScreenings(screeningsjson.Schedule.Shows.Show);
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    }
+
     
     const parseXML = useCallback((xml) =>{
         const parser = new DOMParser();
@@ -74,20 +88,23 @@ function Screenings(){
         <div className="Screenings">
             <Navbar />
                 <div>
-                    <select>
+                    <select name="selectTheatre" onChange={(area) => getFinnkinoScreenings(area.target.value)}>
                         {
                             areas.map(area => (
-                                <option key={area.ID}>{area.Name}</option>
+                                <option value={area.ID} key={area.ID}>{area.Name}</option>
                             ))
                         }
                     </select>
                 </div>
                 <div>
                     
-                    {
+                    { screenings && screenings.length > 0 ? (
                         screenings.map(screenings =>(
                                 <p key={screenings.ID}>{screenings.Title}</p>
                         ))
+                    ) : (
+                        <p>Loading...</p>
+                    )
                     }
                     
                 </div>
