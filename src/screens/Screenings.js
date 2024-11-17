@@ -87,7 +87,13 @@ function Screenings(){
     return(
         <div className="Screenings">
             <Navbar />
-                <div>
+                <div
+                 style={{
+                  display: "flex", 
+                  alignitems: "left"
+                   
+                 }}
+                >
                     <select name="selectTheatre" onChange={(area) => getFinnkinoScreenings(area.target.value)}>
                         {
                             areas.map(area => (
@@ -96,7 +102,13 @@ function Screenings(){
                         }
                     </select>
                 </div>
-                <div>
+                <div
+                 style={{
+                 display: "flex", flexDirection: "column",
+                 justifyContent: "center",
+                 alignItems: "center"
+                }}>
+                
                     
                     { screenings && screenings.length > 0 ? (
                         screenings.map(screenings =>(
@@ -106,7 +118,9 @@ function Screenings(){
                         <p>Loading...</p>
                     )
                     }
-                    
+                    <style>
+                        
+                    </style>
                 </div>
 
             <Footer />
