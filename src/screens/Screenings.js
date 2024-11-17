@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./Screenings.css"
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -7,40 +7,67 @@ function Screenings(){
 
     const [areas, setAreas] = useState([]);
 
-    const getFinnkinoTheatres = (xml) =>{
+    const [screenings, setScreenings] = useState([]);
 
+    const xmlToJson = useCallback((node) =>{
+        const json = {}
+
+        let children = [...node.children]
+  
+        if(!children.length) return node.innerHTML;
+
+        for(let child of children){
+        
+            const hasSiblings = children.filter(c => c.nodeName === child.nodeName).length > 1
+
+            if (hasSiblings) {
+                if (json[child.nodeName] === undefined) {
+                    json[child.nodeName] = [xmlToJson(child)];
+                } else {
+                    json[child.nodeName].push(xmlToJson(child));
+                }
+            } else {
+                json[child.nodeName] = xmlToJson(child);
+            }
+        }
+        return json
+    }, [])
+    
+    const parseXML = useCallback((xml) =>{
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xml,"application/xml");
-        
-        const root = xmlDoc.children
-        
-        const theatres = root[0].children
-        const tempAreas = []
-        for(let i = 0;i< theatres.length;i++){
-            tempAreas.push(
-                {
-                "id": theatres[i].children[0].innerHTML,
-                "name": theatres[i].children[1].innerHTML    
-                }
-            )
-        }
-        setAreas(tempAreas);
-    }
+        return xmlToJson(xmlDoc);
+    }, [xmlToJson])
+
 
     useEffect(() =>{
+        let area="1039";
+        let date="19.11.2024"
         fetch("https://www.finnkino.fi/xml/TheatreAreas/")
         .then(response => response.text())
         .then(xml => {
-            console.log(xml);
-            getFinnkinoTheatres(xml);
+            /* console.log(xml);
+            getFinnkinoTheatres(xml); */
+            const areajson = parseXML(xml)
+            console.log(areajson.TheatreAreas.TheatreArea);
+            setAreas(areajson.TheatreAreas.TheatreArea);
         })
         .catch(error =>
         {
             console.log(error);
         }
         )
-
-    }, [])
+        fetch("https://www.finnkino.fi/xml/Schedule/?area="+area+"&dt="+date)
+        .then(response => response.text())
+        .then(xml =>{
+            const screeningsjson = parseXML(xml);
+            console.log(screeningsjson.Schedule.Shows.Show);
+            setScreenings(screeningsjson.Schedule.Shows.Show);
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    }, [parseXML])
 
 
     return(
@@ -50,10 +77,19 @@ function Screenings(){
                     <select>
                         {
                             areas.map(area => (
-                                <option key={area.id}>{area.name}</option>
+                                <option key={area.ID}>{area.Name}</option>
                             ))
                         }
                     </select>
+                </div>
+                <div>
+                    
+                    {
+                        screenings.map(screenings =>(
+                                <p key={screenings.ID}>{screenings.Title}</p>
+                        ))
+                    }
+                    
                 </div>
 
             <Footer />
