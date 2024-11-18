@@ -6,8 +6,10 @@ import Footer from "../components/Footer";
 function Screenings(){
 
     const [areas, setAreas] = useState([]);
-
+    const [selectedArea, setSelectedArea] = useState([]);
     const [screenings, setScreenings] = useState([]);
+    const [dates, setDates] = useState([]);
+    const [selectedDate, setSelectedDate] = useState([]);
 
     const xmlToJson = useCallback((node) =>{
         const json = {}
@@ -40,6 +42,26 @@ function Screenings(){
             const screeningsjson = parseXML(xml);
             console.log(screeningsjson.Schedule.Shows.Show);
             setScreenings(screeningsjson.Schedule.Shows.Show);
+            console.log("getfinnkinoscreenings")
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    }
+    const getScreeningDates = (area) =>{
+        fetch("https://www.finnkino.fi/xml/ScheduleDates/?area="+area)
+        .then(response => response.text())
+        .then(xml =>{
+            const datesjson = parseXML(xml);
+            const datesArray = datesjson.Dates.dateTime;
+            
+            const formattedDateArray = [];
+            
+            for(var i=0;datesArray.length >i; i++ ){
+                formattedDateArray[i] = new Date(datesArray[i]).toISOString().replace(/T.*/,'').split('-').reverse().join('.')
+            }
+            console.log(formattedDateArray);
+            setDates(formattedDateArray);
         })
         .catch(error =>{
             console.log(error);
@@ -63,7 +85,7 @@ function Screenings(){
             /* console.log(xml);
             getFinnkinoTheatres(xml); */
             const areajson = parseXML(xml)
-            console.log(areajson.TheatreAreas.TheatreArea);
+            //console.log(areajson.TheatreAreas.TheatreArea);
             setAreas(areajson.TheatreAreas.TheatreArea);
         })
         .catch(error =>
@@ -81,8 +103,29 @@ function Screenings(){
         .catch(error =>{
             console.log(error);
         })
+
     }, [parseXML])
 
+    const handleChange = (e, type) =>{
+        switch(type){
+            case "Theatre":
+                setSelectedArea(e);
+                getScreeningDates(e);
+                getFinnkinoScreenings(e,selectedDate);
+                console.log("Theatre changed")
+                console.log(e)
+                break;
+            case "Date":
+                setSelectedDate(e);
+                getFinnkinoScreenings(selectedArea,e);
+                console.log("Date changed")
+                console.log(e)
+                break;
+            default:
+                console.log("error");
+        }
+
+    }
 
     return(
         <div className="Screenings">
@@ -94,11 +137,20 @@ function Screenings(){
                    
                  }}
                 >
-                    <select name="selectTheatre" onChange={(area) => getFinnkinoScreenings(area.target.value)}>
+                    <select name="selectTheatre" onChange={(area) => handleChange(area.target.value,"Theatre")}>
                         {
                             areas.map(area => (
                                 <option value={area.ID} key={area.ID}>{area.Name}</option>
                             ))
+                        }
+                    </select>
+                </div>
+                <div>
+                    <select name="selectDate" onChange={(date) => handleChange(date.target.value,"Date")}>
+                        {
+                             dates.map((date,id) =>(
+                                <option value={date} key={id}>{date}</option>
+                            )) 
                         }
                     </select>
                 </div>
@@ -112,7 +164,13 @@ function Screenings(){
                     
                     { screenings && screenings.length > 0 ? (
                         screenings.map(screenings =>(
-                                <p key={screenings.ID}>{screenings.Title}</p>
+                                <div key={screenings.ID}>{screenings.Title}
+                                <br />
+                                <p>Esitys alkaa: {new Date(screenings.dttmShowStart).toISOString()}</p>
+                                <br />
+                                    <img src={screenings.Images.EventSmallImagePortrait} alt="Screening"></img>
+                                </div>
+                                //new Date(screenings.dttmShowStart).toISOString().replace(/T.*/,'').split('-').reverse().join('.')
                         ))
                     ) : (
                         <p>Loading...</p>
