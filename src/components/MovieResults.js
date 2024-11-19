@@ -9,7 +9,7 @@ const MovieResults = () => {
     const [movies, setMovies] = useState([]);
     const headers = {
         accept: 'application/json',
-        Authorization: 'Bearer INSERT TMDB API TOKEN HERE'
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMWQ1ZGNmMzNlNDExMTI5N2U5MDExZGExYjBjZTEzZCIsIm5iZiI6MTczMTkxNzY5Ni4xMzQ1MDgxLCJzdWIiOiI2NzM3NGVjOWFjOWYzYmEwODE1NThmMTQiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.cXlfAgxkp-2rQVDlsqIaMUha9UnNZGKc3uU4-_87DRo'
         }
         //axios.get(url, {headers})
         //.then(responseHandler)

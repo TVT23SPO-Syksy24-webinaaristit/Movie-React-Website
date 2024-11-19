@@ -166,7 +166,7 @@ function Screenings(){
                         screenings.map(screenings =>(
                                 <div key={screenings.ID}>{screenings.Title}
                                 <br />
-                                <p>Esitys alkaa: {new Date(screenings.dttmShowStart).toISOString()}</p>
+                                <p>Esitys alkaa: {new Date(screenings.dttmShowStart).getHours()}:{new Date(screenings.dttmShowStart).getMinutes()}</p>
                                 <br />
                                     <img src={screenings.Images.EventSmallImagePortrait} alt="Screening"></img>
                                 </div>
