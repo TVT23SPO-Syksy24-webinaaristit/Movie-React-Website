@@ -12,8 +12,10 @@ function Movies() {
     return (
         <div className="Movies">
             <Navbar />
-            <MovieFilters />
+            <div className="moviefiltersearch">
             <MovieSearch />
+            {filters.showFilters ? <MovieFilters /> : null}
+            </div>
             <MovieResults />
             <Footer />
         </div>

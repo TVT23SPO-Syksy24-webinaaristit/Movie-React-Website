@@ -5,9 +5,10 @@ export default function MovieFilterProvider({children}) {
     const [filters, setFilter] = useState({
         search: "",
         sortBy: "popularity.desc",
-        genres: [10749,35],
+        genres: [],
         year: 2023,
-        page: 1
+        page: 1, 
+        showFilters: true
     });
 
     return (

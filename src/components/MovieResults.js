@@ -16,13 +16,18 @@ const MovieResults = () => {
         //.catch(errorHandler);
 
     useEffect(() => {
-        if(true) return;
+        if(false) return;
         updateResults();
     }, [filters]);
 
+    useEffect(() => {
+        console.log(filters);
+    }, [filters]);
+
+
     const updateResults = async () => {
         try{
-        const url = `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&language=en-US&page=${filters.page}&primary_release_year=2023&sort_by=${filters.sortBy}&with_genres=${filters.genres.join("%2C")}`;
+        const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${filters.page}&primary_release_year=2023&sort_by=${filters.sortBy}&with_genres=${filters.genres.join("%2C")}`;
         let response = await axios.get(url, {headers});
         setMovies(response.data.results);
         } catch (error) {
@@ -36,10 +41,9 @@ const MovieResults = () => {
 
     return(
         <div className="MovieResults">
-        <h1>MovieResults</h1>
         {movies && movies.length > 0 ? (
         movies.map(movie => (
-            <MovieCard key={movie.id} title={movie.title} />
+            <MovieCard key={movie.id} title={movie.title} posterPath={movie.poster_path} />
         ))
         ) : (
             <p>Loading...</p>
