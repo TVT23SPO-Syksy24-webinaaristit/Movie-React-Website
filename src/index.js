@@ -4,30 +4,50 @@ import './index.css';
 import Home from './screens/Home.js';
 import Movies from './screens/Movies.js';
 import Screenings from './screens/Screenings.js';
+import Groups from './screens/Groups.js';
+import ProfilePage from './screens/ProfilePage.js';
+import LoginPage from './screens/LoginPage.js';
+import { Navigate } from 'react-router-dom';
 // import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
 
+const isLoggedIn = false; // Placeholder auth logic
+
+//Router setup
 const router = createBrowserRouter([
   {
-    //errorElement: <ErrorPage/>
+    // Error handling route can be added here
+    // errorElement: <ErrorPage />
   },
   {
     path: "/",
-    element: <Home />
+    element: <Home />,
   },
   {
     path: "/movies",
     element: (
-    <MovieFilterProvider>
-      <Movies />
-    </MovieFilterProvider>
-    )
+      <MovieFilterProvider>
+        <Movies />
+      </MovieFilterProvider>
+    ),
   },
   {
-  path: "/screenings",
-  element: <Screenings />
-  }
+    path: "/screenings",
+    element: <Screenings />,
+  },
+  {
+    path: "/groups",
+    element: <Groups />, // Placeholder for the Groups page
+  },
+  {
+    path: "/profile",
+    element: isLoggedIn ? <ProfilePage /> : <Navigate to="/login" replace />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
