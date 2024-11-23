@@ -8,13 +8,13 @@ import MovieResults from "../components/MovieResults";
 import { useFilters } from "../contexts/useFilters";
 
 function Movies() {
-    const { filters, setFilter } = useFilters();
+    const { searchToggle } = useFilters();
     return (
         <div className="Movies">
             <Navbar />
             <div className="moviefiltersearch">
-            <MovieSearch />
-            {filters.showFilters ? <MovieFilters /> : null}
+            {searchToggle ? <MovieSearch /> : null}
+            {!searchToggle ? <MovieFilters /> : null}
             </div>
             <MovieResults />
             <Footer />

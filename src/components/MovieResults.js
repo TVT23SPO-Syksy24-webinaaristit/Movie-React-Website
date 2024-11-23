@@ -1,43 +1,54 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
 import { useFilters } from "../contexts/useFilters";
+import useDebounce from "../contexts/useDebounce";
 
 const MovieResults = () => {
-    const {filters, setFilter} = useFilters();
+    const {search, filters, searchToggle, pagination, setPagination} = useFilters();
     const [movies, setMovies] = useState([]);
-    const headers = {
-        accept: 'application/json',
-        Authorization: 'Bearer INSERT TMDB API TOKEN HERE'
-        }
+
+    const debouncedSearch = useDebounce(search,1000);
+    const debouncedFilters = useDebounce(filters,1000);
+    const debouncedSearchToggle = useDebounce(searchToggle,500);
         //axios.get(url, {headers})
         //.then(responseHandler)
         //.catch(errorHandler);
 
-    useEffect(() => {
-        if(false) return;
-        updateResults();
-    }, [filters]);
 
-    useEffect(() => {
-        console.log(filters);
-    }, [filters]);
-
-
-    const updateResults = async () => {
+    const updateResults = useCallback(async () => {
+        // Might add primary_release_year=2023 later to query
+        console.log("API call made")
+        const headers = {
+            accept: 'application/json',
+            Authorization: 'Bearer INSERT API TOKEN HERE'
+            }
+        const discoverUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pagination.page}&sort_by=${filters.sortBy}&with_genres=${filters.genres.join("%2C")}`;
+        const searchUrl = `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=${pagination.page}`;
         try{
-        const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${filters.page}&primary_release_year=2023&sort_by=${filters.sortBy}&with_genres=${filters.genres.join("%2C")}`;
+        const url = searchToggle ? searchUrl : discoverUrl;
         let response = await axios.get(url, {headers});
         setMovies(response.data.results);
+        setPagination({...pagination, totalPages: response.data.total_pages})
         } catch (error) {
             errorHandler(error);
         }
-    }
+    }, [filters, searchToggle, search, pagination, setPagination]);
 
     const errorHandler = (error) => {
         console.log(error.response)
     }
+
+    useEffect(() => {
+        if(false) return;
+        updateResults();
+    }, [debouncedSearch, debouncedFilters, debouncedSearchToggle]);
+
+    useEffect(() => {
+        console.log(filters);
+        console.log(movies)
+    }, [debouncedSearch, debouncedFilters]);
 
     return(
         <div className="MovieResults">
