@@ -7,23 +7,23 @@ export default function MovieFilterProvider({children}) {
         genres: [],
         year: 2023,
     });
-    const [pagination, setPagination] = useState({
-        page: 1,
-        totalPages: 1
-    });
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1);
     const [searchToggle, setSearchToggle] = useState(true);
     const [search, setSearch] = useState("");
 
     const contextVariables = useMemo(() => ({
         filters,
         setFilter,
-        pagination,
-        setPagination,
+        page, 
+        setPage,
+        totalPages, 
+        setTotalPages,
         searchToggle,
         setSearchToggle,
         search,
         setSearch
-    }), [filters, pagination, searchToggle, search]);
+    }), [filters, page, totalPages, searchToggle, search]);
 
     return (
         <MovieFilterContext.Provider value={contextVariables}>

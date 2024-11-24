@@ -6,12 +6,13 @@ import { useFilters } from "../contexts/useFilters";
 import useDebounce from "../contexts/useDebounce";
 
 const MovieResults = () => {
-    const {search, filters, searchToggle, pagination, setPagination} = useFilters();
+    const {search, filters, searchToggle, page, totalPages, setTotalPages} = useFilters();
     const [movies, setMovies] = useState([]);
 
     const debouncedSearch = useDebounce(search,1000);
     const debouncedFilters = useDebounce(filters,1000);
-    const debouncedSearchToggle = useDebounce(searchToggle,500);
+    const debouncedPage = useDebounce(page, 500);
+    const debouncedSearchToggle = useDebounce(searchToggle, 500);
         //axios.get(url, {headers})
         //.then(responseHandler)
         //.catch(errorHandler);
@@ -24,26 +25,27 @@ const MovieResults = () => {
             accept: 'application/json',
             Authorization: 'Bearer INSERT API TOKEN HERE'
             }
-        const discoverUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pagination.page}&sort_by=${filters.sortBy}&with_genres=${filters.genres.join("%2C")}`;
-        const searchUrl = `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=${pagination.page}`;
+        const discoverUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${filters.sortBy}&with_genres=${filters.genres.join("%2C")}`;
+        const searchUrl = `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=${page}`;
         try{
         const url = searchToggle ? searchUrl : discoverUrl;
         let response = await axios.get(url, {headers});
         setMovies(response.data.results);
-        setPagination({...pagination, totalPages: response.data.total_pages})
+        setTotalPages(response.data.total_pages);
         } catch (error) {
             errorHandler(error);
         }
-    }, [filters, searchToggle, search, pagination, setPagination]);
+    }, [filters, searchToggle, search, page, totalPages, setTotalPages]);
 
     const errorHandler = (error) => {
         console.log(error.response)
     }
 
+
     useEffect(() => {
         if(false) return;
         updateResults();
-    }, [debouncedSearch, debouncedFilters, debouncedSearchToggle]);
+    }, [debouncedSearch, debouncedFilters, debouncedPage, debouncedSearchToggle]);
 
     useEffect(() => {
         console.log(filters);

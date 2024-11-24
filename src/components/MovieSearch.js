@@ -2,12 +2,15 @@ import React from "react";
 import { useFilters } from "../contexts/useFilters";
 
 const MovieSearch = () => {
-    const {search, setSearch, setSearchToggle} = useFilters()
+    const {setPage, search, setSearch, setSearchToggle} = useFilters()
 
     return(
     <div className="MovieSearch">
         <h3>Search</h3>
-        <button onClick={() => setSearchToggle(false)}>Switch to Discover</button>
+        <button onClick={() => {
+            setPage(1);
+            setSearchToggle(false);
+        }}>Switch to Discover</button>
         <input 
         value={search} 
         onChange={(event) => setSearch(event.target.value)} 

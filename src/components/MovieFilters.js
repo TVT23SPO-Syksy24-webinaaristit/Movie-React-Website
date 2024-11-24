@@ -2,7 +2,7 @@ import React from "react";
 import { useFilters } from "../contexts/useFilters";
 
 const MovieFilters = () => {
-    const {filters, setFilter, setSearchToggle} = useFilters();
+    const {filters, setFilter, setSearchToggle, setPage} = useFilters();
 
     const idToGenre = {
         28: "Action",
@@ -35,7 +35,10 @@ const MovieFilters = () => {
     return(
         <div className="MovieFilters">
             <h3>Discover</h3>
-            <button onClick={() => setSearchToggle(true)}>Switch to Search</button>
+            <button onClick={() => {
+            setPage(1);
+            setSearchToggle(true);
+        }}>Switch to Search</button>
             <div className="filterselector">
             <select name="sortBy" onChange={(event) => setFilter({...filters, sortBy: event.target.value})}>
                 <option value="original_title.asc">Original Title (Ascending)</option>
