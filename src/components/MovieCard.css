@@ -1,0 +1,8 @@
+.MovieCard{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 185px;
+}
+.MovieCard h3{
+    text-wrap: wrap;
+}
