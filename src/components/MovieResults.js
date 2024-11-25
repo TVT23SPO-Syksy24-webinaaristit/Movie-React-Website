@@ -23,7 +23,7 @@ const MovieResults = () => {
         console.log("API call made")
         const headers = {
             accept: 'application/json',
-            Authorization: 'Bearer INSERT API TOKEN HERE'
+            Authorization: 'Bearer '+process.env.REACT_APP_TMDB_API_KEY
             }
         const discoverUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${filters.sortBy}&with_genres=${filters.genres.join("%2C")}`;
         const searchUrl = `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=${page}`;
