@@ -182,7 +182,8 @@ const xmlToJson = useCallback((node) =>{
                  style={{
                  display: "flex", flexDirection: "column",
                  justifyContent: "center",
-                 alignItems: "center"
+                 alignItems: "center",
+                 
                 }}>
                 
                     
@@ -190,12 +191,10 @@ const xmlToJson = useCallback((node) =>{
                         screenings.map(screenings =>(
                             <ScreeningCard  key={screenings.ID} 
                             title={screenings.Title} 
+                            finnkinoUrl={screenings.EventURL}
                             hours={new Date(screenings.dttmShowStart).getHours()} 
                             minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
                             image={screenings.Images.EventSmallImagePortrait} />
-                                
-                               
-                                
                             ))
                     ) : (
                         <p>Loading...</p>
