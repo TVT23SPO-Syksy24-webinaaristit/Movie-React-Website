@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
+import Authentication from '../components/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = ({ setIsLoggedIn }) => {
@@ -13,7 +14,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
   return (
     <div>
       <Navbar />
-      <button onClick={handleLogin}>Login</button>
+      <Authentication/>
     </div>
   );
 };
