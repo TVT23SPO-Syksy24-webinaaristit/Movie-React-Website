@@ -34,12 +34,15 @@ const MovieFilters = () => {
 
     return(
         <div className="MovieFilters">
+            <div className="buttontitle">
             <h3>Discover</h3>
-            <button onClick={() => {
+            <button className="modeSwitch" onClick={() => {
             setPage(1);
             setSearchToggle(true);
-        }}>Switch to Search</button>
+            }}>Switch to Search</button>
+            </div>
             <div className="filterselector">
+            <div><h4>Sort By</h4></div>
             <select name="sortBy" onChange={(event) => setFilter({...filters, sortBy: event.target.value})}>
                 <option value="original_title.asc">Original Title (Ascending)</option>
                 <option value="original_title.desc">Original Title (Descending)</option>
@@ -56,6 +59,7 @@ const MovieFilters = () => {
                 <option value="vote_count.asc">Vote Count (Ascending)</option>
                 <option value="vote_count.desc">Vote Count (Descending)</option>
             </select>
+            <div><h4>Genre</h4></div>
             <select name="genre" defaultValue=""
             onChange={(event) => {
                 const selectedGenre = parseInt(event.target.value)
