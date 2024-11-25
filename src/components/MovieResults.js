@@ -11,7 +11,7 @@ const MovieResults = () => {
 
     const debouncedSearch = useDebounce(search,1000);
     const debouncedFilters = useDebounce(filters,1000);
-    const debouncedPage = useDebounce(page, 500);
+    const debouncedPage = useDebounce(page, 100);
     const debouncedSearchToggle = useDebounce(searchToggle, 500);
         //axios.get(url, {headers})
         //.then(responseHandler)
@@ -30,8 +30,9 @@ const MovieResults = () => {
         try{
         const url = searchToggle ? searchUrl : discoverUrl;
         let response = await axios.get(url, {headers});
+        const limitedTotalPages = response.data.total_pages > 500 ? 500 : response.data.total_pages;
         setMovies(response.data.results);
-        setTotalPages(response.data.total_pages);
+        setTotalPages(limitedTotalPages);
         } catch (error) {
             errorHandler(error);
         }
@@ -45,7 +46,7 @@ const MovieResults = () => {
     useEffect(() => {
         if(false) return;
         updateResults();
-    }, [debouncedSearch, debouncedFilters, debouncedPage, debouncedSearchToggle]);
+    }, [debouncedSearch, debouncedFilters, page, debouncedSearchToggle]);
 
     useEffect(() => {
         console.log(filters);
