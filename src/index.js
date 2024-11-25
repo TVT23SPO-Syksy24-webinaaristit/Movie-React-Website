@@ -26,6 +26,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
+    element: (
+      <MovieFilterProvider>
+        <Home />
+      </MovieFilterProvider>
+      )
     element: <Home />,
   },
   {
