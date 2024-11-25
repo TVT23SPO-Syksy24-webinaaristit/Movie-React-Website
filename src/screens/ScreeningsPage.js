@@ -1,13 +1,13 @@
-import "./Screenings.css"
+import "./ScreeningsPage.css"
 import Navbar from "../components/Navbar";
-import ScreeningResults from "../components/ScreeningResults";
+import ScreeningResults from "../components/Screenings/ScreeningResults";
 
 import Footer from "../components/Footer";
 
-function Screenings(){
+function ScreeningsPage(){
 
     return(
-        <div className="Screenings">
+        <div className="ScreeningsPage">
             <Navbar />
             <ScreeningResults />
             <Footer />
@@ -15,4 +15,4 @@ function Screenings(){
     );
 };
 
-export default Screenings;
+export default ScreeningsPage;

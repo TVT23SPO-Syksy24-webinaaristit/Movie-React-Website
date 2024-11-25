@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import ScreeningCard from "./ScreeningCard"
 
 
 const ScreeningResults = () =>{
@@ -67,7 +68,7 @@ const xmlToJson = useCallback((node) =>{
             console.log("getfinnkinoscreenings")
         })
         .catch(error =>{
-            console.log(error);
+            errorHandler(error);
         })
     }
     const getScreeningDates = (area) =>{
@@ -86,7 +87,7 @@ const xmlToJson = useCallback((node) =>{
             setDates(formattedDateArray);
         })
         .catch(error =>{
-            console.log(error);
+            errorHandler(error);
         })
     }
 
@@ -110,7 +111,7 @@ const xmlToJson = useCallback((node) =>{
         })
         .catch(error =>
         {
-            console.log(error);
+            errorHandler(error);
         }
         )
         fetch("https://www.finnkino.fi/xml/Schedule/")
@@ -121,7 +122,7 @@ const xmlToJson = useCallback((node) =>{
             setScreenings(screeningsjson.Schedule.Shows.Show);
         })
         .catch(error =>{
-            console.log(error);
+            errorHandler(error);
         })
 
     }, [parseXML])
@@ -187,16 +188,15 @@ const xmlToJson = useCallback((node) =>{
                     
                     { screenings && screenings.length > 0 ? (
                         screenings.map(screenings =>(
-                                <div key={screenings.ID}>{screenings.Title}
-                                <br />
-                                <p>Esitys alkaa: {new Date(screenings.dttmShowStart).getHours()}:{new Date(screenings.dttmShowStart).getMinutes()}</p>
-                                <br />
-                                    <img src={screenings.Images.EventSmallImagePortrait} alt="Screening"></img>
-                                   
-                                 </div> 
+                            <ScreeningCard  key={screenings.ID} 
+                            title={screenings.Title} 
+                            hours={new Date(screenings.dttmShowStart).getHours()} 
+                            minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
+                            image={screenings.Images.EventSmallImagePortrait} />
+                                
                                
-                                //new Date(screenings.dttmShowStart).toISOString().replace(/T.*/,'').split('-').reverse().join('.')
-                        ))
+                                
+                            ))
                     ) : (
                         <p>Loading...</p>
                     )

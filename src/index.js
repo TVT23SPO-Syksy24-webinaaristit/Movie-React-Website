@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Home from './screens/Home.js';
 import Movies from './screens/Movies.js';
-import Screenings from './screens/Screenings.js';
+import Screenings from './screens/ScreeningsPage.js';
 // import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
