@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import axios from "axios";
 import ScreeningCard from "./ScreeningCard"
 
 
@@ -35,28 +34,6 @@ const xmlToJson = useCallback((node) =>{
         }
         return json
     }, [])
-
-    const updateScreenings = async (area,date) =>{
-        /* try{ */
-            const url = `https://www.finnkino.fi/xml/Schedule/?area=${area}&dt=${date}`;
-            let response = await axios.get(url)
-            .then(response => response.text())
-            const screeningsjson = parseXML(response);              // WORK IN PROGRESS, IGNORE THIS FUNCTION
-            console.log(screeningsjson.Schedule.Shows.Show);
-            /* .then(response => response.text())
-            .then(xml =>{
-                const screeningsjson = parseXML(xml);
-                console.log(screeningsjson.Schedule.Shows.Show);
-                setScreenings(screeningsjson.Schedule.Shows.Show);
-                console.log("getfinnkinoscreenings")
-            }) */
-            
-
-       /*  } catch(error){
-            errorHandler(error);
-        } */
-    }
-
 
     const getFinnkinoScreenings = (area,date) =>{
         fetch(`https://www.finnkino.fi/xml/Schedule/?area=${area}&dt=${date}`)
@@ -194,7 +171,8 @@ const xmlToJson = useCallback((node) =>{
                             finnkinoUrl={screenings.EventURL}
                             hours={new Date(screenings.dttmShowStart).getHours()} 
                             minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
-                            image={screenings.Images.EventSmallImagePortrait} />
+                            image={screenings.Images.EventSmallImagePortrait}
+                            auditorium={screenings.TheatreAndAuditorium} />
                             ))
                     ) : (
                         <p>Loading...</p>
