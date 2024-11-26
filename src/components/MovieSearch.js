@@ -6,11 +6,13 @@ const MovieSearch = () => {
 
     return(
     <div className="MovieSearch">
-        <h3>Search</h3>
-        <button onClick={() => {
-            setPage(1);
-            setSearchToggle(false);
-        }}>Switch to Discover</button>
+        <div className="buttontitle">
+            <h3>Search</h3>
+            <button className="modeSwitch" onClick={() => {
+                setPage(1);
+                setSearchToggle(false);
+            }}>Switch to Discover</button>
+        </div>
         <input 
         value={search} 
         onChange={(event) => setSearch(event.target.value)} 

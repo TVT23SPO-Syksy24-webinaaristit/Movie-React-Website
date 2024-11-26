@@ -7,12 +7,17 @@ const MoviePoster = (props) => {
     const baseURL = "https://image.tmdb.org/t/p/";
     const posterURL = baseURL+props.size+props.posterPath;
     return (
-        <img src={posterURL}></img>
+
+        props.posterPath ? (
+            <img src={posterURL}></img>
+        ) : (
+            <img src="/imageplaceholder.jpg"></img>
+        )
     );
 };
 
 MoviePoster.defaultProps = {
-    size: "w500"
+    size: "original"
 };
 
 export default MoviePoster;

@@ -11,7 +11,7 @@ const MovieResults = () => {
 
     const debouncedSearch = useDebounce(search,1000);
     const debouncedFilters = useDebounce(filters,1000);
-    const debouncedPage = useDebounce(page, 500);
+    const debouncedPage = useDebounce(page, 100);
     const debouncedSearchToggle = useDebounce(searchToggle, 500);
         //axios.get(url, {headers})
         //.then(responseHandler)
@@ -23,15 +23,16 @@ const MovieResults = () => {
         console.log("API call made")
         const headers = {
             accept: 'application/json',
-            Authorization: 'Bearer '+process.env.REACT_APP_TMDB_API_KEY
+            Authorization: `Bearer ${process.env.REACT_APP_TMDB_API_KEY}`
             }
         const discoverUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${filters.sortBy}&with_genres=${filters.genres.join("%2C")}`;
         const searchUrl = `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=${page}`;
         try{
         const url = searchToggle ? searchUrl : discoverUrl;
         let response = await axios.get(url, {headers});
+        const limitedTotalPages = response.data.total_pages > 500 ? 500 : response.data.total_pages;
         setMovies(response.data.results);
-        setTotalPages(response.data.total_pages);
+        setTotalPages(limitedTotalPages);
         } catch (error) {
             errorHandler(error);
         }
@@ -45,7 +46,7 @@ const MovieResults = () => {
     useEffect(() => {
         if(false) return;
         updateResults();
-    }, [debouncedSearch, debouncedFilters, debouncedPage, debouncedSearchToggle]);
+    }, [debouncedSearch, debouncedFilters, page, debouncedSearchToggle]);
 
     useEffect(() => {
         console.log(filters);
@@ -59,7 +60,8 @@ const MovieResults = () => {
             <MovieCard key={movie.id} title={movie.title} posterPath={movie.poster_path} />
         ))
         ) : (
-            <p>Loading...</p>
+            <div className="noresultsmsg">No Results</div>
+            
         )
         }
         </div>
