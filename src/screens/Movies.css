@@ -1,41 +1,111 @@
+
 .moviesearchfield {
-    padding: 8px;
-    font-size: 16px;
+    padding: 0.5em;
+    font-size: 1em;
     border: 1px solid;
     border-radius: 4px;
     outline: none;
     display: inline-block;
-    min-width: 300px;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+    min-width: 80%;
+    margin-top: 0.5em;
+}
 
-.MovieSearch .moviesearchfield{
-  width: 90vh;
-} 
-.MovieSearch {
+
+.buttontitle{
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding-top: 20px;
 }
-.MovieSearch button {
-  font-size: 1.54em;
-  padding: 0px;
-  height: 100%;
+.MovieFilters h3 {
+  font-size: 2em;
+  display: inline-block;
+  margin-right: 0.7em;
 }
+.MovieSearch {
+  margin-bottom: 2em;
+  margin-left: 20%;
+  margin-top: 1.5em;
+}
+.MovieSearch  h3{
+  font-size: 2em;
+  display: inline-block;
+  margin-right: 0.7em;
+}
+
+.modeSwitch{
+  background-color: #333;
+  color: #f2f2f2;
+  border: none;
+  padding: 0.2em;
+  border-radius: 2px;
+  height: 1.8em;
+  margin-top: 0.3em;
+}
+
+.modeSwitch:hover{
+  background-color: #444;
+  cursor: pointer;
+}
+
+.MovieFilters button:hover{
+  background-color: #444;
+  cursor: pointer;
+}
+
 .MovieFilters{
-  margin-bottom: 10px;
+  margin-bottom: 2em;
+  margin-left: 20%;
+  margin-top: 1.5em;
 }
+.MovieFilters h3 {
+  font-size: 2em;
+  display: inline-block;
+  margin-right: 0.7em;
+}
+
+.filterselector select {
+  background-color: #333;
+  color: #f2f2f2;
+  border: none;
+  border-radius: 2px;
+  
+  padding: 0.2em
+}
+
+.filterselector select:hover {
+  background-color: #444;
+  cursor: pointer;
+}
+
 .MovieResults{
   margin-left: auto;
   margin-right: auto;
   display:flex;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 5px;
+  row-gap: 5px;
+  column-gap: 5px;
+  min-height: 80vh;
+  margin-bottom: 3em;
+}
+
+@media (min-width: 768px) {
+  .MovieResults{
+    max-width: 80%;
+    column-gap: 15px;
+  }
+  .moviesearchfield {
+    min-width: 50%;
+  }
+
+}
+
+.noresultsmsg{
+  margin-top: 20vh;
+  font-size: 2em;
 }
 .activegenrebutton{
-  background-color: #333;
+  /*background-color: #333;*/
+  background-color: #3776a0;
   border: none;
   color: #f2f2f2;
   font-size: 0.8em;
@@ -54,3 +124,6 @@
   background-color: #444;
 }
 
+.activegenres{
+
+}
