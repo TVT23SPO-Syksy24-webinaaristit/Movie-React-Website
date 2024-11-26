@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "./Screenings.css"
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import ScreeningCard from "./ScreeningCard"
 
-function Screenings(){
+
+const ScreeningResults = () =>{
 
     const [areas, setAreas] = useState([]);
     const [selectedArea, setSelectedArea] = useState([]);
@@ -11,7 +10,8 @@ function Screenings(){
     const [dates, setDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState([]);
 
-    const xmlToJson = useCallback((node) =>{
+
+const xmlToJson = useCallback((node) =>{
         const json = {}
 
         let children = [...node.children]
@@ -36,7 +36,7 @@ function Screenings(){
     }, [])
 
     const getFinnkinoScreenings = (area,date) =>{
-        fetch("https://www.finnkino.fi/xml/Schedule/?area="+area+"&dt="+date)
+        fetch(`https://www.finnkino.fi/xml/Schedule/?area=${area}&dt=${date}`)
         .then(response => response.text())
         .then(xml =>{
             const screeningsjson = parseXML(xml);
@@ -45,7 +45,7 @@ function Screenings(){
             console.log("getfinnkinoscreenings")
         })
         .catch(error =>{
-            console.log(error);
+            errorHandler(error);
         })
     }
     const getScreeningDates = (area) =>{
@@ -64,7 +64,7 @@ function Screenings(){
             setDates(formattedDateArray);
         })
         .catch(error =>{
-            console.log(error);
+            errorHandler(error);
         })
     }
 
@@ -76,9 +76,7 @@ function Screenings(){
     }, [xmlToJson])
 
 
-    useEffect(() =>{
-        let area="1039";
-        let date="19.11.2024"
+    useEffect(() =>{    
         fetch("https://www.finnkino.fi/xml/TheatreAreas/")
         .then(response => response.text())
         .then(xml => {
@@ -90,10 +88,10 @@ function Screenings(){
         })
         .catch(error =>
         {
-            console.log(error);
+            errorHandler(error);
         }
         )
-        fetch("https://www.finnkino.fi/xml/Schedule/?area="+area+"&dt="+date)
+        fetch("https://www.finnkino.fi/xml/Schedule/")
         .then(response => response.text())
         .then(xml =>{
             const screeningsjson = parseXML(xml);
@@ -101,10 +99,14 @@ function Screenings(){
             setScreenings(screeningsjson.Schedule.Shows.Show);
         })
         .catch(error =>{
-            console.log(error);
+            errorHandler(error);
         })
 
     }, [parseXML])
+
+    const errorHandler = (error)=>{
+        error===null ? (console.log("unknown error")) : (console.log(error.response))
+    }
 
     const handleChange = (e, type) =>{
         switch(type){
@@ -122,15 +124,14 @@ function Screenings(){
                 console.log(e)
                 break;
             default:
-                console.log("error");
+                console.log("handlechange error");
         }
 
     }
 
     return(
-        <div className="Screenings">
-            <Navbar />
-                <div
+        <div className="ScreeningResults">
+            <div
                  style={{
                   display: "flex", 
                   alignitems: "left"
@@ -158,20 +159,21 @@ function Screenings(){
                  style={{
                  display: "flex", flexDirection: "column",
                  justifyContent: "center",
-                 alignItems: "center"
+                 alignItems: "center",
+                 
                 }}>
                 
                     
                     { screenings && screenings.length > 0 ? (
                         screenings.map(screenings =>(
-                                <div key={screenings.ID}>{screenings.Title}
-                                <br />
-                                <p>Esitys alkaa: {new Date(screenings.dttmShowStart).getHours()}:{new Date(screenings.dttmShowStart).getMinutes()}</p>
-                                <br />
-                                    <img src={screenings.Images.EventSmallImagePortrait} alt="Screening"></img>
-                                </div>
-                                //new Date(screenings.dttmShowStart).toISOString().replace(/T.*/,'').split('-').reverse().join('.')
-                        ))
+                            <ScreeningCard  key={screenings.ID} 
+                            title={screenings.Title} 
+                            finnkinoUrl={screenings.EventURL}
+                            hours={new Date(screenings.dttmShowStart).getHours()} 
+                            minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
+                            image={screenings.Images.EventSmallImagePortrait}
+                            auditorium={screenings.TheatreAndAuditorium} />
+                            ))
                     ) : (
                         <p>Loading...</p>
                     )
@@ -180,10 +182,8 @@ function Screenings(){
                         
                     </style>
                 </div>
-
-            <Footer />
         </div>
-    );
-};
+    )
+}
 
-export default Screenings;
+export default ScreeningResults;
