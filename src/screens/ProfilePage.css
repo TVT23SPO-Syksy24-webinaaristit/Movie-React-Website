@@ -1,5 +1,4 @@
 
-
 .ProfilePage {
     min-height: 100vh; 
     
@@ -18,8 +17,8 @@
 
   .delete-button {
     position: absolute;
-    bottom: 20px; 
-    right: 50%; 
+    bottom: 50%; 
+    right: 10%; 
     background-color: red;
     color: white;
     padding: 40px 40px;
@@ -30,4 +29,21 @@
 
   .delete-button:hover {
    background-color: darkred;
+  }
+
+  .favorite-gallery {
+    display: inline-block;
+    border: 3px solid grey;
+    margin: 5px;
+    width: 25%;
+  }
+
+  .favorite-gallery:hover{
+    border: 3px solid orange;
+    cursor: pointer;
+  }
+
+  .favorite-gallery img{
+    width: 100%;
+    height: auto;
   }
