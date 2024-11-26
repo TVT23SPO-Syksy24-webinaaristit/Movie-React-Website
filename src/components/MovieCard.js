@@ -5,7 +5,8 @@ import MoviePoster from "./MoviePoster";
 const MovieCard = (props) => {
     return(
         <div className="MovieCard">
-            <MoviePoster size="w185" posterPath={props.posterPath} /> 
+            <div className="moviecardposter">
+            <MoviePoster size="w185" posterPath={props.posterPath} /> </div>
             <h3>{props.title}</h3>
         </div>
     );

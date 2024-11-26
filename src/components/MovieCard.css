@@ -1,8 +1,25 @@
 .MovieCard{
     word-wrap: break-word;
     overflow-wrap: break-word;
-    width: 185px;
+    width: 200px;
 }
 .MovieCard h3{
     text-wrap: wrap;
+    font-size: 1.1em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    padding-bottom: 1em;
+}
+
+.MovieCard .moviecardposter {
+    height: 280px;
+    overflow: hidden;
+    border-radius: 5px;
+
+}
+
+.MovieCard img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
