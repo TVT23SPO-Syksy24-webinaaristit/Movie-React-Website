@@ -1,7 +1,6 @@
-import express from 'express'
-import cors from 'cors'
-
-const port = process.env.PORT;
+import express from 'express';
+import cors from 'cors';
+import userRouter from "./routers/userRouter.js";
 
 const app = express();
 
@@ -11,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 
-app.use("/",userRouter);
+app.use("/user",userRouter);
 
 //General error handling
 app.use((err,req,res,next) => {
@@ -19,8 +18,7 @@ app.use((err,req,res,next) => {
     res.status(statusCode).json({error: err.message})
 });
 
-app.listen(port);
-
+export default app;
 
 
 

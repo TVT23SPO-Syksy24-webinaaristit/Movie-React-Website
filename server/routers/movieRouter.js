@@ -1,5 +1,7 @@
 // import { pool } from ''
-import { router } from 'express'
+//Test code from Niko's implementation
+
+/*import { router } from 'express'
 
 const router = Router()
 
@@ -11,3 +13,4 @@ router.get('/', (req, res) => {
         return res.status(200).json(results.rows)
     })
 })
+*/
