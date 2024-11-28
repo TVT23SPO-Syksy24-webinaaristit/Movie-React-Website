@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Home from './screens/Home.js';
 import Movies from './screens/Movies.js';
-import Screenings from './screens/Screenings.js';
+import ScreeningsPage from './screens/ScreeningsPage.js';
 import ProfilePage from './screens/ProfilePage.js';
 // import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -30,8 +30,8 @@ const router = createBrowserRouter([
     )
   },
   {
-  path: "/screenings",
-  element: <Screenings />
+  path: "/screeningspage",
+  element: <ScreeningsPage />
   },
   {
     path: "/profilepage",
