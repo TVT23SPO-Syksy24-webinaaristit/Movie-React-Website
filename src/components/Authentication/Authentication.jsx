@@ -4,6 +4,7 @@ import './Authentication.css'
 import user_icon from '../Assets/person.png'
 import email_icon from '../Assets/email.png'
 import password_icon from '../Assets/password.png'
+import { useUser } from '../../contexts/useUser'
 
 const Authentication = () => {
   const [action, setAction] = useState("Log In");
@@ -12,6 +13,8 @@ const Authentication = () => {
       email: "",
       password: "",
   });
+  const {user, signUp, signIn} = useUser();
+
 
   const handleInputChange = (e) => {
       const { name, value } = e.target;
@@ -24,6 +27,8 @@ const Authentication = () => {
   const handleSubmit = async () => {
       try {
           if (action === "Log In") {
+
+            /*
               const response = await axios.post("http://localhost:3001/login", {
                   email: formData.email,
                   password: formData.password,
@@ -32,18 +37,29 @@ const Authentication = () => {
 
               // Save token securely
               localStorage.setItem("authToken", token);
-
-              alert("Login successful!");
-              window.location.href = "/";
+            */
+            await signIn({
+                email: formData.email,
+                password: formData.password
+            });
+            console.log(user);
+            alert("Login successful!");
+            window.location.href = "/";
           } else if (action === "Sign Up") {
+            /*
               const response = await axios.post("http://localhost:3001/signup", {
                   name: formData.name,
                   email: formData.email,
                   password: formData.password,
               });
-
-              alert("Sign Up successful!");
-              setAction("Log In"); // Switch to Log In view
+            */
+            await signUp({
+                email: formData.email,
+                username: formData.name,
+                password: formData.password
+            });
+            alert("Sign Up successful!");
+            setAction("Log In"); // Switch to Log In view
           }
       } catch (error) {
           console.error(`${action} failed:`, error.response?.data?.message || error.message);

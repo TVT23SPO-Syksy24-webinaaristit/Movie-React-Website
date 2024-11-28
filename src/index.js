@@ -11,6 +11,7 @@ import { Navigate } from 'react-router-dom';
 // import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
+import UserProvider from './contexts/UserProvider.js';
 // import dotenv from 'dotenv';
 // import routes from './routers/router.js';
 
@@ -26,11 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: (
-      <MovieFilterProvider>
-        <Home />
-      </MovieFilterProvider>
-      )
+    element: <Home />
   },
   {
     path: "/movies",
@@ -61,9 +58,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <UserProvider> */}
+    <UserProvider>
       <RouterProvider router={router} />
-    {/* </UserProvider> */}
+    </UserProvider>
   </React.StrictMode>
 );
 
