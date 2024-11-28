@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 
-function FavoriteButton({ isFavorite, onToggleFavorite }) {
-    const button = document.createElement('button');
-    button.textContent = isFavorite ? 'Unfavorite' : 'Favorite';
-    button.classList.add('favorite-button');
-    if (isFavorite) {
-      button.classList.add('active');
-    }
+const FavoriteButton = ({ isFavorite, onToggleFavorite }) => {
+  return (
+    <button onClick={onToggleFavorite} className={`favorite-button ${isFavorite ? 'active' : ''}`}>
+      {isFavorite ? 'Unfavorite' : 'Favorite'}
+    </button>
+  );
+};
+
+export default FavoriteButton;
   
-    button.addEventListener('click', onToggleFavorite);
   
-    return button;
-  }
-  
-  export default FavoriteButton;
