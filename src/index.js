@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Home from './screens/Home.js';
-import Movies from './screens/Movies.js';
-import Screenings from './screens/Screenings.js';
-import Groups from './screens/Groups.js';
+import Home from './screens/HomePage.js';
+import Movies from './screens/MoviesPage.js';
+import Screenings from './screens/ScreeningsPage.js';
+import Groups from './screens/GroupsPage.js';
 import ProfilePage from './screens/ProfilePage.js';
 import LoginPage from './screens/LoginPage.js';
 import { Navigate } from 'react-router-dom';
