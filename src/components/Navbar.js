@@ -38,7 +38,7 @@ const Navbar = () => {
       )}
 
       <div className="right-icons">
-        <div className="profile-icon">
+        <div className="profile-icon" onClick={() => navigate("/profile")}>
           <img alt="Profile" />
         </div>
         

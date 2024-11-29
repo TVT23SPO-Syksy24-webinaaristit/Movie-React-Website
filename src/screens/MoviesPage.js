@@ -8,7 +8,7 @@ import MovieResults from "../components/MovieResults";
 import MoviePagination from "../components/MoviePagination";
 import { useFilters } from "../contexts/useFilters";
 
-function Movies() {
+function MoviesPage() {
     const { searchToggle } = useFilters();
     return (
         <div className="Movies">
@@ -24,4 +24,4 @@ function Movies() {
     );
 };
 
-export default Movies;
+export default MoviesPage;
