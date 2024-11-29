@@ -25,7 +25,6 @@ const Navbar = () => {
         <span></span>
       </div>
 
-      <input type="text" className="search-field" placeholder="search..." />
 
       {isDropdownOpen && (
         <div className="dropdown">
