@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Home from './screens/HomePage.js';
-import Movies from './screens/MoviesPage.js';
-import Screenings from './screens/ScreeningsPage.js';
-import Groups from './screens/GroupsPage.js';
+import HomePage from './screens/HomePage.js';
+import MoviesPage from './screens/MoviesPage.js';
+import ScreeningsPage from './screens/ScreeningsPage.js';
+import GroupsPage from './screens/GroupsPage.js';
 import ProfilePage from './screens/ProfilePage.js';
 import LoginPage from './screens/LoginPage.js';
 import { Navigate } from 'react-router-dom';
@@ -27,23 +27,23 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Home />
+    element: <HomePage />
   },
   {
     path: "/movies",
     element: (
       <MovieFilterProvider>
-        <Movies />
+        <MoviesPage />
       </MovieFilterProvider>
     ),
   },
   {
     path: "/screenings",
-    element: <Screenings />,
+    element: <ScreeningsPage />,
   },
   {
     path: "/groups",
-    element: <Groups />, // Placeholder for the Groups page
+    element: <GroupsPage />, // Placeholder for the Groups page
   },
   {
     path: "/profile",
