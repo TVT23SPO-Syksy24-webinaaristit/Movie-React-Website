@@ -77,6 +77,14 @@ const Authentication = () => {
 
   return (
       <div className="container">
+        <button onClick={() => {
+            const headers = {headers: {Authorization:user.token}}
+            axios.get(process.env.REACT_APP_API_URL + "/test/test" , headers)
+            .then(response => {
+            console.log(response);
+            }).catch(error => {
+            alert(error.response.data.error ? error.response.data.error : error)
+      })}}>auth test</button>
           <div className="header">
               <div className="text">{action}</div>
               <div className="underline"></div>
