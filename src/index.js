@@ -4,6 +4,7 @@ import './index.css';
 import Home from './screens/Home.js';
 import Movies from './screens/Movies.js';
 import Screenings from './screens/ScreeningsPage.js';
+import GroupPage from './screens/GroupPage.js';
 // import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
   path: "/screenings",
   element: <Screenings />
+  },
+  {
+  path: "/groups", //To be moved under the protected routes once auth is ready.
+  element:<GroupPage />
   }
 ]);
 
