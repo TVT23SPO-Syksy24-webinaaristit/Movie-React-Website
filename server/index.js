@@ -29,6 +29,21 @@ app.get('/groups', async (req, res) => {
     console.error('Error querying database:', err);
     res.status(500).send({ error: 'Database query failed' });
   }
+
+  app.get("/groups/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      const result = await pool.query("SELECT * FROM groups WHERE id = $1", [id]);
+      if (result.rows.length === 0) {
+        return res.status(404).send("Group not found");
+      }
+      res.json(result.rows[0]);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error fetching group details");
+    }
+  });
+  
 });
 
 // Start the Server
