@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import userRouter from "./routers/userRouter.js";
+import testRouter from "./routers/testRouter.js";
 
 const app = express();
 
@@ -13,7 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 
-app.use("/user",userRouter);
+app.use("/user", userRouter);
+
+app.use("/test", testRouter);//TEST
 
 //General error handling
 app.use((err,req,res,next) => {
