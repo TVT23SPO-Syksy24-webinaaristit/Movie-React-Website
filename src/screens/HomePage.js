@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MovieCarousel from '../components/MovieCarousel';
 
-function Home() {
+function HomePage() {
   return (
     <div className="Home">
       <Navbar />
@@ -14,4 +14,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
