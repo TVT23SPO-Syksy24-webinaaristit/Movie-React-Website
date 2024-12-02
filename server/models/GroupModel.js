@@ -10,7 +10,7 @@ export const GroupModel = {
 
   // Fetch a group by ID
   async fetchGroupById(groupId) {
-    const query = "SELECT * FROM groups WHERE id = $1";
+    const query = "SELECT * FROM groups WHERE idgroup = $1";
     const result = await pool.query(query, [groupId]);
     if (result.rows.length === 0) {
       throw new Error("Group not found");
