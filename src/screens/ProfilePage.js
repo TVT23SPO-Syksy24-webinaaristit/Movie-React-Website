@@ -21,12 +21,9 @@ function ProfilePage() {
       </h2>
       
       <button className="delete-button">Delete account?</button>
-      
+      <Footer />
     </div>
-   
   );
 }
 
-
-<Footer />
 export default ProfilePage;
