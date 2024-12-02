@@ -42,7 +42,6 @@ const MovieResults = () => {
         console.log(error.response)
     }
 
-
     useEffect(() => {
         if(false) return;
         updateResults();
