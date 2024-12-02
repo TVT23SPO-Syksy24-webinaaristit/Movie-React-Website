@@ -14,8 +14,6 @@ function ProfilePage() {
       <div class="container">
   <h2>User Information</h2>
   <p>Username: <span id="username"></span></p>
-  <p>Email: <span id="email"></span></p>
-    
   </div>
 
      <FavoriteList />
