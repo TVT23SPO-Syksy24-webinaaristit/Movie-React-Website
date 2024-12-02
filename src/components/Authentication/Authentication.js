@@ -6,6 +6,7 @@ import email_icon from '../Assets/email.png'
 import password_icon from '../Assets/password.png'
 import { useUser } from '../../contexts/useUser'
 
+
 const Authentication = () => {
   const [action, setAction] = useState("Log In");
   const [formData, setFormData] = useState({

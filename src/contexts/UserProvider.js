@@ -10,7 +10,9 @@ export default function UserProvider({children}) {
 
     const signUp = async (userinput) => {
         setUser(userinput);
+        (console.log(userinput));
         const json = JSON.stringify(userinput);
+        (console.log(json));
         const headers = {headers: {"Content-Type":"application/json"}}
         try {
             await axios.post(url + "/user/register", json, headers);

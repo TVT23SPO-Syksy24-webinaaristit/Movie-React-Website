@@ -40,10 +40,6 @@ const router = createBrowserRouter([
     ),
   },
   {
-  path: "/screenings",
-  element: <ScreeningsPage />
-  },
-  {
   path: "/groups", //To be moved under the protected routes once auth is ready.
   element:<GroupPage />
   },
@@ -59,10 +55,6 @@ const router = createBrowserRouter([
       element: <ScreeningsPage />,
       }
     ]
-  },
-  {
-    path: "/groups",
-    element: <GroupPage />, // Placeholder for the Groups page
   },
   {
     path: "/profile",
