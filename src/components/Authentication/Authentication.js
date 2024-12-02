@@ -16,7 +16,6 @@ const Authentication = () => {
   });
   const {user, signUp, signIn} = useUser();
 
-
   const handleInputChange = (e) => {
       const { name, value } = e.target;
       setFormData((prev) => ({
