@@ -12,6 +12,7 @@ import { Navigate } from 'react-router-dom';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
 import UserProvider from './contexts/UserProvider.js';
+import ProtectedRoute from './components/Authentication/ProtectedRoute.js';
 // import dotenv from 'dotenv';
 // import routes from './routers/router.js';
 
@@ -38,8 +39,13 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/screenings",
-    element: <ScreeningsPage />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+      path: "/screenings",
+      element: <ScreeningsPage />,
+      }
+    ]
   },
   {
     path: "/groups",
