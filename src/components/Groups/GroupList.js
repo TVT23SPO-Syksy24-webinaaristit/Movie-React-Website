@@ -46,7 +46,7 @@ const GroupList = () => {
             >
               <div className="group-content">
                 <div>
-                  <h3>{group.name}</h3>
+                  <h3>{group.group_name}</h3>
                   <p>{group.description}</p>
                 </div>
                 <button
