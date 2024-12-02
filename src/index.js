@@ -52,8 +52,13 @@ const router = createBrowserRouter([
     element: <GroupsPage />, // Placeholder for the Groups page
   },
   {
-    path: "/profile",
-    element: isLoggedIn ? <ProfilePage /> : <Navigate to="/login" replace />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/profile",
+        element: <ProfilePage />,
+      }
+    ]
   },
   {
     path: "/login",
