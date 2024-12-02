@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './Navbar.css';
+import LogOutButton from './LogOutButton';
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -43,6 +44,8 @@ const Navbar = () => {
           <img alt="Profile" />
         </div>
         
+        <LogOutButton />
+
         <button className="theme-toggle" onClick={toggleTheme}>
           {isThemeDark ? '🌙' : '☀️'}
         </button>

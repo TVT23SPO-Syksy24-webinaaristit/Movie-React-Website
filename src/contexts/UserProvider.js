@@ -34,9 +34,13 @@ export default function UserProvider({children}) {
             throw error
         }
     }
+    
+    const logOut = async () => {
+        setUser({email: "", password: ""});
+    }
 
     return (
-        <UserContext.Provider value={{user,setUser,signUp,signIn}}>
+        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut}}>
             {children}
         </UserContext.Provider>
     )
