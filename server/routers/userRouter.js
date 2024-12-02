@@ -7,6 +7,6 @@ router.post("/register", postRegistration);
 
 router.post("/login", postLogin);
 
-router.post("/delete", auth, deleteAccount);
+router.delete("/delete/:id", auth, deleteAccount);
 
 export default router;

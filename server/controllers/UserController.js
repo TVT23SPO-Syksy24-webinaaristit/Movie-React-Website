@@ -39,14 +39,14 @@ const postLogin = async(req,res,next) => {
 const deleteAccount = async(req,res,next) =>{
     try{
         const userFromDb = await selectUserByEmail(req.body.email);
-        if(!req.params.idaccount === null) return next(new ApiError("User id not found"))
+        if(!req.params.id === null) return next(new ApiError("User id not found",400))
             
         const user = userFromDb.rows[0];
+        const id = parseInt(user.id);
+        await deleteUserById(id);
 
-        const result = await deleteUserById(user.idaccount);
 
-
-        return res.status(200).json(createUserObject(user.idaccount));
+        return res.status(200).json({id: user.id});
     } catch(error){
         return next(error);
     }

@@ -35,8 +35,27 @@ export default function UserProvider({children}) {
         }
     }
 
+    const deleteAccount = async()=>{
+        const json = JSON.stringify(user.id)
+        /* const json = { id: user.id }; */
+        /* const headers = { Authorization: user.token }; */
+        const headers = {headers: {Authorization: user.token}}
+        try{
+            console.log(json)
+            const response = await axios.delete(url + "/user/delete/"+json, headers)   
+            console.log(response)
+            
+        } catch(error){
+            console.log("gfdkjmasdfkjsfdvn")
+            throw error;
+        }
+
+        
+    }
+
+
     return (
-        <UserContext.Provider value={{user,setUser,signUp,signIn}}>
+        <UserContext.Provider value={{user,setUser,signUp,signIn,deleteAccount}}>
             {children}
         </UserContext.Provider>
     )
