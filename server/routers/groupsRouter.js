@@ -1,25 +1,15 @@
-import { pool } from '../helpers/db.js'
-import { Router } from 'express';
-import { auth } from '../helpers/auth.js';
+import express from "express";
+import { GroupController } from "../controllers/GroupsController.js";
 
-const router = Router()
+const router = express.Router();
 
-router.get('/groups', auth, (req, res) =>{
-    pool.query('SELECT id, name, description FROM GROUPS', (error, results) => {
-        if (error) {
-            return res.status(500).json({ error: error.message })
-        }
-        return res.status(200).json(results.rows)
-    })
-})
+// Route to fetch all groups
+router.get("/", GroupController.getAllGroups);
 
-// async (req, res) => {
-//     try {
-//       const result = await pool.query('SELECT id, title, description FROM groups');
-//       res.json(result.rows); // Return rows as JSON
-//     } catch (err) {
-//       console.error('Error querying database:', err);
-//       res.status(500).send({ error: 'Database query failed' });
-//     }
+// Route to fetch a group by ID
+router.get("/:id", GroupController.getGroupDetails);
+
+// Route to create a new group
+router.post("/", GroupController.addGroup);
 
 export default router;

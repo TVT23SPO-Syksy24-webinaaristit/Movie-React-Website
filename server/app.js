@@ -20,6 +20,8 @@ app.use("/user", userRouter);
 
 app.use("/test", testRouter);//TEST
 
+app.use("/groups", groupsRouter);
+
 
 
 //General error handling
