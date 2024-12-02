@@ -4,7 +4,8 @@ import './index.css';
 import HomePage from './screens/HomePage.js';
 import MoviesPage from './screens/MoviesPage.js';
 import ScreeningsPage from './screens/ScreeningsPage.js';
-import GroupsPage from './screens/GroupsPage.js';
+import GroupPage from './screens/GroupPage.js';
+import GroupDetails from './screens/GroupDetails.js';
 import ProfilePage from './screens/ProfilePage.js';
 import LoginPage from './screens/LoginPage.js';
 import { Navigate } from 'react-router-dom';
@@ -39,6 +40,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+  path: "/groups", //To be moved under the protected routes once auth is ready.
+  element:<GroupPage />
+  },
+  {
+  path: "/groups/:id",
+  element: <GroupDetails />
+  },
+  {
     element: <ProtectedRoute />,
     children: [
       {
@@ -46,10 +55,6 @@ const router = createBrowserRouter([
       element: <ScreeningsPage />,
       }
     ]
-  },
-  {
-    path: "/groups",
-    element: <GroupsPage />, // Placeholder for the Groups page
   },
   {
     element: <ProtectedRoute />,

@@ -25,14 +25,13 @@ const Navbar = () => {
         <span></span>
       </div>
 
-      <input type="text" className="search-field" placeholder="search..." />
 
       {isDropdownOpen && (
         <div className="dropdown">
           <button className="dropdown-btn" onClick={() => navigate("/")}>Home</button>
           <button className="dropdown-btn" onClick={() => navigate("/movies")}>Movies</button>
           <button className="dropdown-btn" onClick={() => navigate("/screenings")}>Screenings</button>
-          <button className="dropdown-btn">Groups</button>
+          <button className="dropdown-btn"onClick={() => navigate("/groups")}>Groups</button>
           <button className="dropdown-btn" onClick={() => navigate("/profile")}>Profile</button>
           
         </div>
