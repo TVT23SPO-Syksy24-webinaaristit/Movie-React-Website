@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS public.groups
 (
     idgroup bigserial NOT NULL,
     group_name character varying(45) NOT NULL,
+    group_description text,
     owner integer NOT NULL,
     member_count integer NOT NULL,
     PRIMARY KEY (idgroup)
