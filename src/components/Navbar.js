@@ -33,7 +33,7 @@ const Navbar = () => {
           <button className="dropdown-btn" onClick={() => navigate("/movies")}>Movies</button>
           <button className="dropdown-btn" onClick={() => navigate("/screenings")}>Screenings</button>
           <button className="dropdown-btn">Groups</button>
-          <button className="dropdown-btn" onClick={() => navigate("/profilepage")}>Profile</button>
+          <button className="dropdown-btn" onClick={() => navigate("/profile")}>Profile</button>
           
         </div>
       )}

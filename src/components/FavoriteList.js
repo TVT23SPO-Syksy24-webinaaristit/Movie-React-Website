@@ -5,9 +5,9 @@ function FavoriteList() {
 
   useEffect(() => {
     // Fetch the user's favorite movies from the server
-    fetch('/api/user/favorites')
+    /*fetch('/api/user/favorites')
       .then(response => response.json())
-      .then(data => setFavoriteMovies(data.favoriteMovies));
+      .then(data => setFavoriteMovies(data.favoriteMovies));*/
   }, []);
 
   return (
