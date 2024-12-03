@@ -30,7 +30,7 @@ const postLogin = async(req,res,next) => {
         if (!await compare(req.body.password, user.password)) return next (new ApiError(invalidCredentialsMessage)); //Comparing user inputted password to the one in the database
         
         const token = sign(req.body.email, process.env.JWT_SECRET_KEY); //creating a personalized webtoken for user after passing all checks that includes webtoken's secret key from the env file.
-        return res.status(200).json(createUserObject(user.idaccount, user.email, user.username, token)); //returning token to frontend
+        return res.status(200).json(createUserObject(user.id, user.email, user.username, token)); //returning token to frontend
     } catch (error) {
         return next(error);
     };
