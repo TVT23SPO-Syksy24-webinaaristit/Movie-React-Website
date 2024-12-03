@@ -10,7 +10,9 @@ export default function UserProvider({children}) {
 
     const signUp = async (userinput) => {
         setUser(userinput);
+        (console.log(userinput));
         const json = JSON.stringify(userinput);
+        (console.log(json));
         const headers = {headers: {"Content-Type":"application/json"}}
         try {
             await axios.post(url + "/user/register", json, headers);
@@ -34,6 +36,10 @@ export default function UserProvider({children}) {
             throw error
         }
     }
+    
+    const logOut = async () => {
+        setUser({email: "", password: ""});
+    }
 
     const deleteAccount = async()=>{
         const json = JSON.stringify(user.id)
@@ -55,7 +61,7 @@ export default function UserProvider({children}) {
 
 
     return (
-        <UserContext.Provider value={{user,setUser,signUp,signIn,deleteAccount}}>
+        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut,deleteAccount}}>
             {children}
         </UserContext.Provider>
     )
