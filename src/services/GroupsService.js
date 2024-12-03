@@ -23,9 +23,9 @@ const joinGroup = async (groupId, userId) => {
   }
 };
 
-const createGroup = async (groupData) => {
+const createGroup = async (userId,group_name,description) => {
   try {
-    const response = await axios.post(`${API_URL}/groups/create`, groupData);  // Create group
+    const response = await axios.post(`${API_URL}/groups/create`, userId, group_name, description);  // Create group
     return response.data;
   } catch (error) {
     console.error("Error creating group:", error);

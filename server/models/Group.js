@@ -3,13 +3,13 @@ import {pool} from "../helpers/db.js";
 //Group.js imports connection to database from helper db.js and includes queries related to groups
 
 const selectAllGroups = async () => {
-  const result = await pool.query("SELECT idgroup, group_name, member_count, description FROM groups");
+  const result = await pool.query("SELECT idgroup, group_name, member_count, group_description FROM groups");
   // Make sure the returned values are usable.
   return result.rows.map(row => ({
       id: row.idgroup,
       name: row.group_name,
       members: row.member_count,
-      description: row.description
+      description: row.group_description
   }));
 };
 
@@ -20,7 +20,7 @@ const selectGroupById = async (id) => {
 const insertGroupCreate = async (groupData) => {
     const {name, description, owner} = groupData;
     try{
-    return await pool.query("INSERT INTO groups (name, description, owner, member_count) VALUES ($1, $2, $3, 1) RETURNING *",
+    return await pool.query("INSERT INTO groups (group_name, group_description, owner, member_count) VALUES ($1, $2, $3, 1) RETURNING *",
       [name, description, owner]
     );
 
