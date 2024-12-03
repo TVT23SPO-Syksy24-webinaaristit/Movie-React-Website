@@ -43,8 +43,22 @@ export default function UserProvider({children}) {
         sessionStorage.setItem("user", JSON.stringify({"email": "","username": ""}));
     }
 
+    const deleteAccount = async()=>{
+        const headers = {headers: {Authorization: user.token}}
+        try{
+            await axios.get(url + `/user/delete/${user.id}`,headers)   
+            setUser({email: "", password: ""});
+            alert("Account has been deleted");
+        } catch(error){
+            throw error.response.data;
+        }
+
+        
+    }
+
+
     return (
-        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut}}>
+        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut,deleteAccount}}>
             {children}
         </UserContext.Provider>
     )
