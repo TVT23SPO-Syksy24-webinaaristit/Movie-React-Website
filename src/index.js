@@ -53,7 +53,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: isLoggedIn ? <ProfilePage /> : <Navigate to="/login" replace />,
+    element: <ProfilePage /> 
   },
   {
     path: "/login",

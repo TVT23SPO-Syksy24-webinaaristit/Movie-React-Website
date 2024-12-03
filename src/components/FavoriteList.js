@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function FavoriteList() {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   useEffect(() => {
-    // Fetch the user's favorite movies from the server
-    fetch('/api/user/favorites')
-      .then(response => response.json())
-      .then(data => setFavoriteMovies(data.favoriteMovies));
+    const fetchFavorites = async () => {
+      try {
+        const response = await axios.get('/api/favorites');
+        setFavoriteMovies(response.data);
+      } catch (error) {
+        console.error('Error fetching favorites:', error);
+      }
+    };
+
+    fetchFavorites();
   }, []);
 
   return (
