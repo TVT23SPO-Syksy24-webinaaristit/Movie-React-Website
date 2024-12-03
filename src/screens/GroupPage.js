@@ -11,6 +11,7 @@ function GroupPage() {
     <div className="GroupPage">
       <Navbar />
       <GroupList />
+      <GroupCreation />
     </div>
   )
 }

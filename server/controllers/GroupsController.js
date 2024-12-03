@@ -24,6 +24,7 @@ const getGroupDetails = async (req, res, next) => {
 
 const postGroupCreate = async (req, res, next) => {
   const groupData = req.body;
+  const userId = req.user.id;  // Get the user ID from the request
   try {
     const newGroup = await insertGroupCreate(groupData);  // Create group via model
     return res.status(201).json(newGroup); // Return the new group details
@@ -36,7 +37,7 @@ const postGroupCreate = async (req, res, next) => {
 const postGroupJoin = async (req, res, next) => {
   const { groupId, userId } = req.body;
   try {
-    const updatedGroup = await insertGroupJoin(groupId, userId);  // Update group via model
+    const updatedGroup = await insertGroupJoin(groupId, userId, 1);  // Update group via model
     return res.status(200).json(updatedGroup); // Return the updated group details
   } catch (error) {
     console.error("Error in controller (joining group):", error);

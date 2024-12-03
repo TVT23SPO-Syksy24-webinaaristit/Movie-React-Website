@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchAllGroups, joinGroup } from "../../services/GroupsService"; // Import API service functions
-import "./GroupList.css"; // Import styles (if applicable)
+import "./GroupStyles.css"; // Import styles (if applicable)
 
 const GroupList = () => {
   const [groups, setGroups] = useState([]); // State to store the fetched groups
@@ -67,7 +67,9 @@ const GroupList = () => {
           ))}
         </ul>
       ) : (
-        <p>No groups available.</p>
+        <p>No groups available.
+          Try to create a group instead?
+        </p>
       )}
     </div>
   );

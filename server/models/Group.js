@@ -19,7 +19,23 @@ const selectGroupById = async (id) => {
 
 const insertGroupCreate = async (groupData) => {
     const {name, description, owner} = groupData;
-    return await pool.query("INSERT INTO groups (name, description, owner) VALUES ($1, $2, $3) RETURNING *",[name, description, owner]);
+    try{
+    return await pool.query("INSERT INTO groups (name, description, owner, member_count) VALUES ($1, $2, $3, 1) RETURNING *",
+      [name, description, owner]
+    );
+
+    const groupId = result.rows[0].idgroup; // Get the group ID from the result
+
+    await pool.query(
+      "INSERT INTO groups_members (accounts_idaccount, groups_idgroup, is_a_member, join_date_timestamp) VALUES ($1, $2, 1, NOW())",
+      [userId, groupId]
+    );
+
+      return { idgroup: groupId, group_name: name, owner: userId, member_count: 1, description };
+    } catch (error) {
+        console.error("Error creating group:", error);
+        throw error;
+    }
 };
 
 const insertGroupJoin = async (groupId, userId) => {
@@ -27,7 +43,7 @@ const insertGroupJoin = async (groupId, userId) => {
   if (existingMember.rows.length > 0) {
     throw new Error("User already in group");
   }
-  return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup) VALUES ($1, $2) RETURNING *",[userId, groupId]);
+  return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup, is_a_member) VALUES ($1, $2, $3) RETURNING *",[userId, groupId, 1]);
 
 };
 
