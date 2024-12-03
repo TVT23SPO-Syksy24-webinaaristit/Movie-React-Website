@@ -1,15 +1,17 @@
-import express from "express";
-import { GroupController } from "../controllers/GroupsController.js";
+//server/routers/groupsRouter.js
+import { Router } from "express"
+import { getAllGroups, getGroupDetails, postGroupCreate, postGroupJoin } from "../controllers/GroupsController.js";
 
-const router = express.Router();
+const router = Router();
 
-// Route to fetch all groups
-router.get("/", GroupController.getAllGroups);
+// Route to fetch all groupsrouter.get("/", GroupController.getAllGroups);
 
-// Route to fetch a group by ID
-router.get("/:id", GroupController.getGroupDetails);
+router.get("/", getAllGroups);
 
-// Route to create a new group
-router.post("/", GroupController.addGroup);
+router.get("/:id", getGroupDetails);
+
+router.post("/create", postGroupCreate);
+
+router.post("/join", postGroupJoin);
 
 export default router;

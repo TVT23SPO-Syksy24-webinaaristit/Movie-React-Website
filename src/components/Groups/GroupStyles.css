@@ -35,3 +35,13 @@
     border-radius: 5px; /* Add rounded corners */
     cursor: pointer; /* Change the cursor to a pointer */
   }
+
+  .description {
+    display: block; /* Ensure the description is block-level */
+    margin-bottom: 15px; /* Add space between the description and the next item */
+  }
+
+  .name {
+    display: block; /* Ensure the name is block-level */
+    margin-bottom: 15px; /* Add space between the name and the next item */
+  }

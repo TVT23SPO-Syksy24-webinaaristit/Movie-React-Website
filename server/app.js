@@ -18,9 +18,11 @@ app.use(express.urlencoded({extended: false}));
 
 app.use("/user", userRouter);
 
+app.use("/groups", groupsRouter);
+
 app.use("/test", testRouter);//TEST
 
-app.use("/groups", groupsRouter);
+
 
 
 

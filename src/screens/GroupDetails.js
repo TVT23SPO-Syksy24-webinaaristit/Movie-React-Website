@@ -19,7 +19,7 @@ const GroupDetails = () => {
 
   return (
     <div>
-      <h1>{group.title}</h1>
+      <h1>{group.name}</h1>
       <p>{group.description}</p>
       {/* {group.members && (
         <div>
