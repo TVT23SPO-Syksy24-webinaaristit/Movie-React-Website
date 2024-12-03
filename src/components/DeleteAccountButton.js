@@ -4,11 +4,11 @@ import { useUser } from "../contexts/useUser";
 const DeleteAccountButton = () =>{
     const { deleteAccount } = useUser();
     return(
-        <button onClick={() => {
+        <button className="delete-button" onClick={() => {
             deleteAccount();
 
         }
-        }>JUUPAJ UU HEI HEI</button>
+        }>Delete account</button>
     )
 }
 

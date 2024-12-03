@@ -42,18 +42,13 @@ export default function UserProvider({children}) {
     }
 
     const deleteAccount = async()=>{
-        const json = JSON.stringify(user.id)
-        /* const json = { id: user.id }; */
-        /* const headers = { Authorization: user.token }; */
         const headers = {headers: {Authorization: user.token}}
         try{
-            console.log(json)
-            const response = await axios.delete(url + "/user/delete/"+json, headers)   
-            console.log(response)
-            
+            await axios.get(url + `/user/delete/${user.id}`,headers)   
+            setUser({email: "", password: ""});
+            alert("Account has been deleted");
         } catch(error){
-            console.log("gfdkjmasdfkjsfdvn")
-            throw error;
+            throw error.response.data;
         }
 
         

@@ -8,9 +8,12 @@ const insertUser = async (username, email, hashedPassword) => {
 const selectUserByEmail = async (email) => {
     return await pool.query("SELECT * FROM accounts WHERE email = $1",[email]);
 };
+const selectUserById = async(id)=>{
+    return await pool.query("SELECT * FROM accounts WHERE idaccount = $1",[id]);
+};
 
 const deleteUserById = async(id) =>{
-    return await pool.query("DELETE FROM favorites WHERE accounts_idaccount=$1",[id]);
+    return await pool.query("CALL delete_account($1)",[id]);
 }
 
-export { insertUser, selectUserByEmail, deleteUserById };
+export { insertUser, selectUserByEmail, selectUserById, deleteUserById };

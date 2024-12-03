@@ -1,5 +1,5 @@
 import {hash, compare} from "bcrypt";
-import { deleteUserById, insertUser, selectUserByEmail } from "../models/User.js";
+import { deleteUserById, insertUser, selectUserByEmail, selectUserById } from "../models/User.js";
 import { ApiError } from "../helpers/ApiError.js"
 
 // Error Helper HERE
@@ -38,15 +38,10 @@ const postLogin = async(req,res,next) => {
 
 const deleteAccount = async(req,res,next) =>{
     try{
-        const userFromDb = await selectUserByEmail(req.body.email);
         if(!req.params.id === null) return next(new ApiError("User id not found",400))
-            
-        const user = userFromDb.rows[0];
-        const id = parseInt(user.id);
-        await deleteUserById(id);
-
-
-        return res.status(200).json({id: user.id});
+        const userid = req.params.id;
+        await deleteUserById(req.params.id);
+        return res.status(200).json({id: userid});
     } catch(error){
         return next(error);
     }
