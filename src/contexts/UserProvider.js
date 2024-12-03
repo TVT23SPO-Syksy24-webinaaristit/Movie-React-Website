@@ -31,6 +31,7 @@ export default function UserProvider({children}) {
             const token = response.data.token;
             setUser(response.data);
             sessionStorage.setItem("user", JSON.stringify(response.data));
+            console.log(response.data);
         } catch(error) {
             setUser({email: "", password: ""});
             throw error
@@ -39,6 +40,7 @@ export default function UserProvider({children}) {
     
     const logOut = async () => {
         setUser({email: "", password: ""});
+        sessionStorage.setItem("user", JSON.stringify({"email": "","username": ""}));
     }
 
     return (
