@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+//should have a button to create a new group on the database
+
 
 const GroupDetails = () => {
   const { id } = useParams(); // Get the dynamic group ID from the URL
@@ -19,7 +21,7 @@ const GroupDetails = () => {
 
   return (
     <div>
-      <h1>{group.title}</h1>
+      <h1>{group.group_name}</h1>
       <p>{group.description}</p>
       {/* You can add more details or components here */}
     </div>
