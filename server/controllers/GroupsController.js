@@ -23,10 +23,11 @@ const getGroupDetails = async (req, res, next) => {
 };
 
 const postGroupCreate = async (req, res, next) => {
-  const groupData = req.body;
-  const userId = req.user.id;  // Get the user ID from the request
+  const { owner, name, description} = req.body;  // Get the group details from the request
+  console.log("Incoming request :", req);
+  console.log("Incoming request body:", req.body);
   try {
-    const newGroup = await insertGroupCreate(groupData);  // Create group via model
+    const newGroup = await insertGroupCreate(owner, name, description);  // Create group via model
     return res.status(201).json(newGroup); // Return the new group details
   } catch (error) {
     console.error("Error in controller (creating group):", error);

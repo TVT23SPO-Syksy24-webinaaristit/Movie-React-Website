@@ -1,46 +1,53 @@
-//src/services/GroupsService.js
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';  // API URL
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001'; // API URL
 
+// Fetch all groups
 const fetchAllGroups = async () => {
   try {
-    const response = await axios.get(`${API_URL}/groups`);  // Get all groups
+    const response = await axios.get(`${API_URL}/groups`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching groups:", error);
+    console.error('Error fetching groups:', error);
     throw error;
   }
 };
 
+// Join a group
 const joinGroup = async (groupId, userId) => {
   try {
-    const response = await axios.post(`${API_URL}/groups/join`, { groupId, userId});  // Join group
+    const response = await axios.post(`${API_URL}/groups/join`, { groupId, userId });
     return response.data;
   } catch (error) {
-    console.error("Error joining group:", error);
+    console.error('Error joining group:', error);
     throw error;
   }
 };
 
-const createGroup = async (userId,group_name,description) => {
+// Create a group
+const createGroup = async (userId, groupName, groupDescription) => {
   try {
-    const response = await axios.post(`${API_URL}/groups/create`, userId, group_name, description);  // Create group
+    const response = await axios.post(`${API_URL}/groups/create`, {
+      owner: userId, // Send userId as owner
+      name: groupName, // Send group name
+      description: groupDescription, // Send description
+    }, );
     return response.data;
   } catch (error) {
-    console.error("Error creating group:", error);
+    console.error('Error creating group:', error);
     throw error;
   }
 };
 
+// Delete a group
 const deleteGroup = async (groupId) => {
   try {
-    const response = await axios.delete(`${API_URL}/groups/${groupId}`);  // Delete group
+    const response = await axios.delete(`${API_URL}/groups/${groupId}`);
     return response.data;
   } catch (error) {
-    console.error("Error deleting group:", error);
+    console.error('Error deleting group:', error);
     throw error;
   }
 };
 
-export { fetchAllGroups, joinGroup, createGroup, deleteGroup };  // Export the services
+export { fetchAllGroups, joinGroup, createGroup, deleteGroup };

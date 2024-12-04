@@ -18,7 +18,7 @@ const selectGroupById = async (id) => {
 };
 
 const insertGroupCreate = async (groupData) => {
-    const {name, description, owner} = groupData;
+    const {owner,name, description} = groupData;
     try{
     return await pool.query("INSERT INTO groups (group_name, group_description, owner, member_count) VALUES ($1, $2, $3, 1) RETURNING *",
       [name, description, owner]
