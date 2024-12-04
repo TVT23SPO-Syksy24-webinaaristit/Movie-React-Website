@@ -2,27 +2,36 @@ import express from 'express';
 import cors from 'cors';
 import userRouter from "./routers/userRouter.js";
 import testRouter from "./routers/testRouter.js";
+import groupsRouter from './routers/groupsRouter.js'
+
 
 const app = express();
 
+
 //Middleware
 app.use(cors({
-    origin: 'http://localhost:3000',  
-    methods: ['GET', 'POST'],        
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-
 app.use("/user", userRouter);
 
+app.use("/groups", groupsRouter);
+
 app.use("/test", testRouter);//TEST
+
+
+
+
 
 //General error handling
 app.use((err,req,res,next) => {
     const statusCode = err.statusCode || 500
     res.status(statusCode).json({error: err.message})
 });
+
 
 export default app;
 
@@ -50,11 +59,6 @@ const JWT_SECRET = "your_super_secret_key";
 // Mock database (use a real database in production, e.g., MongoDB or PostgreSQL)
 const users = [];
 
-// Start the server
-const PORT = 3001;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
 
 // Utility function to generate JWT token
 const generateToken = (user) => {

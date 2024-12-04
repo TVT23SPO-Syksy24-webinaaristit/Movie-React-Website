@@ -25,9 +25,9 @@ describe("User authentication", () => {
     });
 
     describe('POST /api/auth/login', () => {
-        const email = "rekisteritesti@foo.com";
-        const username = "darkkeri";
-        const password = "register1231";
+        const email = process.env.EMAIL;
+        const username = process.env.USERNAME;
+        const password = process.env.PASSWORD;
         it (("should register"), async () => {
         const response = await request(server)
             .post("/user/register")

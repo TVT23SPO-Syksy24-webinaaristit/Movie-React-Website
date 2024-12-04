@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './Navbar.css';
+import LogOutButton from './LogOutButton';
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -25,14 +26,13 @@ const Navbar = () => {
         <span></span>
       </div>
 
-      <input type="text" className="search-field" placeholder="search..." />
 
       {isDropdownOpen && (
         <div className="dropdown">
           <button className="dropdown-btn" onClick={() => navigate("/")}>Home</button>
           <button className="dropdown-btn" onClick={() => navigate("/movies")}>Movies</button>
           <button className="dropdown-btn" onClick={() => navigate("/screenings")}>Screenings</button>
-          <button className="dropdown-btn">Groups</button>
+          <button className="dropdown-btn"onClick={() => navigate("/groups")}>Groups</button>
           <button className="dropdown-btn" onClick={() => navigate("/profile")}>Profile</button>
           
         </div>
@@ -43,6 +43,8 @@ const Navbar = () => {
           <img alt="Profile" />
         </div>
         
+        <LogOutButton />
+
         <button className="theme-toggle" onClick={toggleTheme}>
           {isThemeDark ? '🌙' : '☀️'}
         </button>

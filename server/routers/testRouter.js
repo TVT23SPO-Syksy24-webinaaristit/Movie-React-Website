@@ -5,7 +5,7 @@ import { auth } from '../helpers/auth.js';
 
 const router = Router()
 
-router.get('/test', auth, (req, res) => {
+router.get('/test', auth, async (req, res) => {
     pool.query('SELECT * FROM accounts', (error, results) => {
         if (error) {
             return res.status(500).json({ error: error.message })
