@@ -1,10 +1,13 @@
+//src/components/Groups/GroupCreation.js
 import React, { useState, useEffect } from 'react';
-import { createGroup} from '../../services/GroupsService';
+import axios from 'axios';
+import { useGroups } from '../../contexts/GroupProvider';
 import { useUser } from '../../contexts/useUser';
-import GroupList from './GroupList';
 import './GroupStyles.css';
 
+
 const GroupCreation = ({onGroupCreated}) => {
+  const {createGroup, joinGroup, leaveGroup, fetchAllGroups} = useGroups();
   const { user } = useUser();
   const [groupData, setGroupData] = useState({
     name: '',

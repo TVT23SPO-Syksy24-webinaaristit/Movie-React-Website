@@ -1,9 +1,11 @@
+//src/components/Groups/GroupList.js
 import React, { useState, useEffect } from "react";
-import { fetchAllGroups, joinGroup, deleteGroup, leaveGroup } from "../../services/GroupsService"; // Import API service functions
 import { useUser } from "../../contexts/useUser"; // Import the user context
+import { useGroups } from "../../contexts/GroupProvider";
 import "./GroupStyles.css"; // Import styles (if applicable)
 
 const GroupList = ({ refresh, setRefresh }) => {
+  const { fetchAllGroups, joinGroup, leaveGroup, deleteGroup } = useGroups(); // Import the group context
   const [groups, setGroups] = useState([]); // State to store the fetched groups
   const [loading, setLoading] = useState(true); // State to handle the loading state
   const [error, setError] = useState(null); // State to handle errors

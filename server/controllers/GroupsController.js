@@ -1,27 +1,19 @@
 //server/controllers/GroupsController.js
 import {selectAllGroups, selectGroupById, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
 
-const getAllGroups = async (req, res, next) => {
-  const { userId } = req.query;
+
+const getAllGroups = async (req, res) => {
+  const userId = req.headers['user-id'];  // Access the 'x-user-id' header
+
   if (!userId) {
     return res.status(400).json({ message: "User ID is required" });
   }
+
   try {
-    const groups = await selectAllGroups(userId);  // Selecting all the available groups from the model
-    return res.status(200).json(groups); // Return the groups to the client
+    const groups = await selectAllGroups(userId);  // Select all the available groups from the model
+    return res.status(200).json(groups);  // Return the groups to the client
   } catch (error) {
     console.error("Error in controller (fetching all groups):", error);
-    next(error);  // Pass error to error-handling middleware
-  }
-};
-
-const getGroupDetails = async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const group = await selectGroupById(id);  // Fetch group by ID from model
-    return res.status(200).json(group); // Return the group details
-  } catch (error) {
-    console.error("Error in controller (fetching group details):", error);
     next(error);  // Pass error to error-handling middleware
   }
 };
@@ -38,6 +30,19 @@ const postGroupCreate = async (req, res, next) => {
     next(error); // Pass error to error-handling middleware
   }
 };
+
+const getGroupDetails = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const group = await selectGroupById(id);  // Fetch group by ID from model
+    return res.status(200).json(group); // Return the group details
+  } catch (error) {
+    console.error("Error in controller (fetching group details):", error);
+    next(error);  // Pass error to error-handling middleware
+  }
+};
+
+
 
 const deleteGroup = async (req, res, next) => {
   const { id } = req.params; // ID of the group to delete
