@@ -17,7 +17,7 @@ const GroupPage = () => {
   return (
     <div className="GroupPage">
       <Navbar />
-      <GroupList refresh={refresh} />
+      <GroupList refresh={refresh} setRefresh={setRefresh} />
       <GroupCreation onGroupCreated={handleGroupCreated} />
     </div>
   );
