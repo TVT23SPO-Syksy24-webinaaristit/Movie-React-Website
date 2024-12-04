@@ -1,9 +1,13 @@
 //server/controllers/GroupsController.js
-import {selectAllGroups, selectGroupById, insertGroupCreate, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
+import {selectAllGroups, selectGroupById, insertGroupCreate, deleteGroupDelete, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
 
 const getAllGroups = async (req, res, next) => {
+  const { userId } = req.query;
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required" });
+  }
   try {
-    const groups = await selectAllGroups();  // Selecting all the available groups from the model
+    const groups = await selectAllGroups(userId);  // Selecting all the available groups from the model
     return res.status(200).json(groups); // Return the groups to the client
   } catch (error) {
     console.error("Error in controller (fetching all groups):", error);
@@ -23,22 +27,33 @@ const getGroupDetails = async (req, res, next) => {
 };
 
 const postGroupCreate = async (req, res, next) => {
-  const { owner, name, description} = req.body;  // Get the group details from the request
-  console.log("Incoming request :", req);
-  console.log("Incoming request body:", req.body);
+  const { owner, name, description } = req.body; // These should match what the frontend sends
+  //console.log("Incoming request body:", req.body); // Log the raw request body for debugging
+
   try {
-    const newGroup = await insertGroupCreate(owner, name, description);  // Create group via model
+    const newGroup = await insertGroupCreate({ owner, name, description }); // Pass an object with named properties
     return res.status(201).json(newGroup); // Return the new group details
   } catch (error) {
     console.error("Error in controller (creating group):", error);
-    next(error);  // Pass error to error-handling middleware
+    next(error); // Pass error to error-handling middleware
   }
 };
 
-const postGroupJoin = async (req, res, next) => {
-  const { groupId, userId } = req.body;
+const deleteGroup = async (req, res, next) => {
+  const { id } = req.params;
   try {
-    const updatedGroup = await insertGroupJoin(groupId, userId, 1);  // Update group via model
+    const deletedGroup = await deleteGroupDelete(id);  // Delete group by ID via model
+    return res.status(200).json(deletedGroup); // Return the deleted group details
+  } catch (error) {
+    console.error("Error in controller (deleting group):", error);
+    next(error);  // Pass error to error-handling middleware
+  }
+}
+
+const postGroupJoin = async (req, res, next) => {
+  const { groups_idgroup, accounts_idaccount } = req.body;
+  try {
+    const updatedGroup = await insertGroupJoin(groups_idgroup, accounts_idaccount, 1);  // Update group via model
     return res.status(200).json(updatedGroup); // Return the updated group details
   } catch (error) {
     console.error("Error in controller (joining group):", error);
@@ -46,4 +61,4 @@ const postGroupJoin = async (req, res, next) => {
   }
 };
 
-export { getAllGroups, getGroupDetails, postGroupCreate, postGroupJoin};
+export { getAllGroups, getGroupDetails, postGroupCreate, postGroupJoin , deleteGroup }; // Export the controller functions

@@ -3,9 +3,11 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001'; // API URL
 
 // Fetch all groups
-const fetchAllGroups = async () => {
+const fetchAllGroups = async (userId) => {
   try {
-    const response = await axios.get(`${API_URL}/groups`);
+    const response = await axios.get(`${API_URL}/groups`, {
+      params: { userId }, // Send userId as a query parameter
+    });
     return response.data;
   } catch (error) {
     console.error('Error fetching groups:', error);
@@ -13,10 +15,14 @@ const fetchAllGroups = async () => {
   }
 };
 
+
 // Join a group
 const joinGroup = async (groupId, userId) => {
   try {
-    const response = await axios.post(`${API_URL}/groups/join`, { groupId, userId });
+    const response = await axios.post(`${API_URL}/groups/join`, {
+       groups_idgroup : groupId,
+       accounts_idaccount : userId,
+    }, );
     return response.data;
   } catch (error) {
     console.error('Error joining group:', error);

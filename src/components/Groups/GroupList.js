@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { fetchAllGroups, joinGroup } from "../../services/GroupsService"; // Import API service functions
+import { fetchAllGroups, joinGroup, deleteGroup } from "../../services/GroupsService"; // Import API service functions
+import { useUser } from "../../contexts/useUser"; // Import the user context
 import "./GroupStyles.css"; // Import styles (if applicable)
 
-const GroupList = () => {
+const GroupList = ({ refresh }) => {
   const [groups, setGroups] = useState([]); // State to store the fetched groups
   const [loading, setLoading] = useState(true); // State to handle the loading state
   const [error, setError] = useState(null); // State to handle errors
-  const [userId] = useState(1); // Example user ID (replace with actual user data if available)
+  const { user } = useUser(); // Get the user object from the context
 
   // Fetch groups from the backend when the component mounts
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await fetchAllGroups(); // Call the API to get groups
+        const response = await fetchAllGroups(user.id); // Pass user ID to fetchAllGroups
         if (response && Array.isArray(response)) {
           setGroups(response); // Set the groups array
         } else {
@@ -27,16 +28,27 @@ const GroupList = () => {
     };
 
     fetchGroups();
-  }, []);
+  }, [refresh, user.id]); // Trigger refetching when refresh or user ID changes
 
   // Handle the "Join Group" button click
   const handleJoinGroup = async (groupId) => {
     try {
-      const response = await joinGroup(groupId, userId); // Call the API to join a group
-      alert(`You successfully joined the group: ${response.name}`);
+      const response = await joinGroup(groupId, user.id); // Call the API to join a group
+      alert(`You successfully joined the group`);
     } catch (err) {
       console.error("Error joining group:", err);
       alert("Failed to join the group. Please try again.");
+    }
+  };
+
+  const handleDeleteGroup = async (groupId) => {
+    try {
+      await deleteGroup(groupId); // Call the API to delete a group
+      setGroups(groups.filter((group) => group.id !== groupId)); // Remove the deleted group from the list
+      alert(`You successfully deleted the group: ${groupId}`);
+    } catch (err) {
+      console.error("Error deleting group:", err);
+      alert("Failed to delete the group. Please try again.");
     }
   };
 
@@ -56,20 +68,34 @@ const GroupList = () => {
                 <p>
                   <strong>Members:</strong> {group.members}
                 </p>
-                <button
-                  className="join-button"
-                  onClick={() => handleJoinGroup(group.id)} // Pass the group ID
-                >
-                  ➕ Join
-                </button>
+                {group.isMember ? (
+                  <button className= "join-button" disabled>
+                    ✅ Joined
+                  </button>
+                ) : (
+                  user.id !== group.owner && (
+                    <button
+                      className="join-button"
+                      onClick={() => handleJoinGroup(group.id)} // Pass the group ID
+                    >
+                      ➕ Join
+                    </button>
+                  )
+                )}
+                {user.id === group.owner && (
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDeleteGroup(group.id)} // Pass the group ID
+                  >
+                    ❌ Delete
+                  </button>
+                )}
               </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No groups available.
-          Try to create a group instead?
-        </p>
+        <p>No groups available. Try to create a group instead?</p>
       )}
     </div>
   );

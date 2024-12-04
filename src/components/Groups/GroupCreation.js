@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { createGroup } from '../../services/GroupsService';
+import { createGroup} from '../../services/GroupsService';
 import { useUser } from '../../contexts/useUser';
+import GroupList from './GroupList';
 import './GroupStyles.css';
 
-const GroupCreation = () => {
+const GroupCreation = ({onGroupCreated}) => {
   const { user } = useUser();
-  console.log('User:', user);
   const [groupData, setGroupData] = useState({
     name: '',
     description: '',
   });
   const [groupCreated, setGroupCreated] = useState(false);
   const [error, setError] = useState(null);
-
-
-  useEffect(() => {
-    console.log('User context:', user.id);
-  }, [user.id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,6 +31,7 @@ const GroupCreation = () => {
     try {
       await createGroup(user.id, groupData.name, groupData.description);  // Pass data to createGroup function
       setGroupCreated(true);
+      onGroupCreated();
       console.log("Sending data:", user.id, groupData.name, groupData.description);
     } catch (error) {
       console.error('Error creating group:', error);
