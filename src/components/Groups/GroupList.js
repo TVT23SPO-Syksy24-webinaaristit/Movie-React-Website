@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchAllGroups, joinGroup, deleteGroup } from "../../services/GroupsService"; // Import API service functions
+import { fetchAllGroups, joinGroup, deleteGroup, leaveGroup } from "../../services/GroupsService"; // Import API service functions
 import { useUser } from "../../contexts/useUser"; // Import the user context
 import "./GroupStyles.css"; // Import styles (if applicable)
 
@@ -41,6 +41,16 @@ const GroupList = ({ refresh }) => {
     }
   };
 
+  const handleLeaveGroup = async (groupId) => {
+    try {
+      const response = await leaveGroup(groupId, user.id); // Call the API to leave a group
+      alert(`You successfully left the group`);
+    } catch (err) {
+      console.error("Error leaving group:", err);
+      alert("Failed to leave the group. Please try again.");
+    }
+  };
+
   const handleDeleteGroup = async (groupId) => {
     try {
       await deleteGroup(groupId); // Call the API to delete a group
@@ -73,7 +83,6 @@ const GroupList = ({ refresh }) => {
                     ✅ Joined
                   </button>
                 ) : (
-                  user.id !== group.owner && (
                     <button
                       className="join-button"
                       onClick={() => handleJoinGroup(group.id)} // Pass the group ID
@@ -81,14 +90,21 @@ const GroupList = ({ refresh }) => {
                       ➕ Join
                     </button>
                   )
-                )}
-                {user.id === group.owner && (
-                  <button
-                    className="delete-button"
-                    onClick={() => handleDeleteGroup(group.id)} // Pass the group ID
-                  >
-                    ❌ Delete
+                }
+                {group.isMember && (
+                  group.isOwner ? (
+                  <button className= "join-button"
+                  onClick={() => handleDeleteGroup(group.id)} >
+                    😭 Delete Group
                   </button>
+                ) : (
+                    <button
+                      className="join-button"
+                      onClick={() => handleLeaveGroup(group.id)} // Pass the group ID
+                    >
+                      😢 Leave
+                    </button>
+                  )
                 )}
               </div>
             </li>

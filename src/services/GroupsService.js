@@ -30,6 +30,18 @@ const joinGroup = async (groupId, userId) => {
   }
 };
 
+const leaveGroup = async (groupId, userId) => {
+  try {
+    const response = await axios.delete(`${API_URL}/groups/${groupId}/leave`, {
+      data: { userId },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error leaving group:', error);
+    throw error;
+  }
+};
+
 // Create a group
 const createGroup = async (userId, groupName, groupDescription) => {
   try {
@@ -56,4 +68,4 @@ const deleteGroup = async (groupId) => {
   }
 };
 
-export { fetchAllGroups, joinGroup, createGroup, deleteGroup };
+export { fetchAllGroups, joinGroup, createGroup, deleteGroup, leaveGroup };

@@ -1,5 +1,5 @@
 //server/controllers/GroupsController.js
-import {selectAllGroups, selectGroupById, insertGroupCreate, deleteGroupDelete, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
+import {selectAllGroups, selectGroupById, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
 
 const getAllGroups = async (req, res, next) => {
   const { userId } = req.query;
@@ -40,15 +40,44 @@ const postGroupCreate = async (req, res, next) => {
 };
 
 const deleteGroup = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.params; // ID of the group to delete
+  const { userId } = req.query; // Assuming userId is set in middleware (e.g., authentication middleware)
   try {
-    const deletedGroup = await deleteGroupDelete(id);  // Delete group by ID via model
+    // Fetch the group details to confirm ownership
+    const group = await selectGroupById(id);
+    if (!group) {
+      return res.status(404).json({ error: "Group not found" });
+    }
+
+    // Check if the current user is the owner of the group
+    if (group.owner !== userId) {
+      return res.status(403).json({ error: "You are not authorized to delete this group" });
+    }
+
+    // Proceed to delete the group
+    const deletedGroup = await deleteGroupDelete(id); // Delete the group using the model
     return res.status(200).json(deletedGroup); // Return the deleted group details
   } catch (error) {
     console.error("Error in controller (deleting group):", error);
-    next(error);  // Pass error to error-handling middleware
+    next(error); // Pass error to error-handling middleware
   }
-}
+};
+
+const leaveGroup = async (req, res, next) => {
+  const { id } = req.params; // ID of the group to leave
+  const { userId } = req.query; // Assuming userId is set in middleware (e.g., authentication middleware)
+
+  try {
+    // Proceed to remove the user from the group
+    const result = await deleteGroupLeave(id, userId); // Use the model to remove the user
+    return res.status(200).json({ message: "Successfully left the group", result });
+  } catch (error) {
+    console.error("Error in controller (leaving group):", error);
+    next(error); // Pass error to error-handling middleware
+  }
+};
+
+
 
 const postGroupJoin = async (req, res, next) => {
   const { groups_idgroup, accounts_idaccount } = req.body;
@@ -61,4 +90,4 @@ const postGroupJoin = async (req, res, next) => {
   }
 };
 
-export { getAllGroups, getGroupDetails, postGroupCreate, postGroupJoin , deleteGroup }; // Export the controller functions
+export { getAllGroups, getGroupDetails, postGroupCreate, postGroupJoin , deleteGroup, leaveGroup }; // Export the controller functions

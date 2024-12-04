@@ -10,6 +10,7 @@ const selectAllGroups = async (userId) => {
       g.group_name,
       g.member_count,
       g.group_description,
+      g.owner,
       COALESCE(m.accounts_idaccount, NULL) AS is_member
     FROM groups g
     LEFT JOIN group_members m ON g.idgroup = m.groups_idgroup AND m.accounts_idaccount = $1
@@ -21,23 +22,17 @@ const selectAllGroups = async (userId) => {
     name: row.group_name,
     members: row.member_count,
     description: row.group_description,
-    isMember: row.is_member !== null // If 'is_member' is not null, the user is a member
+    isMember: row.is_member !== null, // If 'is_member' is not null, the user is a member
+    isOwner: parseInt(row.owner) === parseInt(userId)// If 'owner' is the same as the user ID, the user is the owner
   }));
 };
 
-//   const result = await pool.query("SELECT idgroup, group_name, member_count, group_description FROM groups");
-//   // Make sure the returned values are usable.
-//   return result.rows.map(row => ({
-//       id: row.idgroup,
-//       name: row.group_name,
-//       members: row.member_count,
-//       description: row.group_description
-//   }));
-// };
+
 
 const selectGroupById = async (id) => {
     return await pool.query("SELECT * FROM groups WHERE idgroup = $1",[id]);
 };
+
 
 const insertGroupCreate = async ({ owner, name, description }) => {
   //console.log("Inserting group with data:", { owner, name, description });
@@ -75,6 +70,17 @@ const insertGroupCreate = async ({ owner, name, description }) => {
   }
 };
 
+const deleteGroupLeave = async (groupId, userId) => {
+  try {  const result = await pool.query("DELETE FROM group_members WHERE groups_idgroup = $1 AND accounts_idaccount = $2 RETURNING *", [groupId, userId]);
+    //also remove -1 from member count
+    await pool.query("UPDATE groups SET member_count = member_count - 1 WHERE idgroup = $1",[groupId]);
+    console.log('User removed from group successfully.');
+  } catch (error) {
+    console.error('Error removing user from group:', error);
+    throw error;
+  }
+};
+
 const deleteGroupDelete = async (groupId) => {
   const client = await pool.connect();  // Get a client from the pool
   try {
@@ -82,13 +88,13 @@ const deleteGroupDelete = async (groupId) => {
     await client.query('BEGIN');
 
     // Delete from group_highlights
-    await client.query('DELETE FROM group_highlights WHERE group_id = $1', [groupId]);
+    await client.query('DELETE FROM group_highlights WHERE groups_idgroup = $1', [groupId]);
 
     // Delete from group_members
-    await client.query('DELETE FROM group_members WHERE group_id = $1', [groupId]);
+    await client.query('DELETE FROM group_members WHERE groups_idgroup = $1', [groupId]);
 
     // Delete from groups
-    await client.query('DELETE FROM groups WHERE id = $1', [groupId]);
+    await client.query('DELETE FROM groups WHERE idgroup = $1', [groupId]);
 
     // Commit the transaction
     await client.query('COMMIT');
@@ -105,24 +111,20 @@ const deleteGroupDelete = async (groupId) => {
   }
 };
 
-const selectGroupIfMember = async (groups_idgroup, accounts_idaccount) => {
-  const result = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2",[accounts_idaccount, groups_idgroup]);
-  return result.rows.length > 0;
-};
 
 const insertGroupJoin = async (groups_idgroup, accounts_idaccount) => {
   const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2",[accounts_idaccount, groups_idgroup]);
   if (existingMember.rows.length > 0) {
     throw new Error("User already in group");
   }
+  //if user is added, also add a +1 to member count
+  await pool.query("UPDATE groups SET member_count = member_count + 1 WHERE idgroup = $1",[groups_idgroup]);
   return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup, is_a_member) VALUES ($1, $2, $3) RETURNING *",[accounts_idaccount, groups_idgroup, 1]);
 
 };
 
-export {selectAllGroups, selectGroupById, insertGroupCreate, deleteGroupDelete, insertGroupJoin, selectGroupIfMember};
+export {selectAllGroups, selectGroupById, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin};
 
-
-// const groupId = result.rows[0].idgroup; // Get the group ID from the result
 
 // await pool.query(
 //   "INSERT INTO groups_members (accounts_idaccount, groups_idgroup, is_a_member, join_date_timestamp) VALUES ($1, $2, 1, NOW())",
