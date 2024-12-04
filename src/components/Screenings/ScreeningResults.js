@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ScreeningCard from "./ScreeningCard"
+import "./ScreeningResults.css"
 
 
 const ScreeningResults = () =>{
@@ -42,6 +43,7 @@ const xmlToJson = useCallback((node) =>{
             const screeningsjson = parseXML(xml);
             console.log(screeningsjson.Schedule.Shows.Show);
             setScreenings(screeningsjson.Schedule.Shows.Show);
+            console.log(screenings);
             console.log("getfinnkinoscreenings")
         })
         .catch(error =>{
@@ -55,7 +57,7 @@ const xmlToJson = useCallback((node) =>{
             const datesjson = parseXML(xml);
             console.log(datesjson)
             const datesArray = datesjson.Dates.dateTime;
-            console.log(datesArray)
+            
             const formattedDateArray = [];
             
             for(var i=0;datesArray.length >i; i++ ){
@@ -133,15 +135,12 @@ const xmlToJson = useCallback((node) =>{
     }
 
     return(
-        <div className="ScreeningResults">
-            <div
-                 style={{
-                  display: "flex", 
-                  alignitems: "left"
-                   
-                 }}
-                >
-                    <select name="selectTheatre" onChange={(area) => handleChange(area.target.value,"Theatre")}>
+        <div className="screeningResults">
+            <h1>Finnkino Screenings</h1>
+            <div className="screeningMenus">
+                <div className="selectTheatre">
+                    <h3>Choose Theatre</h3>
+                    <select name="selectTheatre" id="selectTheatre" onChange={(area) => handleChange(area.target.value,"Theatre")}>
                         {
                             areas.map(area => (
                                 <option value={area.ID} key={area.ID}>{area.Name}</option>
@@ -149,41 +148,37 @@ const xmlToJson = useCallback((node) =>{
                         }
                     </select>
                 </div>
-                <div>
-                    <select name="selectDate" onChange={(date) => handleChange(date.target.value,"Date")}>
+                <div className="selectDate">
+                    <h3>Choose Date</h3>
+                    <select name="selectDate" id="selectDate" onChange={(date) => handleChange(date.target.value,"Date")}>
                         {
                              dates.map((date,id) =>(
                                 <option value={date} key={id}>{date}</option>
                             )) 
                         }
                     </select>
+                    <div className="icon-container">
+                        <i></i>
+                    </div>
                 </div>
-                <div
-                 style={{
-                 display: "flex", flexDirection: "column",
-                 justifyContent: "center",
-                 alignItems: "center",
-                 
-                }}>
-                
-                    
-                    { screenings && screenings.length > 0 ? (
+            </div>
+
+                <div className="screening">
+                    { screenings && screenings.length > null ? (
+                        
                         screenings.map(screenings =>(
                             <ScreeningCard  key={screenings.ID} 
                             title={screenings.Title} 
                             finnkinoUrl={screenings.EventURL}
                             hours={new Date(screenings.dttmShowStart).getHours()} 
                             minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
-                            image={screenings.Images.EventSmallImagePortrait}
+                            image={screenings.Images.EventMediumImagePortrait}
                             auditorium={screenings.TheatreAndAuditorium} />
                             ))
                     ) : (
                         <p>Loading...</p>
                     )
-                    }
-                    <style>
-                        
-                    </style>
+                    } 
                 </div>
         </div>
     )
