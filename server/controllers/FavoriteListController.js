@@ -1,4 +1,4 @@
-import {selectFavorites, insertFavorites } from "../models/FavoriteList.js";
+import {selectFavorites, insertFavorites deleteFavoritesById} from "../models/FavoriteList.js";
 
 
 const getFavorites = async (req,res,next) => {
@@ -24,4 +24,15 @@ const postFavorites = async(req,res,next) => {
     }
 }
 
-export { getFavorites, postFavorites }
+const deleteFavorites = async(req,res,next) => {
+    try {
+        if (!/^\d+$/.test(req.params.id)) return next(new ApiError("Invalid favorites ID. ID must be a positive integer",400))
+        const id = parseInt(req.params.id)
+        const result = await deleteFavoritesById(id)
+        return res.status(200).json({id: id})
+    } catch (error) {
+        return next(error)
+    }
+}
+
+export { getFavorites, postFavorites deleteFavorites}
