@@ -79,7 +79,6 @@ export const GroupProvider = ({ children }) => {
   const joinGroup = async (groupId) => {
     const headers = {
         Authorization: user.token,
-
      };
     try {
       const response = await axios.post(`${API_URL}/groups/join`, {
@@ -95,12 +94,13 @@ export const GroupProvider = ({ children }) => {
 
   // Leave a group
   const leaveGroup = async (groupId) => {
-    const headers = { headers: {Authorization: user.token }};
+    const headers = {
+        Authorization: user.token, 
+    };
     try {
-      const response = await axios.delete(`${API_URL}/groups/${groupId}/leave`, {
-        headers,
-        data: { userId: user.id },
-      });
+        const response = await axios.delete(`${API_URL}/groups/${groupId}/leave?accountId=${user.id}`, {
+            headers,
+        });
       return response.data;
     } catch (error) {
       console.error('Error leaving group:', error);

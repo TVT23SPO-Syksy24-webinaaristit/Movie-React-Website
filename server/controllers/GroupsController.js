@@ -69,16 +69,22 @@ const deleteGroup = async (req, res, next) => {
 };
 
 const leaveGroup = async (req, res, next) => {
-  const { id } = req.params; // ID of the group to leave
-  const { userId } = req.query; // Assuming userId is set in middleware (e.g., authentication middleware)
+  const { accountId } = req.query; // Extract accountId from query
+  const { id: groupId } = req.params; // Extract groupId from path params
+
+  console.log("Group ID:", groupId);
+  console.log("Account ID:", accountId);
+
+  if (!accountId || !groupId) {
+    return res.status(400).json({ message: "Group ID and Account ID are required" });
+  }
 
   try {
-    // Proceed to remove the user from the group
-    const result = await deleteGroupLeave(id, userId); // Use the model to remove the user
+    const result = await deleteGroupLeave(groupId, accountId);
     return res.status(200).json({ message: "Successfully left the group", result });
   } catch (error) {
     console.error("Error in controller (leaving group):", error);
-    next(error); // Pass error to error-handling middleware
+    next(error);
   }
 };
 
