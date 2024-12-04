@@ -31,27 +31,9 @@ export default function UserProvider({children}) {
             const response = await axios.post(url + "/user/login", json, headers);
 
             const token = response.data.token;
-            
-            const {id, email, username} = response.data;
-            if (!id){
-                console.error("No user id in response data");
-                throw new Error("No user id in response data");
-            }
-
-            const user = {
-                id,
-                email,
-                username,
-                token,
-            };
-
-
-            setUser(user);
-            sessionStorage.setItem("user", JSON.stringify(user));
-
-
-            const userFromSessionStorage = sessionStorage.getItem("user");
-            console.log("User from sessionStorage:", userFromSessionStorage)
+            setUser(response.data);
+            sessionStorage.setItem("user", JSON.stringify(response.data));
+            console.log(response.data);
         } catch(error) {
             setUser({email: "", password: "", id: null});
             throw error
@@ -60,10 +42,25 @@ export default function UserProvider({children}) {
     
     const logOut = async () => {
         setUser({email: "", password: ""});
+        sessionStorage.setItem("user", JSON.stringify({"email": "","username": ""}));
     }
 
+    const deleteAccount = async()=>{
+        const headers = {headers: {Authorization: user.token}}
+        try{
+            await axios.get(url + `/user/delete/${user.id}`,headers)   
+            setUser({email: "", password: ""});
+            alert("Account has been deleted");
+        } catch(error){
+            throw error.response.data;
+        }
+
+        
+    }
+
+
     return (
-        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut}}>
+        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut,deleteAccount}}>
             {children}
         </UserContext.Provider>
     )

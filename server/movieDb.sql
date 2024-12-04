@@ -124,4 +124,91 @@ ALTER TABLE IF EXISTS public.group_highlights
     ON DELETE NO ACTION
     NOT VALID;
 
+
+
+    CREATE PROCEDURE transfer_group_ownership(idusers INT,idgroups INT)
+LANGUAGE plpgsql 
+AS $$
+DECLARE
+	chosen_owner INT;
+	member_count INT;
+BEGIN
+IF idusers>0 THEN
+	UPDATE groups
+	SET owner = idusers
+	WHERE idgroup=idgroups;
+ELSE	
+	SELECT count(*)
+	INTO member_count
+	FROM group_members
+	WHERE groups_idgroup=idgroups;
+	IF member_count<1 THEN
+		DELETE from groups		/* Group has no members - group will be deleted */
+		where idgroup=idgroups;
+	ELSE
+		select accounts_idaccount
+		INTO chosen_owner
+		FROM group_members
+		WHERE groups_idgroup=idgroups
+		ORDER BY join_date_timestamp asc
+		limit 1;
+	
+		UPDATE groups
+		SET owner = chosen_owner
+		WHERE idgroup=idgroups;
+	END IF;
+END IF;
+
+END;
+$$;
+
+
+
+CREATE PROCEDURE delete_account(iduser INT)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+groups_owned_count INT;
+selected_group INT;
+BEGIN
+delete from favorites f
+using accounts
+where f.accounts_idaccount = accounts.idaccount
+and accounts.idaccount = iduser;
+
+delete from reviews r
+using accounts
+where r.accounts_idaccount = accounts.idaccount
+and accounts.idaccount = iduser;
+
+delete from group_highlights gh
+using accounts
+where gh.accounts_idaccount = accounts.idaccount
+and accounts.idaccount = iduser;
+
+delete from group_members gm
+using accounts
+where gm.accounts_idaccount = accounts.idaccount
+and accounts.idaccount = iduser;
+
+select count(*)
+into groups_owned_count
+FROM groups
+WHERE owner=iduser;
+
+for counter in 1..groups_owned_count loop
+	select idgroup
+	into selected_group
+	from groups
+	where owner=iduser
+	limit 1;
+	CALL transfer_group_ownership(0,selected_group); /* Does an automatic group ownership transfering to every group owned */
+END loop;
+
+delete from accounts
+where idaccount=iduser;
+
+END;
+$$;
+
 END;
