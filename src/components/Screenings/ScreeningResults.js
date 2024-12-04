@@ -53,12 +53,15 @@ const xmlToJson = useCallback((node) =>{
         .then(response => response.text())
         .then(xml =>{
             const datesjson = parseXML(xml);
+            console.log(datesjson)
             const datesArray = datesjson.Dates.dateTime;
-            
+            console.log(datesArray)
             const formattedDateArray = [];
             
             for(var i=0;datesArray.length >i; i++ ){
-                formattedDateArray[i] = new Date(datesArray[i]).toISOString().replace(/T.*/,'').split('-').reverse().join('.')
+                var unformattedDate = new Date(datesArray[i]);
+                unformattedDate.setDate(unformattedDate.getDate() + parseInt(1));
+                formattedDateArray[i] = unformattedDate.toISOString().replace(/T.*/,'').split('-').reverse().join('.')
             }
             console.log(formattedDateArray);
             setDates(formattedDateArray);
