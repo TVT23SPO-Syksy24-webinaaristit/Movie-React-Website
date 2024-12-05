@@ -1,4 +1,5 @@
 /* navbar.css */
+@import 'react-flagpack/dist/style.css';
 :root {
   --bg-color: #ffffff;
   --text-color: #000000;
@@ -74,12 +75,16 @@
   gap: 15px;
 }
 
-.profile-icon {
+.user-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 30px;
   height: 30px;
   border-radius: 50%;
   background-color: #666;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .theme-toggle {
@@ -121,7 +126,27 @@
   transform: scale(1.1);
 }
 
-body.dark-theme {
-  background-color: #111;
-  color: #f2f2f2;
+.dropdown_profile {
+  position: absolute;
+  top: 60px; /* Adjust this based on your layout */
+  right: 10px; /* Adjust for positioning next to the icon */
+  background-color: #333;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
+
+.dropdown-profile-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  width: 40px; /* Adjust size as needed */
+  height: 40px;
+  border-radius: 100%;
+}
+

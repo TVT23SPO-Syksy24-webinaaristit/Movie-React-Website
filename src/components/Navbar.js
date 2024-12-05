@@ -1,18 +1,36 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './Navbar.css';
 import LogOutButton from './LogOutButton';
 import { ThemeContext } from '../contexts/ThemeContext';
+import user_icon from './Assets/person.png';
+import Flag from 'react-flagpack'
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isPfpDropDownOpen, setIsPfpDropDownOpen] = useState(false);
   const { theme, toggleTheme} = useContext(ThemeContext);
+  const [username, setUsername] = useState(null);
   const [isFlagDropdownOpen, setIsFlagDropdownOpen] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+    setUsername(storedUsername);
+  } else {
+    setUsername("Guest");
+  }
+  }, []);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  const togglePfpDropdown = () => {
+    setIsPfpDropDownOpen(!isPfpDropDownOpen);
+  }
+
 
   return (
     <div className="navbar">
@@ -35,14 +53,10 @@ const Navbar = () => {
       )}
 
       <div className="right-icons">
-        <div className="profile-icon" onClick={() => navigate("/profile")}>
-          <img alt="Profile" />
-        </div>
         
-        <LogOutButton />
 
         <button className="theme-toggle" onClick={toggleTheme}>
-        Switch to {theme === "light" ? "Dark" : "Light"} Mode
+        {theme === "light" ? "☀️" : "🌙"}
         </button>
         
         <div
@@ -50,14 +64,33 @@ const Navbar = () => {
           onMouseEnter={() => setIsFlagDropdownOpen(true)}
           onMouseLeave={() => setIsFlagDropdownOpen(false)}
         >
-          <img alt="Language" className="flag-icon" />
+          <Flag
+           code="EU"
+          />
           {isFlagDropdownOpen && (
             <div className="flag-options">
-              <img  alt="English" />
-              <img  alt="Finnish" />
+              <Flag code= "GB-UKM"/>
+              <Flag code= "FI"/>
             </div>
           )}
         </div>
+        <div className="user-icon"  onClick={togglePfpDropdown}>
+          <img src={user_icon} alt="user_icon"/>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        
+        {isPfpDropDownOpen && (
+          <div className="dropdown_profile">
+          <div className="dropdown-profile-content" onClick={() => navigate("/profile")}>
+          <img src={user_icon} alt="user_icon"/>
+          <span>{username || "Guest"}</span> {/* Default to "Guest" if username is not available */}
+          </div>
+          <LogOutButton/>
+        </div>
+        )}
+        
       </div>
     </div>
   );
