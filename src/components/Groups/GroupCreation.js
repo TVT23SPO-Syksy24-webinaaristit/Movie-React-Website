@@ -1,8 +1,14 @@
+//src/components/Groups/GroupCreation.js
 import React, { useState, useEffect } from 'react';
-import { createGroup } from '../../services/GroupsService';
+import axios from 'axios';
+import { useGroups } from '../../contexts/GroupProvider';
+import { useUser } from '../../contexts/useUser';
 import './GroupStyles.css';
 
-const GroupCreation = () => {
+
+const GroupCreation = ({onGroupCreated}) => {
+  const {createGroup, joinGroup, leaveGroup, fetchAllGroups} = useGroups();
+  const { user } = useUser();
   const [groupData, setGroupData] = useState({
     name: '',
     description: '',
@@ -20,9 +26,16 @@ const GroupCreation = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user.id) {
+      setError('You must be logged in to create a group.');
+      return;
+    }
     try {
-      await createGroup(groupData);  // Pass data to createGroup function
+      await createGroup(user.id, groupData.name, groupData.description);  // Pass data to createGroup function
       setGroupCreated(true);
+      onGroupCreated();
+      console.log("Sending data:", user.id, groupData.name, groupData.description);
     } catch (error) {
       console.error('Error creating group:', error);
       setError('Failed to create group. Please try again.');
@@ -30,12 +43,12 @@ const GroupCreation = () => {
     }
   };
 
-  useEffect(() => {
-    if (groupCreated) {
-      alert('Group created successfully!');
-      setGroupData({ name: '', description: '' });
-    }
-  }, [groupCreated]);
+useEffect(() => {
+  if (groupCreated) {
+    alert('Group created successfully!');
+    setGroupData({owner: '', name: '', description: ''});
+  }
+}, [groupCreated]);
 
   return (
     <div className='groupbox'>

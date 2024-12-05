@@ -4,6 +4,7 @@ import './index.css';
 import HomePage from './screens/HomePage.js';
 import MoviesPage from './screens/MoviesPage.js';
 import ScreeningsPage from './screens/ScreeningsPage.js';
+import { GroupProvider } from './contexts/GroupProvider.js';
 import GroupPage from './screens/GroupPage.js';
 import GroupDetails from './screens/GroupDetails.js';
 import ProfilePage from './screens/ProfilePage.js';
@@ -41,7 +42,11 @@ const router = createBrowserRouter([
   },
   {
   path: "/groups", //To be moved under the protected routes once auth is ready.
-  element:<GroupPage />
+  element:(
+    <GroupProvider>
+      <GroupPage />
+    </GroupProvider>
+  )
   },
   {
   path: "/groups/:id",
