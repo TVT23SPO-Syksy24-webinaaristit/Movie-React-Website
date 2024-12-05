@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 
-const FavoriteButton = ({ movieId, isFavorited, onToggleFavorite }) => {
+const FavoriteButton = ({ idmovie, isFavorited, onToggleFavorite }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleToggle = async () => {
     setIsLoading(true);
     try {
-      // Make API call to toggle favorite status
-      onToggleFavorite(movieId);
+      onToggleFavorite(idmovie);
+      alert('Movie added to favorites successfully!'); // Show notification
     } catch (error) {
       console.error('Error toggling favorite:', error);
+      alert('An error occurred. Please try again later.');
     } finally {
       setIsLoading(false);
     }
@@ -27,4 +28,3 @@ const FavoriteButton = ({ movieId, isFavorited, onToggleFavorite }) => {
 };
 
 export default FavoriteButton;
-  

@@ -1,4 +1,4 @@
-import {selectFavorites, insertFavorites deleteFavoritesById} from "../models/FavoriteList.js";
+import {selectFavorites, insertFavorites, deleteFavoritesById} from "../models/FavoriteList.js";
 
 
 const getFavorites = async (req,res,next) => {
@@ -12,12 +12,12 @@ const getFavorites = async (req,res,next) => {
 
 const postFavorites = async(req,res,next) => {
     try {
-        if (!req.body.description  || req.body.description.length === 0){
-            const error = new Error('Invalid description for task')
+        if (!req.body){
+            const error = new Error('error in controller', error)
             error.statusCode = 400
             return next(error)
         }
-        const result = await insertFavorites(req.body.description)
+        const result = await insertFavorites(req.body)
         return res.status(200).json({id: result.rows[0].id})
     }   catch (error) {
         return next(error)
@@ -35,4 +35,4 @@ const deleteFavorites = async(req,res,next) => {
     }
 }
 
-export { getFavorites, postFavorites deleteFavorites}
+export { getFavorites, postFavorites, deleteFavorites}
