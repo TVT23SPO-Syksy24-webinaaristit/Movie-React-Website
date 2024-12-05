@@ -3,6 +3,7 @@ import './ProfilePage.css';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FavoriteList from "../components/FavoriteList";
+import DeleteAccountButton from "../components/DeleteAccountButton";
 
 
 
@@ -20,7 +21,7 @@ function ProfilePage() {
 
       </h2>
       
-      <button className="delete-button">Delete account?</button>
+      <DeleteAccountButton />
       <Footer />
     </div>
   );

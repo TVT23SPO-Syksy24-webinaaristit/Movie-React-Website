@@ -10,9 +10,9 @@ export default function UserProvider({children}) {
 
     const signUp = async (userinput) => {
         setUser(userinput);
-        (console.log(userinput));
+        //(console.log(userinput));
         const json = JSON.stringify(userinput);
-        (console.log(json));
+        //(console.log(json));
         const headers = {headers: {"Content-Type":"application/json"}}
         try {
             await axios.post(url + "/user/register", json, headers);
@@ -26,14 +26,16 @@ export default function UserProvider({children}) {
         setUser(userinput);
         const json = JSON.stringify(userinput);
         const headers = {headers: {"Content-Type":"application/json"}}
+
         try {
             const response = await axios.post(url + "/user/login", json, headers);
+
             const token = response.data.token;
             setUser(response.data);
             sessionStorage.setItem("user", JSON.stringify(response.data));
-            console.log(response.data);
+            //console.log(response.data);
         } catch(error) {
-            setUser({email: "", password: ""});
+            setUser({email: "", password: "", id: null});
             throw error
         }
     }
@@ -43,8 +45,22 @@ export default function UserProvider({children}) {
         sessionStorage.setItem("user", JSON.stringify({"email": "","username": ""}));
     }
 
+    const deleteAccount = async()=>{
+        const headers = {headers: {Authorization: user.token}}
+        try{
+            await axios.get(url + `/user/delete/${user.id}`,headers)   
+            setUser({email: "", password: ""});
+            alert("Account has been deleted");
+        } catch(error){
+            throw error.response.data;
+        }
+
+        
+    }
+
+
     return (
-        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut}}>
+        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut,deleteAccount}}>
             {children}
         </UserContext.Provider>
     )
