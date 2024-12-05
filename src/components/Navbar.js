@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './Navbar.css';
 import LogOutButton from './LogOutButton';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isThemeDark, setIsThemeDark] = useState(false);
+  const { theme, toggleTheme} = useContext(ThemeContext);
   const [isFlagDropdownOpen, setIsFlagDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const toggleTheme = () => {
-    setIsThemeDark(!isThemeDark);
-    document.body.classList.toggle('dark-theme', !isThemeDark);
   };
 
   return (
@@ -46,7 +42,7 @@ const Navbar = () => {
         <LogOutButton />
 
         <button className="theme-toggle" onClick={toggleTheme}>
-          {isThemeDark ? '🌙' : '☀️'}
+        Switch to {theme === "light" ? "Dark" : "Light"} Mode
         </button>
         
         <div
