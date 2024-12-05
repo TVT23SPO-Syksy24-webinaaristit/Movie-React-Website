@@ -1,22 +1,25 @@
+//src/components/Groups/GroupList.js
 import React, { useState, useEffect } from "react";
-import { fetchAllGroups, joinGroup } from "../../services/GroupsService"; // Import API service functions
+import { useUser } from "../../contexts/useUser"; // Import the user context
+import { useGroups } from "../../contexts/GroupProvider";
 import "./GroupStyles.css"; // Import styles (if applicable)
 
-const GroupList = () => {
+const GroupList = ({ refresh, setRefresh }) => {
+  const { fetchAllGroups, joinGroup, leaveGroup, deleteGroup } = useGroups(); // Import the group context
   const [groups, setGroups] = useState([]); // State to store the fetched groups
   const [loading, setLoading] = useState(true); // State to handle the loading state
   const [error, setError] = useState(null); // State to handle errors
-  const [userId] = useState(1); // Example user ID (replace with actual user data if available)
+  const { user } = useUser(); // Get the user object from the context
 
-  // Fetch groups from the backend when the component mounts
+  // Fetch groups from the backend when the component mounts or refresh changes
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await fetchAllGroups(); // Call the API to get groups
+        const response = await fetchAllGroups(user.id); // Pass user ID to fetchAllGroups
         if (response && Array.isArray(response)) {
           setGroups(response); // Set the groups array
         } else {
-          throw new Error("Invalid response structure");
+          setError("No groups available or invalid data.");
         }
       } catch (err) {
         console.error("Error fetching groups:", err);
@@ -27,16 +30,42 @@ const GroupList = () => {
     };
 
     fetchGroups();
-  }, []);
+  }, [refresh, user.id]); // Trigger refetching when refresh or user ID changes
 
   // Handle the "Join Group" button click
   const handleJoinGroup = async (groupId) => {
     try {
-      const response = await joinGroup(groupId, userId); // Call the API to join a group
-      alert(`You successfully joined the group: ${response.name}`);
+      await joinGroup(groupId, user.id); // Call the API to join a group
+      alert(`You successfully joined the group`);
+      setRefresh(prev => !prev); // Toggle refresh to trigger a re-fetch
     } catch (err) {
       console.error("Error joining group:", err);
       alert("Failed to join the group. Please try again.");
+    }
+  };
+
+  // Handle the "Leave Group" button click
+  const handleLeaveGroup = async (groupId) => {
+    try {
+      await leaveGroup(groupId, user.id); // Call the API to leave a group
+      alert(`You successfully left the group`);
+      setRefresh(prev => !prev); // Toggle refresh to trigger a re-fetch
+    } catch (err) {
+      console.error("Error leaving group:", err);
+      alert("Failed to leave the group. Please try again.");
+    }
+  };
+
+  // Handle the "Delete Group" button click
+  const handleDeleteGroup = async (groupId) => {
+    try {
+      await deleteGroup(groupId); // Call the API to delete a group
+      setGroups(groups.filter((group) => group.id !== groupId)); // Remove the deleted group from the list
+      alert(`You successfully deleted the group: ${groupId}`);
+      setRefresh(prev => !prev); // Toggle refresh to trigger a re-fetch
+    } catch (err) {
+      console.error("Error deleting group:", err);
+      alert("Failed to delete the group. Please try again.");
     }
   };
 
@@ -56,20 +85,38 @@ const GroupList = () => {
                 <p>
                   <strong>Members:</strong> {group.members}
                 </p>
-                <button
-                  className="join-button"
-                  onClick={() => handleJoinGroup(group.id)} // Pass the group ID
-                >
-                  ➕ Join
-                </button>
+                {group.isMember ? (
+                  <button className="join-button" disabled>
+                    ✅ Joined
+                  </button>
+                ) : (
+                  <button
+                    className="join-button"
+                    onClick={() => handleJoinGroup(group.id)} // Pass the group ID
+                  >
+                    ➕ Join
+                  </button>
+                )}
+                {group.isMember && (
+                  group.isOwner ? (
+                    <button className="join-button" onClick={() => handleDeleteGroup(group.id)}>
+                      😭 Delete Group
+                    </button>
+                  ) : (
+                    <button
+                      className="join-button"
+                      onClick={() => handleLeaveGroup(group.id)} // Pass the group ID
+                    >
+                      😢 Leave
+                    </button>
+                  )
+                )}
               </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No groups available.
-          Try to create a group instead?
-        </p>
+        <p>No groups available. Try to create a group instead?</p>
       )}
     </div>
   );
