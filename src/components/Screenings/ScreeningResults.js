@@ -163,8 +163,7 @@ const xmlToJson = useCallback((node) =>{
             </div>
 
                 <div className="screening">
-                    { screenings && screenings.length > 0 ? (
-                        
+                    { screenings && screenings.length > 0 ? ( 
                         screenings.map(screenings =>(
                             <ScreeningCard  key={screenings.ID} 
                             title={screenings.Title} 
@@ -175,23 +174,9 @@ const xmlToJson = useCallback((node) =>{
                             auditorium={screenings.TheatreAndAuditorium} />
                             ))
                     ) : (
-                        
-                        <p>sadasd</p>
+                        <p>Loading...</p>
                     )
                     } 
-                    {screenings.length === 1 ?(
-                        <ScreeningCard  key={screenings.ID} 
-                        title={screenings.Title} 
-                        finnkinoUrl={screenings.EventURL}
-                        hours={new Date(screenings.dttmShowStart).getHours()} 
-                        minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
-                        image={screenings.Images.EventMediumImagePortrait}
-                        auditorium={screenings.length} />
-                    
-                    ) : (
-                        <p>dada</p>
-                    )
-                }
                 </div>
         </div>
     )

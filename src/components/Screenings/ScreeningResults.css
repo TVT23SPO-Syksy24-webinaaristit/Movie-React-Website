@@ -1,6 +1,5 @@
 .screeningResults{
-    text-align: center;
-    
+    text-align: center;  
 }
 
 .screening{
@@ -10,26 +9,12 @@ justify-content: center;
 align-items: center;
 }
 .screeningMenus{
-    display: grid;
-    grid-template-columns: auto auto auto auto auto;
-    grid-template-rows: auto auto auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
     align-items: center;
     justify-content: center;
-    padding-bottom: 5em;
-}
-.selectTheatre{
-    grid-column-start: 2;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 2; 
-    margin-right: 2em;
-}
-.selectDate{
-    grid-column-start: 5;
-    grid-column-end: 6;
-    grid-row-start: 1;
-    grid-row-end: 2; 
-    margin-left: 2em;
+    padding-bottom: 3em;
 }
 #selectTheatre{
     padding: 10px;
