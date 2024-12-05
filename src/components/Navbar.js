@@ -4,7 +4,6 @@ import './Navbar.css';
 import LogOutButton from './LogOutButton';
 import { ThemeContext } from '../contexts/ThemeContext';
 import user_icon from './Assets/person.png';
-import Flag from 'react-flagpack'
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -64,13 +63,10 @@ const Navbar = () => {
           onMouseEnter={() => setIsFlagDropdownOpen(true)}
           onMouseLeave={() => setIsFlagDropdownOpen(false)}
         >
-          <Flag
-           code="EU"
+          <img src="https://www.countryflags.io/us/flat/64.png" alt="us-flag"
           />
           {isFlagDropdownOpen && (
             <div className="flag-options">
-              <Flag code= "GB-UKM"/>
-              <Flag code= "FI"/>
             </div>
           )}
         </div>
