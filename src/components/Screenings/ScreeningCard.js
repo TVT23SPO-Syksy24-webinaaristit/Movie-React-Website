@@ -1,14 +1,20 @@
 import React from "react";
+import "./ScreeningCard.css"
+import { Link } from 'react-router-dom'
 
 
 const ScreeningCard = (props) => {
     return (
-        <div className="ScreeningCard">
-            <h3><a href={props.finnkinoUrl}>{props.title}</a></h3>
+        <div className="screeningCard">
+            <Link className="link" to={props.finnkinoUrl}>
+            <div className="titleLink">
+            <h3>{props.title}</h3>
+            </div>
+            </Link>
             <p><i>{props.auditorium}</i></p>
             <p>Esitys alkaa: {props.hours}:{props.minutes}</p>
-            <div className="ScreeningPoster">
-                <img src={props.image} alt="Screening"></img>
+            <div className="screeningPoster">
+                <img src={props.image} alt="Screening" className="poster"></img>
             </div>  
         </div>
     )

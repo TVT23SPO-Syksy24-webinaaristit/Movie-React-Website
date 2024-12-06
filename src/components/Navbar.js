@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './Navbar.css';
 import LogOutButton from './LogOutButton';
+import { ThemeContext } from '../contexts/ThemeContext';
+import user_icon from './Assets/person.png';
+import Flag from 'react-world-flags';
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isThemeDark, setIsThemeDark] = useState(false);
   const [isFlagDropdownOpen, setIsFlagDropdownOpen] = useState(false);
+  const [isPfpDropDownOpen, setIsPfpDropDownOpen] = useState(false);
+  const { theme, toggleTheme} = useContext(ThemeContext);
+  const [username, setUsername] = useState(null);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+    setUsername(storedUsername);
+  } else {
+    setUsername("Guest");
+  }
+  }, []);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const toggleTheme = () => {
-    setIsThemeDark(!isThemeDark);
-    document.body.classList.toggle('dark-theme', !isThemeDark);
-  };
+  const toggleFlagDropdown = () => {
+    setIsFlagDropdownOpen(!isFlagDropdownOpen);
+  }
+
+  const togglePfpDropdown = () => {
+    setIsPfpDropDownOpen(!isPfpDropDownOpen);
+  }
+
 
   return (
     <div className="navbar">
@@ -25,10 +44,11 @@ const Navbar = () => {
         <span></span>
         <span></span>
       </div>
+      
 
 
       {isDropdownOpen && (
-        <div className="dropdown">
+        <div className="dropdown" onMouseLeave={toggleDropdown}>
           <button className="dropdown-btn" onClick={() => navigate("/")}>Home</button>
           <button className="dropdown-btn" onClick={() => navigate("/movies")}>Movies</button>
           <button className="dropdown-btn" onClick={() => navigate("/screenings")}>Screenings</button>
@@ -39,29 +59,46 @@ const Navbar = () => {
       )}
 
       <div className="right-icons">
-        <div className="profile-icon" onClick={() => navigate("/profile")}>
-          <img alt="Profile" />
-        </div>
         
-        <LogOutButton />
 
         <button className="theme-toggle" onClick={toggleTheme}>
-          {isThemeDark ? '🌙' : '☀️'}
+        {theme === "light" ? "☀️" : "🌙"}
         </button>
         
         <div
-          className="flag-dropdown"
-          onMouseEnter={() => setIsFlagDropdownOpen(true)}
+          className="flag-dropdown" 
+          onClick={toggleFlagDropdown}
           onMouseLeave={() => setIsFlagDropdownOpen(false)}
         >
-          <img alt="Language" className="flag-icon" />
+          <Flag code="gb" height="16"
+          />
           {isFlagDropdownOpen && (
             <div className="flag-options">
-              <img  alt="English" />
-              <img  alt="Finnish" />
+              <Flag code="gb" height="16" onClick={() => navigate("/en")} />
+              <Flag code="es" height="16" onClick={() => navigate("/es")} />
+              <Flag code="fr" height="16" onClick={() => navigate("/fr")} />
+              <Flag code="de" height="16" onClick={() => navigate("/de")} />
             </div>
           )}
         </div>
+        
+        <div className="user-icon"  onClick={togglePfpDropdown}>
+          <img src={user_icon} alt="user_icon"/>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        
+        {isPfpDropDownOpen && (
+          <div className="dropdown_profile" onMouseLeave={togglePfpDropdown}>
+          <div className="dropdown-profile-content"  onClick={() => navigate("/profile")}>
+          <img src={user_icon} alt="user_icon"/>
+          <span>{username || "Guest"}</span> {/* Default to "Guest" if username is not available */}
+          </div>
+          <LogOutButton/>
+        </div>
+        )}
+        
       </div>
     </div>
   );
