@@ -33,6 +33,9 @@ const selectGroupById = async (id) => {
     return await pool.query("SELECT * FROM groups WHERE idgroup = $1",[id]);
 };
 
+const selectGroupHighlights = async(groups_idgroup) =>{
+  return await pool.query("SELECT * FROM group_highlights WHERE groups_idgroup = $1",[groups_idgroup]);
+};
 
 const insertGroupCreate = async ({ owner, name, description }) => {
   //console.log("Inserting group with data:", { owner, name, description });
@@ -123,7 +126,8 @@ const insertGroupJoin = async (groups_idgroup, accounts_idaccount) => {
 
 };
 
-export {selectAllGroups, selectGroupById, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin};
+
+export {selectAllGroups, selectGroupById, selectGroupHighlights, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin};
 
 
 // await pool.query(

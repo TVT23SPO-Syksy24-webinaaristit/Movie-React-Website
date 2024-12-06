@@ -1,5 +1,5 @@
 //server/controllers/GroupsController.js
-import {selectAllGroups, selectGroupById, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
+import {selectAllGroups, selectGroupById, selectGroupHighlights, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
 
 
 const getAllGroups = async (req, res) => {
@@ -42,7 +42,16 @@ const getGroupDetails = async (req, res, next) => {
   }
 };
 
-
+const getGroupHighlights = async(req,res,next)=>{
+  const { id } = req.params;
+  try{
+    const highlights = await selectGroupHighlights(id);
+    return res.status(200).json(highlights);
+  } catch (error) {
+    console.error("Error in controller (fetching highlight details):", error);
+    next(error);  // Pass error to error-handling middleware
+  }
+};
 
 const deleteGroup = async (req, res, next) => {
   const { id } = req.params; // ID of the group to delete
@@ -101,4 +110,6 @@ const postGroupJoin = async (req, res, next) => {
   }
 };
 
-export { getAllGroups, getGroupDetails, postGroupCreate, postGroupJoin , deleteGroup, leaveGroup }; // Export the controller functions
+
+
+export { getAllGroups, getGroupDetails, getGroupHighlights, postGroupCreate, postGroupJoin , deleteGroup, leaveGroup }; // Export the controller functions
