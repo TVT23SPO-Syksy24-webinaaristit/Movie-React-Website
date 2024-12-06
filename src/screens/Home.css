@@ -1,3 +1,15 @@
-
-
-
+/* Home.css */
+.Home {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    min-height: 100%; /* Ensure the entire screen height is covered */
+  }
+  
+  .content {
+    flex: 1; /* Push the footer to the bottom if content is short */
+  }
+  
+  footer {
+    flex-shrink: 0; /* Ensure the footer doesn't shrink or collapse */
+  }
+  

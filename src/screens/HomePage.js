@@ -8,7 +8,9 @@ function HomePage() {
   return (
     <div className="Home">
       <Navbar />
+      <div className='content'>
       <MovieCarousel />
+      </div>
       <Footer />
     </div>
   );
