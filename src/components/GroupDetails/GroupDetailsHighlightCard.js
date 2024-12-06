@@ -11,10 +11,12 @@ const GroupDetailsHighlightCard = (props) =>{
     }
     return(
         <div>
+            <div>
         <Link className="link" to={props.link_url}>
         <p>{props.title}</p>
         <p>{highlightType}</p>
         </Link>
+        </div>
         <div>
             <img src={props.image} alt="movie poster" />
         </div>
