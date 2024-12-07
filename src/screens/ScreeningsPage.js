@@ -9,7 +9,9 @@ function ScreeningsPage(){
     return(
         <div className="ScreeningsPage">
             <Navbar />
+            <div className="container">
             <ScreeningResults />
+            </div>
             <Footer />
         </div>
     );
