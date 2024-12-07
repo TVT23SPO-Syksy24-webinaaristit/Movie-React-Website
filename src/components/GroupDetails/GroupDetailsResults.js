@@ -101,7 +101,6 @@ const GroupDetailsResults = () => {
       ) : (typeof (member) === "object" && !Array.isArray(member)) ? (
         <GroupDetailsMemberCard key={member.id}
           username={member.username}
-
         />
       ) : (
         <p>Loading memberlist...</p>

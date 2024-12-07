@@ -1,4 +1,35 @@
 .highlightCard{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    justify-self: center;
+    row-gap: 10px;
+    column-gap: 50px;
+    margin-bottom:10px;
     
-    text-align: center;
+    border:solid;
+    min-width: 40%;
+    max-width: 40%;
+
+}
+.title p{
+    display: inline-block;
+    
+}
+.title{
+    border:solid;
+    flex-grow: 1;
+    overflow:wrap;
+    word-break:break-word;
+}
+.poster{
+    height: 200px;
+    border:solid;
+    
+}
+.poster img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    
 }
