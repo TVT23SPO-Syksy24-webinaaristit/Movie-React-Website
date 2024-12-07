@@ -120,7 +120,7 @@ export const GroupProvider = ({ children }) => {
       return response.data;
       
     }catch(error){
-      console.error('Error leaving group:', error);
+      console.error('Error fetching groupdetails:', error);
       throw error;
     }
 

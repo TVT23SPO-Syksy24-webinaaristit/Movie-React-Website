@@ -7,7 +7,7 @@ import { useGroups } from "../../contexts/GroupProvider";
 
 
 const GroupDetailsResults = () => {
-
+  const { fetchGroupDetails } = useGroups();
   const { id } = useParams(); // Get the group ID from the URL
   const [group, setGroup] = useState([]);
   const [highlight, setHighlight] = useState([]);
@@ -15,10 +15,20 @@ const GroupDetailsResults = () => {
 
   useEffect(() => {
     // Fetch group details by ID
-    fetch(`http://localhost:3001/groups/${id}`)
+    /* fetch(`http://localhost:3001/groups/${id}`)
       .then((response) => response.json())
       .then((data) => setGroup(data.rows[0]))
-      .catch((error) => console.error("Error fetching group details:", error));
+      .catch((error) => console.error("Error fetching group details:", error)); */
+
+      const fetchGroupInfo = async() =>{
+        try{
+          const response = await fetchGroupDetails(id);
+          console.log(response)
+          setGroup(response)
+        }catch(error){
+          console.log(error);
+        }
+      }
 
     fetch(`http://localhost:3001/groups/highlights/${id}`)
       .then((response) => response.json())

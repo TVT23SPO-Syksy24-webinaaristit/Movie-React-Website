@@ -50,8 +50,13 @@ const router = createBrowserRouter([
   )
   },
   {
+    
   path: "/groupdetails/:id",
-  element: <GroupDetailsPage />
+  element: (
+  <GroupProvider>
+    <GroupDetailsPage />
+  </GroupProvider>
+  )
   },
   {
     element: <ProtectedRoute />,

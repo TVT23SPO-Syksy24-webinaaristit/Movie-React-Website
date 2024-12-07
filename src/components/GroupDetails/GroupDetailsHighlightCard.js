@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Link } from 'react-router-dom'
-
+import "./GroupDetailsHighlightCard.css"
 
 const GroupDetailsHighlightCard = (props) =>{
     const [highlightType,setHighlightType] = useState([]);
@@ -10,13 +10,12 @@ const GroupDetailsHighlightCard = (props) =>{
         setHighlightType("s")
     }
     return(
-        <div>
-            <div>
-        <Link className="link" to={props.link_url}>
-        <p>{props.title}</p>
-        
-        </Link>
-        </div>
+        <div className="highlightCard">
+            <div className="title">
+                <Link className="link" to={props.link_url}>
+                <p>{props.title}</p>
+            </Link>
+            </div>
         <p>Posted by: {props.account}</p>
         <div>
             <img src={props.image} alt="movie poster" />
