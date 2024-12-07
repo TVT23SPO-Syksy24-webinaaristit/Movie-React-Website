@@ -39,17 +39,24 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <div className="logo"
-      onClick={() => navigate("/")}>
-        <h1>WebPolyFilms</h1>
+      <div className="burger-menu" onClick={toggleDropdown}>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
-      {/* Navigation Links */}
-      <div className="nav-links">
-        <button className="nav-btn" onClick={() => navigate("/movies")}>Movies</button>
-        <button className="nav-btn" onClick={() => navigate("/screenings")}>Screenings</button>
-        <button className="nav-btn" onClick={() => navigate("/groups")}>Groups</button>
-        <button className="nav-btn" onClick={() => navigate("/profile")}>Profile</button>
-      </div>
+      
+
+
+      {isDropdownOpen && (
+        <div className="dropdown" onMouseLeave={toggleDropdown}>
+          <button className="dropdown-btn" onClick={() => navigate("/")}>Home</button>
+          <button className="dropdown-btn" onClick={() => navigate("/movies")}>Movies</button>
+          <button className="dropdown-btn" onClick={() => navigate("/screenings")}>Screenings</button>
+          <button className="dropdown-btn"onClick={() => navigate("/groups")}>Groups</button>
+          <button className="dropdown-btn" onClick={() => navigate("/profile")}>Profile</button>
+          
+        </div>
+      )}
 
       <div className="right-icons">
         
