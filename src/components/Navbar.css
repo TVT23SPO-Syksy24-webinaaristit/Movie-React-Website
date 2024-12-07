@@ -9,38 +9,29 @@
   --text-color: #ffffff;
 }
 
-.logo{
-  cursor: pointer;
-}
-
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #333;
-  padding: 20px;
+  padding: 10px;
   color: #f2f2f2;
 }
 
-.nav-links {
+.burger-menu {
   display: flex;
-  gap: 15px; /* Space between buttons */
-}
-
-.nav-btn {
-  background-color: transparent;
-  color: white;
-  border: 1px solid white;
-  padding: 8px 15px;
-  border-radius: 5px;
+  flex-direction: column;
+  gap: 4px;
   cursor: pointer;
-  font-size: 1rem;
 }
 
-.nav-btn:hover {
-  background-color: white;
-  color: #333;
+.burger-menu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #f2f2f2;
 }
+
 .search-field {
   padding: 8px;
   font-size: 16px;
