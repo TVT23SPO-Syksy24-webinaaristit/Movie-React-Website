@@ -1,0 +1,47 @@
+.groupbox{
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    min-height: auto;
+    align-items: center;
+    justify-content: center;
+}
+.group-list {
+    display: block; /* Ensure the list behaves as a block element */
+    list-style: none; /* Remove default bullets */
+    width: 50%; /* Set the width of the list */
+  }
+  
+  .group-item {
+    display: block; /* Ensure each list item is block-level */
+    margin-bottom: 15px; /* Add space between list items */
+    padding: 15px;
+    border-radius: 5px;
+  }
+  
+  .group-item h3 {
+    margin: 0 0 10px; /* Add spacing below the title */
+  }
+  
+  .group-item p {
+    margin: 0;
+  }
+  
+  .group-join {
+    display: inline-block; /* Ensure the button is inline */
+    padding: 10px; /* Add padding to the button */
+    background-color: #00ff22; /* Set the background color */
+    border: none; /* Remove the border */
+    border-radius: 5px; /* Add rounded corners */
+    cursor: pointer; /* Change the cursor to a pointer */
+  }
+
+  .description {
+    display: block; /* Ensure the description is block-level */
+    margin-bottom: 15px; /* Add space between the description and the next item */
+  }
+
+  .name {
+    display: block; /* Ensure the name is block-level */
+    margin-bottom: 15px; /* Add space between the name and the next item */
+  }

@@ -1,0 +1,24 @@
+.screeningResults{
+    text-align: center;  
+}
+
+.screening{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+.screeningMenus{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 3em;
+}
+#selectTheatre{
+    padding: 10px;
+}
+#selectDate{
+    padding: 10px;
+}

@@ -1,45 +1,95 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Home from './screens/Home.js';
-import Movies from './screens/Movies.js';
-import Screenings from './screens/Screenings.js';
+import HomePage from './screens/HomePage.js';
+import MoviesPage from './screens/MoviesPage.js';
+import MovieDetailsPage from './screens/MovieDetailsPage.js';
+import ScreeningsPage from './screens/ScreeningsPage.js';
+import { GroupProvider } from './contexts/GroupProvider.js';
+import GroupPage from './screens/GroupPage.js';
+import GroupDetails from './screens/GroupDetails.js';
+import ProfilePage from './screens/ProfilePage.js';
+import LoginPage from './screens/LoginPage.js';
+import { Navigate } from 'react-router-dom';
 // import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
+import UserProvider from './contexts/UserProvider.js';
+import ProtectedRoute from './components/Authentication/ProtectedRoute.js';
+import ThemeProvider from './contexts/ThemeProvider.js';
+// import dotenv from 'dotenv';
+// import routes from './routers/router.js';
 
+const environment = process.env.NODE_ENV
+// dotenv.config()
+const isLoggedIn = false; // Placeholder auth logic
+
+//Router setup
 const router = createBrowserRouter([
   {
-    //errorElement: <ErrorPage/>
+    // Error handling route can be added here
+    // errorElement: <ErrorPage />
   },
   {
     path: "/",
-    element: (
-      <MovieFilterProvider>
-        <Home />
-      </MovieFilterProvider>
-      )
+    element: <HomePage />
   },
   {
     path: "/movies",
     element: (
-    <MovieFilterProvider>
-      <Movies />
-    </MovieFilterProvider>
-    )
+      <MovieFilterProvider>
+        <MoviesPage />
+      </MovieFilterProvider>
+    ),
   },
   {
-  path: "/screenings",
-  element: <Screenings />
-  }
+    path: "/movies/:id",
+    element: <MovieDetailsPage />
+  },
+  {
+  path: "/groups", //To be moved under the protected routes once auth is ready.
+  element:(
+    <GroupProvider>
+      <GroupPage />
+    </GroupProvider>
+  )
+  },
+  {
+  path: "/groups/:id",
+  element: <GroupDetails />
+  },
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+      path: "/screenings",
+      element: <ScreeningsPage />,
+      }
+    ]
+  },
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/profile",
+        element: <ProfilePage />,
+      }
+    ]
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <UserProvider> */}
+    <UserProvider>
+      <ThemeProvider>
       <RouterProvider router={router} />
-    {/* </UserProvider> */}
+      </ThemeProvider>
+    </UserProvider>
   </React.StrictMode>
 );
 

@@ -1,0 +1,146 @@
+:root {
+    --bg-color: #ffffff; /* Light mode background */
+    --text-color: #000000; /* Light mode text */
+    --container-bg-color: #acacac; /* Light mode container */
+    --header-text-color: #7c34f1; /* Light mode header text */
+    --input-bg-color: #eaeaea; /* Light mode input */
+    --input-placeholder-color: #797979; /* Light mode placeholder text */
+    --forgot-password-color: #000000; /* Light mode additional text */
+    --forgot-password-hover: #7c34f1; /* Light mode link hover */
+    --button-bg-color: #7c34f1; /* Light mode button */
+    --button-text-color: #ffffff; /* Button text */
+    --button-gray-bg-color: #7c34f1; /* Gray button */
+    --button-gray-text-color: #b3b3b3; /* Gray button text */
+  }
+  
+  .dark {
+    --bg-color: #121212; /* Dark mode background */
+    --text-color: #ffffff; /* Dark mode text */
+    --container-bg-color: #202020; /* Dark mode container */
+    --header-text-color: #7c34f1; /* Dark mode header text */
+    --input-bg-color: #333333; /* Dark mode input */
+    --input-placeholder-color: #b3b3b3; /* Dark mode placeholder text */
+    --forgot-password-color: #a5a5a5; /* Dark mode additional text */
+    --forgot-password-hover: #9c77d9; /* Dark mode link hover */
+    --button-bg-color: #7c34f1;; /* Dark mode button */
+    --button-text-color: #ffffff; /* Button text */
+    --button-gray-bg-color: #7c34f1; /* Gray button */
+    --button-gray-text-color: #b3b3b3; /* Gray button text */
+  }
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 10px;
+    width:90%;
+    max-width: 600px;
+    padding: 20px;
+    padding-bottom:30px;
+    box-sizing: border-box;
+    background-color: var(--container-bg-color);
+    color: var(--text-color);
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 5px;
+    color: var(--header-text-color);
+}
+
+.text{
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--header-text-color);
+
+}
+
+.underline{
+    width: 60px;
+    height: 6px;
+    border-radius: 9px;
+    color: var(--header-text-color);
+
+}
+
+.inputs{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    max-width: 460px;
+    height: 80px;
+    border-radius: 6px;
+    background-color: var(--input-bg-color);
+    flex-shrink: 0;
+}
+
+.input img{
+    margin: 0px 30px;
+}
+
+.input input{
+    flex: 1;
+    width: 320px;
+    padding: 0 10px;
+    height: 50px;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 19px;
+    border-radius: 6px;
+    color: var(--input-placeholder-color)
+
+}
+
+.forgot-password{
+    padding-left: 62px;
+    margin-top: 27px;
+    font-size: 18px;
+    color: var(--forgot-password-color);
+}
+
+.forgot-password span{
+    cursor: pointer;
+    color: var(--forgot-password-hover);
+}
+
+.submit-container{
+    display: flex;
+    gap: 30px;
+    margin: 60px auto;
+    justify-content: center;
+    color: var(--button-text-color);
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 60px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: var(--button-gray-bg-color);
+    color: var(--button-gray-text-color);
+}
