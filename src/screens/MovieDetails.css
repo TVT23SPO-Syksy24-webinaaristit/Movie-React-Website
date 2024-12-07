@@ -7,7 +7,6 @@
 
 .movieinfo{
     margin-top: 2em;
-    border: solid red;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -17,7 +16,6 @@
     display:inline-block;
     width: 200px;
     overflow: hidden;
-    border: solid red;
 }
 
 .postercontainer img{
@@ -27,5 +25,4 @@
 }
 .movieinfotext{
     display: inline-block;
-    border: solid red;
 }
