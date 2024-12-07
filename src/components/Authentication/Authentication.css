@@ -2,12 +2,12 @@
     --bg-color: #ffffff; /* Light mode background */
     --text-color: #000000; /* Light mode text */
     --container-bg-color: #acacac; /* Light mode container */
-    --header-text-color: #3c009d; /* Light mode header text */
+    --header-text-color: #7c34f1; /* Light mode header text */
     --input-bg-color: #eaeaea; /* Light mode input */
     --input-placeholder-color: #797979; /* Light mode placeholder text */
     --forgot-password-color: #000000; /* Light mode additional text */
-    --forgot-password-hover: #4c00b4; /* Light mode link hover */
-    --button-bg-color: #4c00b4; /* Light mode button */
+    --forgot-password-hover: #7c34f1; /* Light mode link hover */
+    --button-bg-color: #7c34f1; /* Light mode button */
     --button-text-color: #ffffff; /* Button text */
     --button-gray-bg-color: #7c34f1; /* Gray button */
     --button-gray-text-color: #b3b3b3; /* Gray button text */
