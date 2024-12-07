@@ -16,8 +16,8 @@ const MovieDetailsPage = () => {
         <div className="moviedetailspage">
             <Navbar />
             <div className="maincontent">
-                <MovieInfo movieId={id}/>
-                <MovieReviews movieId={id} />
+                <MovieInfo movieId={id.slice(1)}/>
+                <MovieReviews movieId={id.slice(1)} />
             </div>
             <Footer />
         </div>

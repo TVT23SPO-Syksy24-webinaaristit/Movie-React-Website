@@ -1,5 +1,4 @@
 .moviedetailspage{
-
 }
 
 .maincontent{
@@ -7,4 +6,26 @@
 }
 
 .movieinfo{
+    margin-top: 2em;
+    border: solid red;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.postercontainer{
+    display:inline-block;
+    width: 200px;
+    overflow: hidden;
+    border: solid red;
+}
+
+.postercontainer img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.movieinfotext{
+    display: inline-block;
+    border: solid red;
 }
