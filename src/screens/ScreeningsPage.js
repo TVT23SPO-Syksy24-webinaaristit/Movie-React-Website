@@ -35,7 +35,7 @@ function ScreeningsPage() {
   return (
     <div className="ScreeningsPage">
       <Navbar />
-      <div className="container">
+      <div className="content">
         <ScreeningResults />
       {showButton && (
         <button className="back-to-top" onClick={scrollToTop}>

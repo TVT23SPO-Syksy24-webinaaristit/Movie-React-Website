@@ -64,7 +64,7 @@
   #root {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensures the app takes the full screen height */
+    min-height: 100%; /* Ensures the app takes the full screen height */
   }
   
   main {
