@@ -138,8 +138,8 @@
 
 .dropdown_profile {
   position: absolute;
-  top: 60px; /* Adjust this based on your layout */
-  right: 10px; /* Adjust for positioning next to the icon */
+  top: 7%; /* Adjust this based on your layout */
+  right: 1%; /* Adjust for positioning next to the icon */
   background-color: #333;
   border-radius: 4px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
