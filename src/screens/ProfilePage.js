@@ -11,14 +11,17 @@ function ProfilePage() {
   return (
     <div className="ProfilePage">
       <Navbar />
+      <h2>
       <div class="container">
   <h2>User Information</h2>
   <p>Username: <span id="username"></span></p>
   </div>
-  <div class="containerlistbutton">
-    <FavoriteList />
-    <DeleteAccountButton />
-  </div>
+
+     <FavoriteList />
+
+      </h2>
+      
+      <DeleteAccountButton />
       <Footer />
     </div>
   );

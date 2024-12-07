@@ -23,7 +23,6 @@ const GroupPage = () => {
         <GroupList refresh={refresh} setRefresh={setRefresh} />
         <GroupCreation onGroupCreated={handleGroupCreated} />
       </div>
-      <Footer />
     </GroupProvider>
   );
 }
