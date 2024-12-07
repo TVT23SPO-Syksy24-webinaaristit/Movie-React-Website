@@ -3,16 +3,20 @@ import './Home.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MovieCarousel from '../components/MovieCarousel';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const HomePage = () => {
   const [username, setUsername] = useState(null);
+  const navigate = useNavigate();
   
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
     setUsername(storedUsername);
   } else {
-    setUsername("Guest");
+    setUsername(null);
   }
   }, []);
 
@@ -21,8 +25,18 @@ const HomePage = () => {
     <div className="Home">
       <Navbar />
       <div className='content'>
-        <p>Welcome</p>
-        <span>{username}</span>
+        <div className='container'>
+        {username ?(
+          <>
+          <p className='welcomeuser-text'>Currently logged in as</p>
+          <span className='container-in'>{username}</span>
+          </>
+        ) : (
+          <p className='pleaselogin-text'>
+            Please <span onClick={() => navigate("/profile")} className="login-link"> log in </span>
+            </p>
+        )}
+        </div>
       <MovieCarousel />
       </div>
       <Footer />
