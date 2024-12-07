@@ -17,7 +17,7 @@ const GroupDetailsHighlightCard = (props) =>{
         
         </Link>
         </div>
-        <p>{props.account}</p>
+        <p>Posted by: {props.account}</p>
         <div>
             <img src={props.image} alt="movie poster" />
         </div>

@@ -108,9 +108,26 @@ export const GroupProvider = ({ children }) => {
     }
   };
 
+  const fetchGroupDetails = async(groupId) =>{
+    const headers = {
+      
+    };
+    try{
+      const response = await axios.get(`${API_URL}/groups/${groupId}`,
+        headers,
+      )
+      console.log(response.data)
+      return response.data;
+      
+    }catch(error){
+      console.error('Error leaving group:', error);
+      throw error;
+    }
+
+  }
 
   return (
-    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, leaveGroup, createGroup, deleteGroup }}>
+    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, leaveGroup, createGroup, deleteGroup, fetchGroupDetails }}>
       {children}
     </GroupContext.Provider>
   );

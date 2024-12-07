@@ -34,7 +34,11 @@ const selectGroupById = async (id) => {
 };
 
 const selectGroupHighlights = async(groups_idgroup) =>{
-  return await pool.query("SELECT * FROM group_highlights WHERE groups_idgroup = $1",[groups_idgroup]);
+  return await pool.query("SELECT gh.*, a.username FROM group_highlights gh JOIN accounts a ON gh.accounts_idaccount = a.idaccount WHERE groups_idgroup = $1",[groups_idgroup]);
+};
+
+const selectAllGroupMembers = async(groups_idgroup) =>{
+  return await pool.query("SELECT gm.*,a.username FROM group_members gm JOIN accounts a ON gm.accounts_idaccount = a.idaccount WHERE groups_idgroup = $1 AND is_a_member = '1'",[groups_idgroup]);
 };
 
 const insertGroupCreate = async ({ owner, name, description }) => {
@@ -127,7 +131,7 @@ const insertGroupJoin = async (groups_idgroup, accounts_idaccount) => {
 };
 
 
-export {selectAllGroups, selectGroupById, selectGroupHighlights, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin};
+export {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin};
 
 
 // await pool.query(
