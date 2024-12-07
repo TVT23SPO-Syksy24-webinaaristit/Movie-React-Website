@@ -59,15 +59,18 @@ const GroupDetailsResults = () => {
   console.log(member);
 
   return (
-    <div>
+    <div className="groupDetails">
+      
       {group && group.length !== null ? (
-        <div>
-          <h1>{group.group_name}</h1>
-          <p>{group.group_description}</p>
-        </div>
+          <div>
+            <h1>{group.group_name}</h1>
+            <p>{group.group_description}</p>
+          </div>
       ) : (
         <p>Loading group details...</p>
+        
       )}
+      
       {highlight && highlight.length > 0 ? (
         highlight.map(highlight => (
           <GroupDetailsHighlightCard key={highlight.idgroup_highlight}
