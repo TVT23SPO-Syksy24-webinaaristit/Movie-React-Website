@@ -1,0 +1,28 @@
+.moviedetailspage{
+}
+
+.maincontent{
+    min-height: 80vh;
+}
+
+.movieinfo{
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.postercontainer{
+    display:inline-block;
+    width: 200px;
+    overflow: hidden;
+}
+
+.postercontainer img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.movieinfotext{
+    display: inline-block;
+}
