@@ -14,9 +14,10 @@ const GroupDetailsHighlightCard = (props) =>{
             <div>
         <Link className="link" to={props.link_url}>
         <p>{props.title}</p>
-        <p>{highlightType}</p>
+        
         </Link>
         </div>
+        <p>{props.account}</p>
         <div>
             <img src={props.image} alt="movie poster" />
         </div>

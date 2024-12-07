@@ -16,7 +16,7 @@ const GroupDetailsResults = () =>{
         .then((data) => setGroup(data.rows[0]))
         .catch((error) => console.error("Error fetching group details:", error));
 
-        fetch(`http://localhost:3001/groups/highlights/6`)
+        fetch(`http://localhost:3001/groups/highlights/3`)
         .then((response) => response.json())
         .then((data) => setHighlight(data.rows))
         .catch((error) => console.error("Error fetching group details:", error));
@@ -52,12 +52,19 @@ const GroupDetailsResults = () =>{
                     title={highlight.title}
                     link_url={highlight.source_link_url}
                     image={highlight.poster_url}
-
+                    account={highlight.accounts_idaccount}
                     />
                 ))
                 
+            ) : (typeof(highlight) === "object" && !Array.isArray(highlight)) ? (
+                <GroupDetailsHighlightCard key={highlight.idgroup_highlight}
+                    title={highlight.title}
+                    link_url={highlight.source_link_url}
+                    image={highlight.poster_url}
+                    account={highlight.accounts_idaccount}
+                    />
             ) : (
-                <p>Loading group details...</p>
+                <p>Loading highlights...</p>
             )}
         
       
