@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useFavorites } from "../contexts/FavoriteProvider";
 import { useUser } from "../contexts/useUser";
 
-const FavoriteButton = ({ isFavorited, idmovie, idfavorite, title }) => {
+const FavoriteButton = ({ isFavorited, idmovie, idfavorite, title, accounts_idaccount }) => {
   const { user } = useUser();
   const { addToFavorites } = useFavorites();
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const FavoriteButton = ({ isFavorited, idmovie, idfavorite, title }) => {
     }
   
     try {
-      const response = await addToFavorites(idmovie, idfavorite, title, user.id);
+      const response = await addToFavorites(idmovie, idfavorite, title, accounts_idaccount);
       if (!response) {
         setError("Failed to add favorites.");
       } else {

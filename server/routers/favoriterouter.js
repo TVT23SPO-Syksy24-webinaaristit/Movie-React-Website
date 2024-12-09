@@ -1,4 +1,4 @@
-import {router} from "express"
+import {Router} from "express"
 import { auth } from "../helpers/auth.js";
 import {getFavorites, postFavorites, deleteFavorites} from '../controllers/FavoriteListController.js'
 
@@ -11,3 +11,6 @@ router.get('/getfavorites', getFavorites);
 router.post('/postfavorites', auth,  postFavorites);
 
 router.delete("/delete/:id", deleteFavorites);
+
+
+export default router;

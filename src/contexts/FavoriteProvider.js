@@ -18,7 +18,7 @@ export const FavoriteProvider = ({ children }) => {
   const { user } = useContext(UserContext); 
 
   const addToFavorites = async (idmovie, idfavorite, title, accounts_idaccount) => {
-    const headers = {};
+    const headers = {Authorization: user.token};
 
     if (!user || !user.id) {
       throw new Error("User is not logged in or user ID is missing.");
@@ -29,13 +29,15 @@ export const FavoriteProvider = ({ children }) => {
         idmovie,
         idfavorite, // Include idfavorite if your API needs it
         title,
-        accounts_idaccount,
+        accounts_idaccount
       };
-  
-      const response = await axios.post(`${API_URL}/postfavorites`, data, { headers });
+      data.accounts_idaccount = parseInt(accounts_idaccount);
+      console.log(accounts_idaccount)
+      console.log(`${API_URL}/favorites/postfavorites`)
+      const response = await axios.post(`${API_URL}/favorites/postfavorites`, data, { headers });
       return response.data;
     } catch (error) {
-      console.error("Error adding favorites:", error);
+      console.error("Error adding favorites:", error.response.data.error);
       throw error;
     }
   };
