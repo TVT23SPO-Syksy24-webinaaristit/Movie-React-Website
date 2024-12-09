@@ -1,0 +1,13 @@
+services:
+- type: web
+  name: app-backend
+  runtime: node
+  rootDir: /server
+  buildCommand: npm install && npm run build
+  startCommand: npm run devStart
+- type: web
+  name: app-frontend
+  runtime: node
+  rootDir: /src
+  buildCommand: npm install && npm run build
+  startCommand: npm start
