@@ -27,17 +27,6 @@ const Authentication = () => {
   const handleSubmit = async () => {
       try {
           if (action === "Log In") {
-
-            /*
-              const response = await axios.post("http://localhost:3001/login", {
-                  email: formData.email,
-                  password: formData.password,
-              });
-              const { token } = response.data;
-
-              // Save token securely
-              localStorage.setItem("authToken", token);
-            */
             await signIn({
                 email: formData.email,
                 password: formData.password
@@ -46,13 +35,6 @@ const Authentication = () => {
             alert("Login successful!");
             window.location.href = "/";
           } else if (action === "Sign Up") {
-            /*
-              const response = await axios.post("http://localhost:3001/signup", {
-                  name: formData.name,
-                  email: formData.email,
-                  password: formData.password,
-              });
-            */
             await signUp({
                 email: formData.email,
                 username: formData.name,
