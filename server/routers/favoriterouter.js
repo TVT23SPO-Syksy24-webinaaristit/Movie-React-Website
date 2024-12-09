@@ -8,6 +8,6 @@ const router = Router()
 
 router.get('/getfavorites', getFavorites);
 
-router.get('/postfavorites/:id', postFavorites);
+router.post('/postfavorites', auth,  postFavorites);
 
 router.delete("/delete/:id", deleteFavorites);

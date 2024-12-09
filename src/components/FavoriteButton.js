@@ -1,29 +1,44 @@
-import React, { useState } from 'react';
 
-const FavoriteButton = ({ idmovie, isFavorited, onToggleFavorite }) => {
-  const [isLoading, setIsLoading] = useState(false);
+import React, { useState } from "react";
+import { useFavorites } from "../contexts/FavoriteProvider";
+import { useUser } from "../contexts/useUser";
 
-  const handleToggle = async () => {
-    setIsLoading(true);
+const FavoriteButton = ({ isFavorited, idmovie, idfavorite, title }) => {
+  const { user } = useUser();
+  const { addToFavorites } = useFavorites();
+  const [error, setError] = useState(null);
+
+  const handleNewFavorite = async () => {
+    if (!user || !user.id) {
+      setError("User is not logged in or user ID is missing.");
+      console.error("User or user ID is undefined:", user);
+      return;
+    }
+  
     try {
-      onToggleFavorite(idmovie);
-      alert('Movie added to favorites successfully!'); // Show notification
-    } catch (error) {
-      console.error('Error toggling favorite:', error);
-      alert('An error occurred. Please try again later.');
-    } finally {
-      setIsLoading(false);
+      const response = await addToFavorites(idmovie, idfavorite, title, user.id);
+      if (!response) {
+        setError("Failed to add favorites.");
+      } else {
+        console.log("Favorite added successfully:", response);
+        setError(null); // Clear error on success
+      }
+    } catch (err) {
+      console.error("Error adding to favorites:", err);
+      setError("Failed adding favorites. Please try again later.");
     }
   };
 
   return (
-    <button
-      disabled={isLoading}
-      onClick={handleToggle}
-      className={`favorite-button ${isFavorited ? 'active' : ''}`}
-    >
-      {isLoading ? 'Loading...' : (isFavorited ? 'Unfavorite' : 'Favorite')}
-    </button>
+    <>
+      <button
+        onClick={handleNewFavorite}
+        className={`favorite-button ${isFavorited ? "active" : ""}`}
+      >
+        Favorite
+      </button>
+      {error && <p className="error-message">{error}</p>}
+    </>
   );
 };
 

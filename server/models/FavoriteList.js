@@ -5,8 +5,8 @@ const selectFavorites = async () => {
     return await pool.query('select * from favorites')
 }
 
-const insertFavorites = async(idfavorite, idmovie, title, account_idaccount) => {
-    return await pool.query('insert into favorites (idfavorite, idmovie, title, account_idaccount) values ($1, $2, $3, $4) returning *', [idfavorite, idmovie, title, account_idaccount])
+const insertFavorites = async (idfavorite, idmovie, title, accounts_idaccount) => {
+    return await pool.query('insert into favorites (idfavorite, idmovie, title, accounts_idaccount) values ($1, $2, $3, $4) returning *', [idfavorite, idmovie, title, accounts_idaccount]);
 }
 
 const deleteFavoritesById = async(id) => {

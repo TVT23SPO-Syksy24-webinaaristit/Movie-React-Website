@@ -15,6 +15,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
 import UserProvider from './contexts/UserProvider.js';
 import ProtectedRoute from './components/Authentication/ProtectedRoute.js';
+import { FavoriteProvider } from './contexts/FavoriteProvider.js';
 // import dotenv from 'dotenv';
 // import routes from './routers/router.js';
 
@@ -36,7 +37,9 @@ const router = createBrowserRouter([
     path: "/movies",
     element: (
       <MovieFilterProvider>
+        <FavoriteProvider>
         <MoviesPage />
+        </FavoriteProvider>
       </MovieFilterProvider>
     ),
   },
@@ -66,7 +69,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/profile",
-        element: <ProfilePage />,
+        element:(
+          <FavoriteProvider>
+            <ProfilePage />,
+          </FavoriteProvider> 
+        )
       }
     ]
   },
@@ -80,7 +87,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <UserProvider>
+      <FavoriteProvider>
       <RouterProvider router={router} />
+      </FavoriteProvider>
     </UserProvider>
   </React.StrictMode>
 );
