@@ -1,0 +1,43 @@
+.screeningspage{
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    min-height: 100%; /* Ensure the entire screen height is covered */
+}
+
+.content {
+    flex: 1; /* Push the footer to the bottom if content is short */
+    display: flex; /* Add flexbox to center the content */
+    flex-direction: column; /* Stack text and movie carousel vertically */
+    justify-content: center; /* Vertically center the content */
+    align-items: center; /* Horizontally center the content */
+    width: 100%;
+    padding-top:2%
+  }
+.back-to-top {
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    right: 20px; /* Distance from the right of the viewport */
+    background-color: #4c00b4; /* Button background color */
+    color: #ffffff; /* Text color */
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0.8; /* Slight transparency */
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 1000; /* Ensure it's above other elements */
+  }
+  
+  .back-to-top:hover {
+    opacity: 1;
+    transform: scale(1.1); /* Slight zoom effect on hover */
+  }
+  
+  .back-to-top:active {
+    transform: scale(0.9); /* Shrink effect when clicked */
+  }
+  

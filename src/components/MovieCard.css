@@ -23,3 +23,8 @@
     width: 100%;
     object-fit: cover;
 }
+
+.detailsLink{
+    text-decoration: none;
+    color:inherit;
+}
