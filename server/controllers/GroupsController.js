@@ -1,6 +1,7 @@
 //server/controllers/GroupsController.js
 import {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, selectAllGroupJoinRequesters, 
-  insertGroupCreate, deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
+  insertGroupCreate, deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, 
+  insertGroupJoin, insertGroupReply} from '../models/Group.js'; // Import the model from /models
 
 
 const getAllGroups = async (req, res) => {
@@ -152,8 +153,8 @@ const postGroupJoin = async (req, res, next) => {
 const postJoinRequestReply = async(req,res,next)=>{
   const{groups_idgroup,accounts_idaccount,reply} = req.body;
   try{
-
-
+    const updatedGroup = await insertGroupReply(groups_idgroup, accounts_idaccount, reply);// Update group via model
+    return res.status(200).json(updatedGroup); // Return the updated group details
   }catch (error) {
     console.error("Error in controller (replying join request):", error);
     next(error);  // Pass error to error-handling middleware
