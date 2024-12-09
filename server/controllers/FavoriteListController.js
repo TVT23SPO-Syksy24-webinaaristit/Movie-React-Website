@@ -20,6 +20,7 @@ const postFavorites = async(req,res,next) => {
         const result = await insertFavorites(req.body)
         return res.status(200).json({id: result.rows[0].id})
     }   catch (error) {
+        console.log(error)
         return next(error)
     }
 }
