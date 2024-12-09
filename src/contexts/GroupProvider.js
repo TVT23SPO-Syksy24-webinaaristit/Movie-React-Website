@@ -130,8 +130,8 @@ export const GroupProvider = ({ children }) => {
       
     };
     try{
-      const response = await axios.get(`${API_URL}/groups/${groupId}`,
-        headers,
+      console.log(groupId);
+      const response = await axios.get(`${API_URL}/groups/${groupId}`, {headers}
       )
       console.log(response.data)
       return response.data;
@@ -143,8 +143,60 @@ export const GroupProvider = ({ children }) => {
 
   }
 
+  const fetchHighlightDetails = async(groupId) =>{
+    const headers = {
+      
+    };
+    try{
+      console.log(groupId);
+      const response = await axios.get(`${API_URL}/groups/highlights/${groupId}`, {headers}
+      )
+      console.log(response.data)
+      return response.data;
+      
+    }catch(error){
+      console.error('Error fetching highlights:', error);
+      throw error;
+    }
+  }
+
+  const fetchGroupMemberDetails = async(groupId) =>{
+    const headers = {
+      
+    };
+    try{
+      console.log(groupId);
+      const response = await axios.get(`${API_URL}/groups/${groupId}/members`, {headers}
+      )
+      console.log(response.data)
+      return response.data;
+      
+    }catch(error){
+      console.error('Error fetching members:', error);
+      throw error;
+    }
+  }
+
+  const fetchrequesterDetails = async(groupId) =>{
+    const headers = {
+      
+    };
+    try{
+      console.log(groupId);
+      const response = await axios.get(`${API_URL}/groups/${groupId}/requesters`, {headers}
+      )
+      console.log(response.data)
+      return response.data;
+      
+    }catch(error){
+      console.error('Error fetching join requesters:', error);
+      throw error;
+    }
+  }
+
   return (
-    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, replyGroup, leaveGroup, createGroup, deleteGroup, fetchGroupDetails }}>
+    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, replyGroup, leaveGroup, createGroup, deleteGroup, 
+    fetchGroupDetails, fetchHighlightDetails, fetchGroupMemberDetails, fetchrequesterDetails }}>
       {children}
     </GroupContext.Provider>
   );

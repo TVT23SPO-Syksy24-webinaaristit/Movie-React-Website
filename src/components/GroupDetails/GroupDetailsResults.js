@@ -8,7 +8,7 @@ import { useGroups } from "../../contexts/GroupProvider";
 
 
 const GroupDetailsResults = () => {
-  const { fetchGroupDetails } = useGroups();
+  const { fetchGroupDetails, fetchHighlightDetails, fetchGroupMemberDetails, fetchrequesterDetails } = useGroups();
   const { id } = useParams(); // Get the group ID from the URL
   const [group, setGroup] = useState([]);
   const [highlight, setHighlight] = useState([]);
@@ -17,37 +17,54 @@ const GroupDetailsResults = () => {
 
   useEffect(() => {
     // Fetch group details by ID
-    /* fetch(`http://localhost:3001/groups/${id}`)
-      .then((response) => response.json())
-      .then((data) => setGroup(data.rows[0]))
-      .catch((error) => console.error("Error fetching group details:", error)); */
 
       const fetchGroupInfo = async() =>{
         try{
+          console.log("fetchGroupInfo")
           const response = await fetchGroupDetails(id);
-          console.log(response)
-          setGroup(response)
+          console.log(response.rows[0]);
+          setGroup(response.rows[0])
         }catch(error){
+          console.log(error);
+        } 
+      }
+
+      const fetchHighlights = async() =>{
+        try{
+          console.log("fetchHighlights")
+          const response = await fetchHighlightDetails(id);
+          console.log(response.rows);
+          setHighlight(response.rows);
+          }catch(error){
+          console.log(error);
+        }
+      }
+      const fetchGroupMembers = async() =>{
+        try{
+          console.log("fetchGroupMembers")
+          const response = await fetchGroupMemberDetails(id);
+          console.log(response.rows);
+          setMember(response.rows);
+          }catch(error){
           console.log(error);
         }
       }
 
-    fetch(`http://localhost:3001/groups/highlights/${id}`)
-      .then((response) => response.json())
-      .then((data) => setHighlight(data.rows))
-      .catch((error) => console.error("Error fetching group details:", error));
+      const fetchrequesters = async() =>{
+        try{
+          console.log("fetchrequesters")
+          const response = await fetchrequesterDetails(id);
+          console.log(response.rows);
+          setJoinRequester(response.rows);
+          }catch(error){
+          console.log(error);
+        }
+      }
 
-
-    fetch(`http://localhost:3001/groups/${id}/members`)
-      .then((response) => response.json())
-      .then((data) => setMember(data.rows))
-      .catch((error) => console.error("Error fetching group details:", error));
-
-      fetch(`http://localhost:3001/groups/${id}/requesters`)
-      .then((response) => response.json())
-      .then((data) => setJoinRequester(data.rows))
-      .catch((error) => console.error("Error fetching group details:", error));
-    
+      fetchGroupInfo();
+      fetchHighlights();
+      fetchGroupMembers();
+      fetchrequesters();
 
     /*  try{
          const response = await axios.get(`http://localhost:3001/groups/${id}`);
@@ -60,7 +77,7 @@ const GroupDetailsResults = () => {
 
 
   }, [id]);
-
+  
   console.log(group);
   console.log(highlight);
   console.log(member);
