@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import HomePage from './screens/HomePage.js';
 import MoviesPage from './screens/MoviesPage.js';
+import MovieDetailsPage from './screens/MovieDetailsPage.js';
 import ScreeningsPage from './screens/ScreeningsPage.js';
 import { GroupProvider } from './contexts/GroupProvider.js';
 import GroupPage from './screens/GroupPage.js';
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
         <MoviesPage />
       </MovieFilterProvider>
     ),
+  },
+  {
+    path: "/movies/:id",
+    element: <MovieDetailsPage />
   },
   {
   path: "/groups", //To be moved under the protected routes once auth is ready.
