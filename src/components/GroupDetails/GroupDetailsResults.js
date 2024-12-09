@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import GroupDetailsHighlightCard from "./GroupDetailsHighlightCard";
 import GroupDetailsMemberCard from "./GroupDetailsMemberCard";
+import GroupDetailsJoinRequesterCard from "./GroupDetailsJoinRequesterCard";
 import { useGroups } from "../../contexts/GroupProvider";
 
 
@@ -12,6 +13,7 @@ const GroupDetailsResults = () => {
   const [group, setGroup] = useState([]);
   const [highlight, setHighlight] = useState([]);
   const [member, setMember] = useState([]);
+  const [joinRequester, setJoinRequester] = useState([]);
 
   useEffect(() => {
     // Fetch group details by ID
@@ -41,6 +43,11 @@ const GroupDetailsResults = () => {
       .then((data) => setMember(data.rows))
       .catch((error) => console.error("Error fetching group details:", error));
 
+      fetch(`http://localhost:3001/groups/${id}/requesters`)
+      .then((response) => response.json())
+      .then((data) => setJoinRequester(data.rows))
+      .catch((error) => console.error("Error fetching group details:", error));
+    
 
     /*  try{
          const response = await axios.get(`http://localhost:3001/groups/${id}`);
@@ -57,6 +64,7 @@ const GroupDetailsResults = () => {
   console.log(group);
   console.log(highlight);
   console.log(member);
+  console.log(joinRequester);
 
   return (
     <div className="groupDetails">
@@ -93,7 +101,7 @@ const GroupDetailsResults = () => {
       )}
 
 
-      {member && member.length > 0 ? (
+      {member && member.length > 0 ? (      // Group member can be kicked using the already existing groupLeave routing and front end implementation.
 
         member.map(member => (
           <GroupDetailsMemberCard key={member.id}
@@ -109,11 +117,43 @@ const GroupDetailsResults = () => {
         <p>Loading memberlist...</p>
       )}
 
+{joinRequester && joinRequester.length > 0 ? (      
+
+joinRequester.map(joinRequester => (
+  <GroupDetailsJoinRequesterCard key={joinRequester.id}
+    username={joinRequester.username}
+
+  />
+))
+) : (typeof (joinRequester) === "object" && !Array.isArray(joinRequester)) ? (
+<GroupDetailsJoinRequesterCard key={joinRequester.id}
+  username={joinRequester.username}
+/>
+) : (
+<p>Loading join requester list...</p>
+)}
 
 
     </div>
   )
 
 }
+
+
+/*
+- Todo list:
+
+request-to-join-a-group -button
+
+group deletion button
+
+remove a member from group
+
+accept and deny join requests
+
+
+
+
+*/
 
 export { GroupDetailsResults };

@@ -1,7 +1,9 @@
 //server/routers/groupsRouter.js
 import { Router } from "express"
 import { auth } from "../helpers/auth.js";
-import { getAllGroups, getGroupDetails, getGroupHighlights, getGroupMembers, postGroupCreate, postGroupJoin, deleteGroup, leaveGroup } from "../controllers/GroupsController.js";
+import { getAllGroups, getGroupDetails, getGroupHighlights, getGroupMembers, getGroupJoinRequesters, 
+    postGroupCreate, postGroupJoin, postJoinRequestReply,
+    deleteGroup, leaveGroup, deleteHighlight } from "../controllers/GroupsController.js";
 
 const router = Router();
 
@@ -15,13 +17,21 @@ router.get("/highlights/:id", getGroupHighlights);
 
 router.get("/:id/members", getGroupMembers);
 
+router.get("/:id/requesters", getGroupJoinRequesters);
+
 router.post("/create", auth, postGroupCreate);
 
 router.post("/join", auth, postGroupJoin);
 
+router.post("/requestreply", postJoinRequestReply);
+
 router.delete("/:id/", auth, deleteGroup);
 
 router.delete("/:id/leave", auth, leaveGroup);
+
+router.delete(":id/highlight", deleteHighlight);
+
+
 
 
 

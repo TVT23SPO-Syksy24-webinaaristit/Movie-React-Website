@@ -1,5 +1,6 @@
 //server/controllers/GroupsController.js
-import {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
+import {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, selectAllGroupJoinRequesters, 
+  insertGroupCreate, deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin} from '../models/Group.js'; // Import the model from /models
 
 
 const getAllGroups = async (req, res) => {
@@ -59,10 +60,21 @@ const getGroupMembers = async(req,res,next)=>{
     const members = await selectAllGroupMembers(id);  
     return res.status(200).json(members);
   }catch(error){
-    console.error("Error in controller (fetching highlight details):", error);
+    console.error("Error in controller (fetching group members):", error);
     next(error);  // Pass error to error-handling middleware
   }
 };
+
+const getGroupJoinRequesters = async(req,res,next)=>{
+  const {id} = req.params;
+  try{
+    const requesters = await selectAllGroupJoinRequesters(id);  
+    return res.status(200).json(requesters);
+  }catch(error){
+    console.error("Error in controller (fetching group join requesters):", error);
+    next(error);  // Pass error to error-handling middleware
+  }
+}
 
 const deleteGroup = async (req, res, next) => {
   const { id } = req.params; // ID of the group to delete
@@ -108,6 +120,22 @@ const leaveGroup = async (req, res, next) => {
   }
 };
 
+const deleteHighlight = async(req,res,next)=>{
+  const { id: highlightId } = req.params; // Extract highlightId from path params
+
+  console.log("Group ID:", highlightId);
+
+  try{
+    const result = await deleteGroupHighlight(highlightId);
+    return res.status(200).json({ message: "Successfully deleted a highlight", result });
+  }catch (error) {
+    console.error("Error in controller (highlight deletion):", error);
+    next(error);
+  }
+};
+
+
+
 
 
 const postGroupJoin = async (req, res, next) => {
@@ -121,6 +149,19 @@ const postGroupJoin = async (req, res, next) => {
   }
 };
 
+const postJoinRequestReply = async(req,res,next)=>{
+  const{groups_idgroup,accounts_idaccount,reply} = req.body;
+  try{
 
 
-export { getAllGroups, getGroupDetails, getGroupHighlights, getGroupMembers, postGroupCreate, postGroupJoin , deleteGroup, leaveGroup }; // Export the controller functions
+  }catch (error) {
+    console.error("Error in controller (replying join request):", error);
+    next(error);  // Pass error to error-handling middleware
+  }
+};
+
+
+
+export { getAllGroups, getGroupDetails, getGroupHighlights, getGroupMembers, getGroupJoinRequesters, 
+  postGroupCreate, postGroupJoin, postJoinRequestReply, 
+  deleteGroup, leaveGroup, deleteHighlight }; // Export the controller functions
