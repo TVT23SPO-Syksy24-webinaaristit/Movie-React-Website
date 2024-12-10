@@ -5,6 +5,8 @@ import GroupDetailsHighlightCard from "./GroupDetailsHighlightCard";
 import GroupDetailsMemberCard from "./GroupDetailsMemberCard";
 import GroupDetailsJoinRequesterCard from "./GroupDetailsJoinRequesterCard";
 import { useGroups } from "../../contexts/GroupProvider";
+import { useUser } from "../../contexts/useUser"
+import DeleteGroupButton from "./DeleteGroupButton";
 
 
 const GroupDetailsResults = () => {
@@ -14,6 +16,7 @@ const GroupDetailsResults = () => {
   const [highlight, setHighlight] = useState([]);
   const [member, setMember] = useState([]);
   const [joinRequester, setJoinRequester] = useState([]);
+  const { user } = useUser();
 
   useEffect(() => {
     // Fetch group details by ID
@@ -31,9 +34,7 @@ const GroupDetailsResults = () => {
 
       const fetchHighlights = async() =>{
         try{
-          console.log("fetchHighlights")
           const response = await fetchHighlightDetails(id);
-          console.log(response.rows);
           setHighlight(response.rows);
           }catch(error){
           console.log(error);
@@ -41,9 +42,7 @@ const GroupDetailsResults = () => {
       }
       const fetchGroupMembers = async() =>{
         try{
-          console.log("fetchGroupMembers")
           const response = await fetchGroupMemberDetails(id);
-          console.log(response.rows);
           setMember(response.rows);
           }catch(error){
           console.log(error);
@@ -52,9 +51,7 @@ const GroupDetailsResults = () => {
 
       const fetchrequesters = async() =>{
         try{
-          console.log("fetchrequesters")
           const response = await fetchrequesterDetails(id);
-          console.log(response.rows);
           setJoinRequester(response.rows);
           }catch(error){
           console.log(error);
@@ -66,22 +63,13 @@ const GroupDetailsResults = () => {
       fetchGroupMembers();
       fetchrequesters();
 
-    /*  try{
-         const response = await axios.get(`http://localhost:3001/groups/${id}`);
-         return response;
-         console.log(response)
-     }catch(error){
-         console.log("error",error);
-         throw error;
-     } */
-
-
   }, [id]);
   
   console.log(group);
   console.log(highlight);
   console.log(member);
   console.log(joinRequester);
+  console.log(user);
 
   return (
     <div className="groupDetails">
@@ -139,8 +127,17 @@ const GroupDetailsResults = () => {
 joinRequester.map(joinRequester => (
   <GroupDetailsJoinRequesterCard key={joinRequester.id}
     username={joinRequester.username}
+    showAnswerButtons={1}
+    groupid={joinRequester.groups_idgroup}
+   /*  {user.id === group.owner ? (
+      showAnswerButtons={1}
+    ):(
+      showAnswerButtons={0}
+    )} */
 
   />
+  
+
 ))
 ) : (typeof (joinRequester) === "object" && !Array.isArray(joinRequester)) ? (
 <GroupDetailsJoinRequesterCard key={joinRequester.id}
@@ -150,7 +147,7 @@ joinRequester.map(joinRequester => (
 <p>Loading join requester list...</p>
 )}
 
-
+  <DeleteGroupButton />
     </div>
   )
 

@@ -38,7 +38,7 @@ const selectGroupHighlights = async(groups_idgroup) =>{
 };
 
 const selectAllGroupMembers = async(groups_idgroup) =>{
-  return await pool.query("SELECT gm.*,a.username FROM group_members gm JOIN accounts a ON gm.accounts_idaccount = a.idaccount WHERE groups_idgroup = $1 AND is_a_member = '1'",[groups_idgroup]);
+  return await pool.query("SELECT gm.*,a.username,g.owner FROM group_members gm JOIN accounts a ON gm.accounts_idaccount = a.idaccount JOIN groups g ON gm.groups_idgroup = g.idgroup WHERE groups_idgroup = $1 AND is_a_member = '1'",[groups_idgroup]);
 };
 
 const selectAllGroupJoinRequesters = async(groups_idgroup) =>{

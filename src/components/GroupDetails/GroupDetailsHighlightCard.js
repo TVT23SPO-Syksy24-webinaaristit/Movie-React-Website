@@ -2,13 +2,7 @@ import React, {useState} from "react";
 import { Link } from 'react-router-dom'
 import "./GroupDetailsHighlightCard.css"
 
-const GroupDetailsHighlightCard = (props) =>{
-    const [highlightType,setHighlightType] = useState([]);
-    const type = 0;
-    
-    if(props.link_url.includes("jnertikbnrij433.com")===1){
-        setHighlightType("s")
-    }
+const GroupDetailsHighlightCard = (props) =>{ 
     return(
         <div className="highlightCard">
             <div className="poster">
@@ -16,7 +10,7 @@ const GroupDetailsHighlightCard = (props) =>{
             </div>
             <div className="title">
                 <Link className="link" to={props.link_url}>
-                    <p>{props.title}</p>
+                    <p><b>{props.title}</b></p><br />
                 </Link>
             
 
