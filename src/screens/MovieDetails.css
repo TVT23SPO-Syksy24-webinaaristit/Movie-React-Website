@@ -10,6 +10,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    column-gap: 1em;
 }
 
 .postercontainer{
@@ -26,3 +27,49 @@
 .movieinfotext{
     display: inline-block;
 }
+
+.reviewcard{
+    background-color: lightgrey;
+    margin-top: 0.5em;
+    border-radius: 5px;
+    padding: 1em
+}
+.moviereviews {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.reviewsubmit {
+    background-color: lightgrey;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border-radius: 5px;
+    padding: 1em
+}
+.star-button {
+    border: none;
+    background:none;
+    font-size: 2em;
+    
+}
+.reviewsubmit .reviewinput{
+    width:80%;
+    height: 10em;
+    display: block;
+    resize: none;
+
+}
+.reviewsubmitbutton{
+    background-color: #333;
+    color: #f2f2f2;
+    border: none;
+    padding: 0.3em;
+    border-radius: 2px;
+    height: 1.8em;
+    margin-top: 0.3em;
+}
+.reviewsubmitbutton:hover{
+    background-color: #444;
+    cursor: pointer;
+}
+
