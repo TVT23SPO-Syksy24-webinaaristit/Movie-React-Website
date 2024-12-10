@@ -173,6 +173,14 @@ const xmlToJson = useCallback((node) =>{
                             image={screenings.Images.EventMediumImagePortrait}
                             auditorium={screenings.TheatreAndAuditorium} />
                             ))
+                    ) : (typeof(screenings) === "object" && !Array.isArray(screenings)) ? (
+                        <ScreeningCard  key={screenings.ID} 
+                            title={screenings.Title} 
+                            finnkinoUrl={screenings.EventURL}
+                            hours={new Date(screenings.dttmShowStart).getHours()} 
+                            minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
+                            image={screenings.Images.EventMediumImagePortrait}
+                            auditorium={screenings.TheatreAndAuditorium} />
                     ) : (
                         <p>Loading...</p>
                     )

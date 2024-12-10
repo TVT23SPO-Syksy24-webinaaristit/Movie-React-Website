@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const ScreeningCard = (props) => {
     return (
         <div className="screeningCard">
-            <Link className="link" to={props.finnkinoUrl}>
+            <Link className="link" to={props.link_url}>
             <div className="titleLink">
             <h3>{props.title}</h3>
             </div>
