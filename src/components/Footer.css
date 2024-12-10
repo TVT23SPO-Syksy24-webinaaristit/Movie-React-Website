@@ -5,6 +5,7 @@
     padding: 20px 0;
     font-family: Arial, sans-serif;
     flex-shrink: 0; /* Prevents footer from shrinking */
+    flex-wrap: wrap;
   }
   
   .footer-container {
@@ -27,6 +28,8 @@
   .footer-links ul {
     list-style: none;
     padding: 0;
+    flex: 1;
+    flex-wrap: wrap;
   }
   
   .footer-links ul li {
