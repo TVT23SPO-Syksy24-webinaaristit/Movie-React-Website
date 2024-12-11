@@ -28,9 +28,9 @@ export const FavoriteProvider = ({ children }) => {
     try {
       
       const data = {
-        idmovie: 5,
-        title: "miau",
-        accounts_idaccount: 20,
+        idmovie: idmovie,
+        title: title,
+        accounts_idaccount: user.id,
         poster_url: posterUrl,
 
 
