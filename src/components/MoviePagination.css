@@ -20,3 +20,7 @@ ul li {
 li.selected {
     background-color: grey;
 }
+
+.moviepagination{
+    margin-bottom: 2em;
+}

@@ -13,12 +13,14 @@ function MoviesPage() {
     return (
         <div className="Movies">
             <Navbar />
+            <div >
             <div className="moviefiltersearch">
             {searchToggle ? <MovieSearch /> : null}
             {!searchToggle ? <MovieFilters /> : null}
             </div>
             <MovieResults />
             <MoviePagination />
+            </div>
             <Footer />
         </div>
     );

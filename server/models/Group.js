@@ -33,6 +33,17 @@ const selectGroupById = async (id) => {
     return await pool.query("SELECT * FROM groups WHERE idgroup = $1",[id]);
 };
 
+const selectGroupHighlights = async(groups_idgroup) =>{
+  return await pool.query("SELECT gh.*, a.username FROM group_highlights gh JOIN accounts a ON gh.accounts_idaccount = a.idaccount WHERE groups_idgroup = $1",[groups_idgroup]);
+};
+
+const selectAllGroupMembers = async(groups_idgroup) =>{
+  return await pool.query("SELECT gm.*,a.username,g.owner FROM group_members gm JOIN accounts a ON gm.accounts_idaccount = a.idaccount JOIN groups g ON gm.groups_idgroup = g.idgroup WHERE groups_idgroup = $1 AND is_a_member = '1'",[groups_idgroup]);
+};
+
+const selectAllGroupJoinRequesters = async(groups_idgroup) =>{
+  return await pool.query("SELECT gm.*,a.username FROM group_members gm JOIN accounts a ON gm.accounts_idaccount = a.idaccount WHERE groups_idGroup = $1 AND is_a_member = '0' ORDER BY group_request_timestamp ASC",[groups_idgroup]);
+};
 
 const insertGroupCreate = async ({ owner, name, description }) => {
   //console.log("Inserting group with data:", { owner, name, description });
@@ -71,7 +82,8 @@ const insertGroupCreate = async ({ owner, name, description }) => {
 };
 
 const deleteGroupLeave = async (groupId, userId) => {
-  try {  const result = await pool.query("DELETE FROM group_members WHERE groups_idgroup = $1 AND accounts_idaccount = $2 RETURNING *", [groupId, userId]);
+  try {  
+    const result = await pool.query("DELETE FROM group_members WHERE groups_idgroup = $1 AND accounts_idaccount = $2 RETURNING *", [groupId, userId]);
     //also remove -1 from member count
     await pool.query("UPDATE groups SET member_count = member_count - 1 WHERE idgroup = $1",[groupId]);
     console.log('User removed from group successfully.');
@@ -111,6 +123,17 @@ const deleteGroupDelete = async (groupId) => {
   }
 };
 
+const deleteGroupHighlight = async(highlightId) =>{
+
+  try{
+    const result = await pool.query("DELETE FROM group_highlights WHERE idgroup_highlight = $1", [highlightId])
+    console.log('Highlight removed successfully.');
+  }catch (error) {
+    console.error('Error removing highlight:', error);
+    throw error;
+  }
+}
+
 
 const insertGroupJoin = async (groups_idgroup, accounts_idaccount) => {
   const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2",[accounts_idaccount, groups_idgroup]);
@@ -120,10 +143,26 @@ const insertGroupJoin = async (groups_idgroup, accounts_idaccount) => {
   //if user is added, also add a +1 to member count
   await pool.query("UPDATE groups SET member_count = member_count + 1 WHERE idgroup = $1",[groups_idgroup]);
   return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup, is_a_member) VALUES ($1, $2, $3) RETURNING *",[accounts_idaccount, groups_idgroup, 1]);
-
 };
 
-export {selectAllGroups, selectGroupById, insertGroupCreate, deleteGroupDelete, deleteGroupLeave, insertGroupJoin};
+const insertGroupReply = async (groups_idgroup, accounts_idaccount,reply) => {
+  const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2 AND is_a_member = '1'",[accounts_idaccount, groups_idgroup]);
+  if (existingMember.rows.length > 0) {
+    throw new Error("User already in group or has not requested to join");
+  }
+  //if user is added, also add a +1 to member count
+  if(reply === 1){
+  await pool.query("UPDATE groups SET member_count = member_count + 1 WHERE idgroup = $1",[groups_idgroup]);
+  return await pool.query("UPDATE group_members SET group_request_timestamp = NULL, is_a_member = '1', join_date_timestamp=NOW() WHERE accounts_idaccount = $1 AND groups_idgroup = $2 RETURNING *",[accounts_idaccount, groups_idgroup]);
+} else if(reply === 0){
+  return await pool.query("DELETE FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2 RETURNING *",[accounts_idaccount, groups_idgroup]);
+} else throw new Error("error replying group request");
+};
+
+
+export {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, selectAllGroupJoinRequesters, 
+  insertGroupCreate, 
+  deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin, insertGroupReply};
 
 
 // await pool.query(

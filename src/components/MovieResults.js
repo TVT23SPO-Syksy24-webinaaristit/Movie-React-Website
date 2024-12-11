@@ -56,7 +56,7 @@ const MovieResults = () => {
         <div className="MovieResults">
         {movies && movies.length > 0 ? (
         movies.map(movie => (
-            <MovieCard key={movie.id} title={movie.title} posterPath={movie.poster_path} />
+            <MovieCard key={movie.id} movieId={movie.id} title={movie.title} posterPath={movie.poster_path} />
         ))
         ) : (
             <div className="noresultsmsg">No Results</div>
