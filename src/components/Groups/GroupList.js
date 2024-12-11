@@ -6,7 +6,7 @@ import "./GroupStyles.css"; // Import styles (if applicable)
 import { useNavigate } from "react-router-dom";
 
 const GroupList = ({ refresh, setRefresh }) => {
-  const { fetchAllGroups, joinGroup, leaveGroup, deleteGroup, sendGroupJoinRequest } = useGroups(); // Import the group context
+  const { fetchAllGroups, leaveGroup, deleteGroup, sendGroupJoinRequest } = useGroups(); // Import the group context
   const [groups, setGroups] = useState([]); // State to store the fetched groups
   const [loading, setLoading] = useState(true); // State to handle the loading state
   const [error, setError] = useState(null); // State to handle errors
@@ -36,10 +36,10 @@ const GroupList = ({ refresh, setRefresh }) => {
   }, [refresh, user.id]); // Trigger refetching when refresh or user ID changes
 
   // Handle the "Join Group" button click
-  const handleJoinGroup = async (groupId) => {
+  const handleJoinGroupRequest = async (groupId) => {
     try {
       await sendGroupJoinRequest(groupId, user.id); // Call the API to join a group
-      alert(`You successfully joined the group`);
+      alert(`Successfully sent join request to group`);
       setRefresh(prev => !prev); // Toggle refresh to trigger a re-fetch
     } catch (err) {
       console.error("Error joining group:", err);
@@ -106,7 +106,7 @@ const GroupList = ({ refresh, setRefresh }) => {
                   <button
                     className="join-button"
                     onClick={()=>
-                      handleJoinGroup(group.id)} // Pass the group ID
+                      handleJoinGroupRequest(group.id)} // Pass the group ID
                   >
                     ➕ Send request to join
                   </button>

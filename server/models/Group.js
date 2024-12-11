@@ -85,7 +85,11 @@ const deleteGroupLeave = async (groupId, userId) => {
   try {  
     const result = await pool.query("DELETE FROM group_members WHERE groups_idgroup = $1 AND accounts_idaccount = $2 RETURNING *", [groupId, userId]);
     //also remove -1 from member count
+    console.log(result.rows[0].is_a_member);
+    if(result.rows[0].is_a_member > 0){
+      console.log("member count altered");
     await pool.query("UPDATE groups SET member_count = member_count - 1 WHERE idgroup = $1",[groupId]);
+    }
     console.log('User removed from group successfully.');
   } catch (error) {
     console.error('Error removing user from group:', error);
@@ -153,6 +157,7 @@ const insertGroupJoinRequest = async(groups_idgroup, accounts_idaccount)=>{
   return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup, group_request_timestamp, is_a_member) VALUES ($1, $2,NOW(), $3) RETURNING *",[accounts_idaccount, groups_idgroup, 0]);
 };
 
+// CURRENTLY NOT IN USE AT ALL, used join and leave seperately instead.
 const insertGroupReply = async (groups_idgroup, accounts_idaccount,reply) => {
   const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2 AND is_a_member = '1'",[accounts_idaccount, groups_idgroup]);
   if (existingMember.rows.length > 0) {

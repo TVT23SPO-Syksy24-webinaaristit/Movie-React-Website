@@ -5,8 +5,8 @@ import { useGroups } from "../../contexts/GroupProvider";
 
 
 const GroupDetailsJoinRequesterCard = (props) =>{
-  const { joinGroup } = useGroups();
-    const handleJoinGroup = async(groupid,accountid) =>{
+  const { joinGroup, leaveGroup } = useGroups();
+    const handleAcceptToGroup = async(groupid,accountid) =>{
       try{
         await joinGroup(groupid,accountid);
         alert("User accepted to group");
@@ -14,57 +14,46 @@ const GroupDetailsJoinRequesterCard = (props) =>{
         console.error("Error accepting account to group:", error);
       alert("Failed to accept user to group. Please try again.");
       }
-    }
+    };
+
+    const handleDenyToGroup = async (groupid,accountid) => {
+      try {
+        await leaveGroup(groupid, accountid); // Call the API to leave a group
+        alert(`You successfully left the group`);
+      } catch (err) {
+        console.error("Error leaving group:", err);
+        alert("Failed to leave the group. Please try again.");
+      }
+    };
     
     return(
         <div>
 
             <p>requester: {props.username}</p>
+            <p>Time of request: {props.date}</p>
 
             {
             }
             {props.showAnswerButtons === 1 ? (
+              <div>
                 <button
                 className="join-button"
                 onClick={()=>
-                  handleJoinGroup(props.groupid,props.accountid)} // Pass the group ID
+                  handleAcceptToGroup(props.groupid,props.accountid)} // Pass the group ID
               >idaccount:{props.accountid}
                 ✅ Accept
               </button>
+              <button
+              className="join-button"
+              onClick={()=>
+                handleDenyToGroup(props.groupid,props.accountid)} // Pass the group ID
+            >idaccount:{props.accountid}
+              ❌ Deny
+            </button>
+            </div>
             ):(
                 <br />
             )}
-            {/* {group.isMember ? (
-                  <button className="join-button" disabled>
-                    ✅ Joined
-                  </button>
-                ) : (
-                  <button
-                    className="join-button"
-                    onClick={()=>
-                      handleJoinGroup(group.id)} // Pass the group ID
-                  >
-                    ➕ Join
-                  </button>
-                )}
-                {group.isMember && (
-                  group.isOwner ? (
-                    <button className="join-button" onClick={() => handleDeleteGroup(group.id)}>
-                      😭 Delete Group
-                    </button>
-                  ) : (
-                    <button
-                      className="join-button"
-                      onClick={() => handleLeaveGroup(group.id)} // Pass the group ID
-                    >
-                      😢 Leave
-                    </button>
-                  )
-                )} */}
-
-
-
-
         </div>
     )
 }

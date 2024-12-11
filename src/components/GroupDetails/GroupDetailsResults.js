@@ -48,11 +48,13 @@ const GroupDetailsResults = () => {
           console.log(error);
         }
       }
-
+      
       const fetchrequesters = async() =>{
         try{
           const response = await fetchrequesterDetails(id);
-          setJoinRequester(response.rows);
+          
+            setJoinRequester(response.rows);
+          
           }catch(error){
           console.log(error);
         }
@@ -63,13 +65,15 @@ const GroupDetailsResults = () => {
       fetchGroupMembers();
       fetchrequesters();
 
-  }, [id]);
+  }, [id,user.id,member.owner]);
   
   console.log(group);
   console.log(highlight);
   console.log(member);
   console.log(joinRequester);
   console.log(user);
+  console.log(parseInt(group.owner))
+  console.log(user.id)
 
   return (
     <div className="groupDetails">
@@ -104,7 +108,11 @@ const GroupDetailsResults = () => {
       ) : (
         <p>Loading highlights...</p>
       )}
-
+      {user.id == group.owner ?(
+       <p>Pending join requests:</p> 
+      ):(
+        <br />
+      )}
 
       {member && member.length > 0 ? (      // Group member can be kicked using the already existing groupLeave routing and front end implementation.
 
@@ -122,11 +130,13 @@ const GroupDetailsResults = () => {
         <p>Loading memberlist...</p>
       )}
 
-{joinRequester && joinRequester.length > 0 ? (      
+{joinRequester && user.id == group.owner && joinRequester.length > 0  ? (      
 
 joinRequester.map(joinRequester => (
   <GroupDetailsJoinRequesterCard key={joinRequester.id}
     username={joinRequester.username}
+    
+    date={new Date(joinRequester.group_request_timestamp).toUTCString()}
     showAnswerButtons={1}
     groupid={joinRequester.groups_idgroup}
     accountid={joinRequester.accounts_idaccount}
@@ -140,15 +150,28 @@ joinRequester.map(joinRequester => (
   
 
 ))
-) : (typeof (joinRequester) === "object" && !Array.isArray(joinRequester)) ? (
+) : (typeof (joinRequester) === "object" && !Array.isArray(joinRequester) && user.id == group.owner) ? (
+<div>
+  <p>List of sent join requests:</p>
 <GroupDetailsJoinRequesterCard key={joinRequester.id}
   username={joinRequester.username}
+  date={new Date(joinRequester.group_request_timestamp).toUTCString()}
+    showAnswerButtons={1}
+    groupid={joinRequester.groups_idgroup}
+    accountid={joinRequester.accounts_idaccount}
 />
-) : (
+</div>
+) : (user.id == group.owner)? (
 <p>Loading join requester list...</p>
+) : (
+  <br />
 )}
-
-  <DeleteGroupButton />
+  {user.id == group.owner ?(
+       <DeleteGroupButton groupid={group.idgroup}/>
+      ):(
+        <br />
+      )}
+  
     </div>
   )
 

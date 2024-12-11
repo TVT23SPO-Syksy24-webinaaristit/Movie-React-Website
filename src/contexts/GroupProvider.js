@@ -127,12 +127,12 @@ export const GroupProvider = ({ children }) => {
   }
 
   // Leave a group
-  const leaveGroup = async (groupId) => {
+  const leaveGroup = async (groupId,accountId) => {
     const headers = {
         Authorization: user.token, 
     };
     try {
-        const response = await axios.delete(`${API_URL}/groups/${groupId}/leave?accountId=${user.id}`, {
+        const response = await axios.delete(`${API_URL}/groups/${groupId}/leave?accountId=${accountId}`, {
             headers,
         });
       return response.data;
