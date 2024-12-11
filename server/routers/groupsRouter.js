@@ -2,7 +2,7 @@
 import { Router } from "express"
 import { auth } from "../helpers/auth.js";
 import { getAllGroups, getGroupDetails, getGroupHighlights, getGroupMembers, getGroupJoinRequesters, 
-    postGroupCreate, postGroupJoin, postJoinRequestReply,
+    postGroupCreate, postGroupJoin, postJoinRequest, postJoinRequestReply,
     deleteGroup, leaveGroup, deleteHighlight } from "../controllers/GroupsController.js";
 
 const router = Router();
@@ -22,6 +22,8 @@ router.get("/:id/requesters", getGroupJoinRequesters);
 router.post("/create", auth, postGroupCreate);
 
 router.post("/join", auth, postGroupJoin);
+
+router.post("/sendjoinrequest",auth, postJoinRequest);
 
 router.post("/requestreply", postJoinRequestReply);
 

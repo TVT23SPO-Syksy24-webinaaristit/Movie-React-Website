@@ -11,7 +11,7 @@ const selectAllGroups = async (userId) => {
       g.member_count,
       g.group_description,
       g.owner,
-      COALESCE(m.accounts_idaccount, NULL) AS is_member
+      m.is_a_member AS is_member
     FROM groups g
     LEFT JOIN group_members m ON g.idgroup = m.groups_idgroup AND m.accounts_idaccount = $1
   `, [userId]);
@@ -22,7 +22,7 @@ const selectAllGroups = async (userId) => {
     name: row.group_name,
     members: row.member_count,
     description: row.group_description,
-    isMember: row.is_member !== null, // If 'is_member' is not null, the user is a member
+    isMember: row.is_member, // If 'is_member' is not null, the user is a member
     isOwner: parseInt(row.owner) === parseInt(userId)// If 'owner' is the same as the user ID, the user is the owner
   }));
 };
@@ -136,13 +136,21 @@ const deleteGroupHighlight = async(highlightId) =>{
 
 
 const insertGroupJoin = async (groups_idgroup, accounts_idaccount) => {
-  const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2",[accounts_idaccount, groups_idgroup]);
+  const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2 AND is_a_member='1'",[accounts_idaccount, groups_idgroup]);
   if (existingMember.rows.length > 0) {
     throw new Error("User already in group");
   }
   //if user is added, also add a +1 to member count
   await pool.query("UPDATE groups SET member_count = member_count + 1 WHERE idgroup = $1",[groups_idgroup]);
-  return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup, is_a_member) VALUES ($1, $2, $3) RETURNING *",[accounts_idaccount, groups_idgroup, 1]);
+  return await pool.query("UPDATE group_members SET group_request_timestamp = NULL, is_a_member = '1', join_date_timestamp=NOW() WHERE accounts_idaccount = $1 AND groups_idgroup = $2",[accounts_idaccount, groups_idgroup]);
+};
+
+const insertGroupJoinRequest = async(groups_idgroup, accounts_idaccount)=>{
+  const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2",[accounts_idaccount, groups_idgroup]);
+  if (existingMember.rows.length > 0) {
+    throw new Error("User has already sent a join request or is in the group.");
+  }
+  return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup, group_request_timestamp, is_a_member) VALUES ($1, $2,NOW(), $3) RETURNING *",[accounts_idaccount, groups_idgroup, 0]);
 };
 
 const insertGroupReply = async (groups_idgroup, accounts_idaccount,reply) => {
@@ -162,7 +170,7 @@ const insertGroupReply = async (groups_idgroup, accounts_idaccount,reply) => {
 
 export {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, selectAllGroupJoinRequesters, 
   insertGroupCreate, 
-  deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin, insertGroupReply};
+  deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin, insertGroupJoinRequest, insertGroupReply};
 
 
 // await pool.query(

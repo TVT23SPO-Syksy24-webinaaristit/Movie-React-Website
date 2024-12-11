@@ -1,11 +1,19 @@
 import React, {useState} from "react";
 import { Link } from 'react-router-dom';
+import { useGroups } from "../../contexts/GroupProvider";
+
 
 
 const GroupDetailsJoinRequesterCard = (props) =>{
-    
-    const handleJoinGroup = (groupid) =>{
-
+  const { joinGroup } = useGroups();
+    const handleJoinGroup = async(groupid,accountid) =>{
+      try{
+        await joinGroup(groupid,accountid);
+        alert("User accepted to group");
+      }catch(error){
+        console.error("Error accepting account to group:", error);
+      alert("Failed to accept user to group. Please try again.");
+      }
     }
     
     return(
@@ -19,8 +27,8 @@ const GroupDetailsJoinRequesterCard = (props) =>{
                 <button
                 className="join-button"
                 onClick={()=>
-                  handleJoinGroup(props.groupid)} // Pass the group ID
-              >
+                  handleJoinGroup(props.groupid,props.accountid)} // Pass the group ID
+              >idaccount:{props.accountid}
                 ✅ Accept
               </button>
             ):(

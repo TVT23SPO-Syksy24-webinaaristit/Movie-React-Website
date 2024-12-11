@@ -129,6 +129,7 @@ joinRequester.map(joinRequester => (
     username={joinRequester.username}
     showAnswerButtons={1}
     groupid={joinRequester.groups_idgroup}
+    accountid={joinRequester.accounts_idaccount}
    /*  {user.id === group.owner ? (
       showAnswerButtons={1}
     ):(

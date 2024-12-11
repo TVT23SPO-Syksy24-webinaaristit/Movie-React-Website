@@ -76,18 +76,35 @@ export const GroupProvider = ({ children }) => {
 
 
   // Join a group
-  const joinGroup = async (groupId) => {
+  const joinGroup = async (groupId,accountid) => {
     const headers = {
         Authorization: user.token,
      };
     try {
       const response = await axios.post(`${API_URL}/groups/join`, {
         groups_idgroup: groupId,
-        accounts_idaccount: user.id,
+        accounts_idaccount: accountid,
       }, { headers });
       return response.data;
     } catch (error) {
       console.error('Error joining group:', error);
+      throw error;
+    }
+  };
+
+  const sendGroupJoinRequest = async (groupId) => {
+    const headers = {
+        Authorization: user.token,
+     };
+    try {
+      const response = await axios.post(`${API_URL}/groups/sendjoinrequest`, {
+        groups_idgroup: groupId,
+        accounts_idaccount: user.id,
+      }, { headers });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error requesting to join a group:', error);
       throw error;
     }
   };
@@ -195,7 +212,7 @@ export const GroupProvider = ({ children }) => {
   }
 
   return (
-    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, replyGroup, leaveGroup, createGroup, deleteGroup, 
+    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, sendGroupJoinRequest, replyGroup, leaveGroup, createGroup, deleteGroup, 
     fetchGroupDetails, fetchHighlightDetails, fetchGroupMemberDetails, fetchrequesterDetails }}>
       {children}
     </GroupContext.Provider>
