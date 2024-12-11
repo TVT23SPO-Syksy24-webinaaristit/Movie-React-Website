@@ -12,17 +12,17 @@ const getFavorites = async (req,res,next) => {
 
 const postFavorites = async (req, res, next) => {
     try {
-        const { idmovie, title, accounts_idaccount } = req.body;
+        const { idmovie, title, accounts_idaccount, poster_url } = req.body;
 
         // Validate required fields
-        if (!idmovie || !title || !accounts_idaccount) {
+        if (!idmovie || !title || !accounts_idaccount || !poster_url) {
             const error = new Error("Missing required fields: idmovie, title, or accounts_idaccount");
             error.statusCode = 400;
             return next(error);
         }
 
         // Call the model
-        const result = await insertFavorites( idmovie, title, accounts_idaccount);
+        const result = await insertFavorites( idmovie, title, accounts_idaccount, poster_url);
         return res.status(200).json({ id: result.rows[0].id });
     } catch (error) {
         console.error("Error in postFavorites:", error);

@@ -21,7 +21,7 @@ const MovieCard = (props) => {
             <Link className="detailsLink" to={`:${props.movieId}`}>
             <h3>{props.title}</h3>
             </Link>
-            <FavoriteButton isFavorite={isFavorite} onToggleFavorite={toggleFavorite} idmovie={props.movieId} title={props.title} />
+            <FavoriteButton isFavorite={isFavorite} onToggleFavorite={toggleFavorite} idmovie={props.movieId} title={props.title} posterPath={props.posterPath} />
         </div>
     );
 };

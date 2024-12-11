@@ -18,7 +18,7 @@ export function useFavorites() {
 export const FavoriteProvider = ({ children }) => {
   const { user } = useContext(UserContext); 
 
-  const addToFavorites = async (idmovie, title, ) => {
+  const addToFavorites = async (idmovie, title, posterPath ) => {
     
 
     if (!user || !user.id) {
@@ -37,6 +37,7 @@ export const FavoriteProvider = ({ children }) => {
         idmovie: 5,
         title: "miau",
         accounts_idaccount: 2,
+        poster_url:posterPath
 
 
       };
