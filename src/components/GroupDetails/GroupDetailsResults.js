@@ -11,7 +11,7 @@ import DeleteGroupButton from "./DeleteGroupButton";
 
 const GroupDetailsResults = () => {
   const { fetchGroupDetails, fetchHighlightDetails, fetchGroupMemberDetails, fetchrequesterDetails } = useGroups();
-  const { id } = useParams(); // Get the group ID from the URL
+  const { groupid } = useParams(); // Get the group ID from the URL
   const [group, setGroup] = useState([]);
   const [highlight, setHighlight] = useState([]);
   const [member, setMember] = useState([]);
@@ -24,7 +24,7 @@ const GroupDetailsResults = () => {
       const fetchGroupInfo = async() =>{
         try{
           console.log("fetchGroupInfo")
-          const response = await fetchGroupDetails(id);
+          const response = await fetchGroupDetails(groupid);
           console.log(response.rows[0]);
           setGroup(response.rows[0])
         }catch(error){
@@ -34,7 +34,7 @@ const GroupDetailsResults = () => {
 
       const fetchHighlights = async() =>{
         try{
-          const response = await fetchHighlightDetails(id);
+          const response = await fetchHighlightDetails(groupid);
           setHighlight(response.rows);
           }catch(error){
           console.log(error);
@@ -42,7 +42,7 @@ const GroupDetailsResults = () => {
       }
       const fetchGroupMembers = async() =>{
         try{
-          const response = await fetchGroupMemberDetails(id);
+          const response = await fetchGroupMemberDetails(groupid);
           setMember(response.rows);
           }catch(error){
           console.log(error);
@@ -51,7 +51,7 @@ const GroupDetailsResults = () => {
       
       const fetchrequesters = async() =>{
         try{
-          const response = await fetchrequesterDetails(id);
+          const response = await fetchrequesterDetails(groupid);
           
             setJoinRequester(response.rows);
           
@@ -65,7 +65,7 @@ const GroupDetailsResults = () => {
       fetchGroupMembers();
       fetchrequesters();
 
-  }, [id,user.id,member.owner]);
+  }, [groupid,user.id,member.owner]);
   
   console.log(group);
   console.log(highlight);
@@ -181,15 +181,13 @@ joinRequester.map(joinRequester => (
 /*
 - Todo list:
 
-request-to-join-a-group -button
 
-group deletion button
 
 remove a member from group
 
-accept and deny join requests
+add highlights from movies and from screenings
 
-
+remove highlight
 
 
 */
