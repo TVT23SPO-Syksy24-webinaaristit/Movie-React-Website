@@ -1,0 +1,10 @@
+.container-groupdetails{
+    min-height:100vh;
+    display:flex;
+    flex: 1;
+
+}
+
+.content {
+    flex: 1; /* Push the footer to the bottom if content is short */
+  }

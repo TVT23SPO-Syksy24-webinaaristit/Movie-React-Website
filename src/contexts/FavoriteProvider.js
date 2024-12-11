@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { createContext, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
+
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 const FavoriteContext = createContext();
@@ -17,23 +18,31 @@ export function useFavorites() {
 export const FavoriteProvider = ({ children }) => {
   const { user } = useContext(UserContext); 
 
-  const addToFavorites = async (idmovie, idfavorite, title, ) => {
+  const addToFavorites = async (idmovie, title, ) => {
     
 
     if (!user || !user.id) {
       throw new Error("User is not logged in or user ID is missing.");
     }
 
+    
+
+
     const headers = {Authorization: user.token};
 
-    const id = user.id
+    
     try {
+      
       const data = {
-        idmovie,
-        idfavorite, // Include idfavorite if your API needs it
-        title,
-        id
+        idmovie: 5,
+        title: "miau",
+        accounts_idaccount: 2,
+
+
       };
+
+      
+      
       // console.log(accounts_idaccount)
       // data.accounts_idaccount = parseInt(accounts_idaccount);
       // console.log(accounts_idaccount)

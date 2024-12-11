@@ -10,20 +10,25 @@ const getFavorites = async (req,res,next) => {
     }
 }
 
-const postFavorites = async(req,res,next) => {
+const postFavorites = async (req, res, next) => {
     try {
-        if (!req.body){
-            const error = new Error('error in controller', error)
-            error.statusCode = 400
-            return next(error)
+        const { idmovie, title, accounts_idaccount } = req.body;
+
+        // Validate required fields
+        if (!idmovie || !title || !accounts_idaccount) {
+            const error = new Error("Missing required fields: idmovie, title, or accounts_idaccount");
+            error.statusCode = 400;
+            return next(error);
         }
-        const result = await insertFavorites(req.body)
-        return res.status(200).json({id: result.rows[0].id})
-    }   catch (error) {
-        console.log(error)
-        return next(error)
+
+        // Call the model
+        const result = await insertFavorites( idmovie, title, accounts_idaccount);
+        return res.status(200).json({ id: result.rows[0].id });
+    } catch (error) {
+        console.error("Error in postFavorites:", error);
+        return next(error);
     }
-}
+};
 
 const deleteFavorites = async(req,res,next) => {
     try {

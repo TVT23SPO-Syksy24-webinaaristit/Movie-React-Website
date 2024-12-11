@@ -4,10 +4,13 @@ import axios from "axios";
 import MovieCard from "./MovieCard";
 import { useFilters } from "../contexts/useFilters";
 import useDebounce from "../contexts/useDebounce";
+import FavoriteButton from "./FavoriteButton";
 
 const MovieResults = () => {
     const {search, filters, searchToggle, page, totalPages, setTotalPages} = useFilters();
     const [movies, setMovies] = useState([]);
+    const [favoriteMovies, setFavoriteMovies] = useState(new Set());
+
 
     const debouncedSearch = useDebounce(search,1000);
     const debouncedFilters = useDebounce(filters,1000);
@@ -52,12 +55,28 @@ const MovieResults = () => {
         console.log(movies)
     }, [debouncedSearch, debouncedFilters]);
 
+    const toggleFavorite = (id) => {
+        setFavoriteMovies((prev) => {
+            const newFavorites = new Set(prev);
+            if (newFavorites.has(id)) {
+                newFavorites.delete(id); // Remove favorite
+            } else {
+                newFavorites.add(id); // Add favorite
+            }
+            return newFavorites;
+        });
+    };
+
+    const isFavorite = (id) => favoriteMovies.has(id);
+
+    console.log("Movie Data:",movies);
     return(
         <div className="MovieResults">
         {movies && movies.length > 0 ? (
         movies.map(movie => (
             <MovieCard key={movie.id} movieId={movie.id} title={movie.title} posterPath={movie.poster_path} />
         ))
+        
         ) : (
             <div className="noresultsmsg">No Results</div>
             

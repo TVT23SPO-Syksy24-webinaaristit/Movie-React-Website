@@ -16,8 +16,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
 import UserProvider from './contexts/UserProvider.js';
 import ProtectedRoute from './components/Authentication/ProtectedRoute.js';
-import ThemeProvider from './contexts/ThemeProvider.js';
 import { FavoriteProvider } from './contexts/FavoriteProvider.js';
+import ThemeProvider from './contexts/ThemeProvider.js';
 // import dotenv from 'dotenv';
 // import routes from './routers/router.js';
 
@@ -99,10 +99,10 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <ThemeProvider>
-      <FavoriteProvider>
-      <RouterProvider router={router} />
+        <FavoriteProvider>
+          <RouterProvider router={router} />
+        </FavoriteProvider>
       </ThemeProvider>
-      </FavoriteProvider>
     </UserProvider>
   </React.StrictMode>
 );

@@ -1,5 +1,4 @@
 .delete-group-button {
-    position: absolute;
     bottom: 50%; 
     right: 10%; 
     background-color: red;
@@ -8,6 +7,8 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    z-index: 100;
+    position: absolute;
   }
   .delete-group-button:hover {
     background-color: darkred;

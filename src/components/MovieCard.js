@@ -5,12 +5,10 @@ import FavoriteButton from "./FavoriteButton";
 import { Link } from 'react-router-dom';
 
 const MovieCard = (props) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-
-    const toggleFavorite = () => {
-        setIsFavorite(!isFavorite);
-      };
-
+    
+    
+   
+    
     return(
         <div className="MovieCard">
             <div className="moviecardposter">
