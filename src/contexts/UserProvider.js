@@ -34,6 +34,7 @@ export default function UserProvider({children}) {
             setUser(response.data);
             sessionStorage.setItem("user", JSON.stringify(response.data));
             //console.log(response.data);
+            localStorage.setItem("username", response.data.username);
         } catch(error) {
             setUser({email: "", password: "", id: null});
             throw error
@@ -43,6 +44,8 @@ export default function UserProvider({children}) {
     const logOut = async () => {
         setUser({email: "", password: ""});
         sessionStorage.setItem("user", JSON.stringify({"email": "","username": ""}));
+        localStorage.removeItem("username");
+        window.location.reload();
     }
 
     const deleteAccount = async()=>{

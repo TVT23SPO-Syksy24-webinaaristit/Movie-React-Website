@@ -74,17 +74,7 @@ const MovieResults = () => {
         <div className="MovieResults">
         {movies && movies.length > 0 ? (
         movies.map(movie => (
-
-             <div key={movie.id} className="MovieCardWithFavorite">
-                        <MovieCard title={movie.title} posterPath={movie.poster_path} />
-                        <FavoriteButton
-                            isFavorited={isFavorite(movie.id)}
-                            idmovie={movie.id}
-                            title={movie.title}
-                            onToggleFavorite={() => toggleFavorite(movie.id)}
-                        />
-                    </div>
-            
+            <MovieCard key={movie.id} movieId={movie.id} title={movie.title} posterPath={movie.poster_path} />
         ))
         
         ) : (

@@ -1,3 +1,47 @@
+.Home {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    min-height: 100vh; /* Ensure the entire screen height is covered */
+  }
+  
+  .content {
+    flex: 1; /* Push the footer to the bottom if content is short */
+    display: flex; /* Add flexbox to center the content */
+    flex-direction: column; /* Stack text and movie carousel vertically */
+    justify-content: center; /* Vertically center the content */
+    align-items: center; /* Horizontally center the content */
+    width: 100%;
+    padding-top:2%
+  }
+  
+  footer {
+    flex-shrink: 0; /* Ensure the footer doesn't shrink or collapse */
+  }
+  
+  /* Style for the "Welcome" text */
+.welcomeuser-text {
+  font-size: 200%; /* Large font size for emphasis */
+  font-weight: bold; /* Make it bold */
+  color: #7c34f1; /* Green color for a welcoming tone */
+  margin-bottom: 10px; /* Add some spacing below */
+  text-align: center; /* Center-align the text */
+}
 
+/* Style for the username */
+.welcomeuser-text + span {
+  font-size: 250%; /* Slightly smaller than the welcome text */
+  font-weight: normal;
+  color: #7c34f1; /* Darker color for contrast */
+  text-align: center; /* Center-align the text */
+  display: block; /* Make it behave like a block element */
+}
 
-
+/* Style for the "Please log in" text */
+.pleaselogin-text {
+  font-size: 200%; /* Similar to welcome text size */
+  font-weight: bold;
+  color: #7c34f1; /* A noticeable red-orange color for urgency */
+  margin-bottom: 10px; /* Add some spacing below */
+  text-align: center; /* Center-align the text */
+  cursor:pointer;
+}

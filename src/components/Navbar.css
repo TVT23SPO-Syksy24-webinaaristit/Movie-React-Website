@@ -1,35 +1,50 @@
 /* navbar.css */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+.dark {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+}
+
+.logo{
+  cursor: pointer;
+  padding: 2%;
+}
+
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   background-color: #333;
-  padding: 10px;
+  padding: 5px 5%;
   color: #f2f2f2;
+  min-width: 100%;
 }
 
-.burger-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.nav-links {
+  flex: 1;
+  justify-content: center;
+
+}
+
+.nav-btn {
+  justify-content: center;
+  background-color: transparent;
+  color: white;
+  border: 1% solid white;
+  padding: 0,5% 1%;
+  border-radius: 3%;
   cursor: pointer;
+  font-size: 1rem;
 }
 
-.burger-menu span {
-  display: block;
-  width: 25px;
-  height: 3px;
-  background-color: #f2f2f2;
-}
-
-.search-field {
-  padding: 8px;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-  width: 100%;
-  max-width: 300px;
+.nav-btn:hover {
+  background-color: white;
+  color: #333;
 }
 
 .dropdown {
@@ -61,15 +76,21 @@
 .right-icons {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 15px;
 }
 
-.profile-icon {
+.user-icon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   width: 30px;
   height: 30px;
   border-radius: 50%;
   background-color: #666;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .theme-toggle {
@@ -82,6 +103,7 @@
 
 .flag-dropdown {
   position: relative;
+  cursor: pointer;
 }
 
 .flag-icon {
@@ -109,9 +131,33 @@
 
 .flag:hover {
   transform: scale(1.1);
+  cursor: pointer;
 }
 
-body.dark-theme {
-  background-color: #111;
-  color: #f2f2f2;
+.dropdown_profile {
+  position: absolute;
+  top: 7%; /* Adjust this based on your layout */
+  right: 1%; /* Adjust for positioning next to the icon */
+  background-color: #333;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+  width: 10%; /* Adjust width as needed */
+  height: 7%;
 }
+
+.dropdown-profile-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  width: 50%; /* Adjust size as needed */
+  height: 50%;
+  border-radius: 1000%;
+}
+

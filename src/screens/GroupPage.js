@@ -17,13 +17,16 @@ const GroupPage = () => {
   };
 
   return (
+    <div>
+    <Navbar />
     <GroupProvider>  {/* Wrap GroupPage with GroupProvider */}
       <div className="GroupPage">
-        <Navbar />
         <GroupList refresh={refresh} setRefresh={setRefresh} />
         <GroupCreation onGroupCreated={handleGroupCreated} />
       </div>
     </GroupProvider>
+    <Footer />
+    </div>
   );
 }
 
