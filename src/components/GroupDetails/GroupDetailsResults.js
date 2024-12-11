@@ -11,7 +11,7 @@ import DeleteGroupButton from "./DeleteGroupButton";
 
 const GroupDetailsResults = () => {
   const { fetchGroupDetails, fetchHighlightDetails, fetchGroupMemberDetails, fetchrequesterDetails } = useGroups();
-  const { groupid } = useParams(); // Get the group ID from the URL
+  const { id } = useParams(); // Get the group ID from the URL
   const [group, setGroup] = useState([]);
   const [highlight, setHighlight] = useState([]);
   const [member, setMember] = useState([]);
@@ -24,7 +24,7 @@ const GroupDetailsResults = () => {
       const fetchGroupInfo = async() =>{
         try{
           console.log("fetchGroupInfo")
-          const response = await fetchGroupDetails(groupid);
+          const response = await fetchGroupDetails(id);
           console.log(response.rows[0]);
           setGroup(response.rows[0])
         }catch(error){
@@ -34,7 +34,7 @@ const GroupDetailsResults = () => {
 
       const fetchHighlights = async() =>{
         try{
-          const response = await fetchHighlightDetails(groupid);
+          const response = await fetchHighlightDetails(id);
           setHighlight(response.rows);
           }catch(error){
           console.log(error);
@@ -42,7 +42,7 @@ const GroupDetailsResults = () => {
       }
       const fetchGroupMembers = async() =>{
         try{
-          const response = await fetchGroupMemberDetails(groupid);
+          const response = await fetchGroupMemberDetails(id);
           setMember(response.rows);
           }catch(error){
           console.log(error);
@@ -51,7 +51,7 @@ const GroupDetailsResults = () => {
       
       const fetchrequesters = async() =>{
         try{
-          const response = await fetchrequesterDetails(groupid);
+          const response = await fetchrequesterDetails(id);
           
             setJoinRequester(response.rows);
           
@@ -65,7 +65,7 @@ const GroupDetailsResults = () => {
       fetchGroupMembers();
       fetchrequesters();
 
-  }, [groupid,user.id,member.owner]);
+  }, [id,user.id,member.owner]);
   
   console.log(group);
   console.log(highlight);
