@@ -35,14 +35,6 @@ export const FavoriteProvider = ({ children }) => {
 
 
       };
-      console.log(data)
-
-      
-      
-      // console.log(accounts_idaccount)
-      // data.accounts_idaccount = parseInt(accounts_idaccount);
-      // console.log(accounts_idaccount)
-      // console.log(`${API_URL}/favorites/postfavorites`)
       const response = await axios.post(`${API_URL}/favorites/postfavorites`, data, { headers });
       return response.data;
     } catch (error) {

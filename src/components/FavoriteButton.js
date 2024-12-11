@@ -15,11 +15,10 @@ const FavoriteButton = ({ isFavorited, idmovie, title, posterUrl }) => {
         return;
     }
 
-    console.log("ID Movie:", idmovie); // Log idmovie before calling API
-    console.log("User ID:", user.id); // Log user ID
-    console.log("title:", title);
-    console.log("poster url:", posterUrl);
-
+    // if (isFavorite){
+    //   setError("This movie is already in your favorites.");
+    //   return;
+    // }
     try {
         const response = await addToFavorites(idmovie, title, posterUrl);
         if (!response) {

@@ -23,7 +23,7 @@ const postFavorites = async (req, res, next) => {
 
         // Call the model
         const result = await insertFavorites( idmovie, title, accounts_idaccount, poster_url);
-        return res.status(200).json({ id: result.rows[0].id });
+        return res.status(200).json({ id: result.rows[0].id });//Unnecessary and annoying error?
     } catch (error) {
         console.error("Error in postFavorites:", error);
         return next(error);
