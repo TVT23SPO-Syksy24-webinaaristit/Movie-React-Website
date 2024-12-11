@@ -1,7 +1,7 @@
 .Home {
     display: flex;
     flex-direction: column; /* Stack items vertically */
-    min-height: 100%; /* Ensure the entire screen height is covered */
+    min-height: 100vh; /* Ensure the entire screen height is covered */
   }
   
   .content {
