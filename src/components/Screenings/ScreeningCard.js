@@ -13,7 +13,7 @@ const ScreeningCard = (props) => {
     }
     return (
         <div className="screeningCard">
-            <Link className="link" to={props.link_url}>
+            <Link className="link" to={props.finnkinoUrl}>
             <div className="titleLink">
             <h3>{props.title}</h3>
             </div>

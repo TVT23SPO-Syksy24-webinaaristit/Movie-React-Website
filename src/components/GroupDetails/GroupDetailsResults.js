@@ -108,12 +108,8 @@ const GroupDetailsResults = () => {
       ) : (
         <p>Loading highlights...</p>
       )}
-      {user.id == group.owner ?(
-       <p>Pending join requests:</p> 
-      ):(
-        <br />
-      )}
-
+      
+      <p><b>Group members</b></p> 
       {member && member.length > 0 ? (      // Group member can be kicked using the already existing groupLeave routing and front end implementation.
 
         member.map(member => (
@@ -130,6 +126,11 @@ const GroupDetailsResults = () => {
         <p>Loading memberlist...</p>
       )}
 
+{user.id == group.owner ?(
+       <p><b>Pending join requests:</b></p> 
+      ):(
+        <br />
+      )}
 {joinRequester && user.id == group.owner && joinRequester.length > 0  ? (      
 
 joinRequester.map(joinRequester => (
