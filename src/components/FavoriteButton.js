@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useFavorites } from "../contexts/FavoriteProvider";
 import { useUser } from "../contexts/useUser";
 
-const FavoriteButton = ({ isFavorited, idmovie, title, posterPath }) => {
+const FavoriteButton = ({ isFavorited, idmovie, title, posterUrl }) => {
   const { user } = useUser();
   const { addToFavorites } = useFavorites();
   const [error, setError] = useState(null);
@@ -18,10 +18,10 @@ const FavoriteButton = ({ isFavorited, idmovie, title, posterPath }) => {
     console.log("ID Movie:", idmovie); // Log idmovie before calling API
     console.log("User ID:", user.id); // Log user ID
     console.log("title:", title);
-    console.log("poster url:", posterPath)
+    console.log("poster url:", posterUrl);
 
     try {
-        const response = await addToFavorites(idmovie, title);
+        const response = await addToFavorites(idmovie, title, posterUrl);
         if (!response) {
             setError("Failed to add favorites.");
         } else {

@@ -18,29 +18,24 @@ export function useFavorites() {
 export const FavoriteProvider = ({ children }) => {
   const { user } = useContext(UserContext); 
 
-  const addToFavorites = async (idmovie, title, posterPath ) => {
+  const addToFavorites = async (idmovie, title, posterUrl,  ) => {
     
 
     if (!user || !user.id) {
       throw new Error("User is not logged in or user ID is missing.");
     }
-
-    
-
-
     const headers = {Authorization: user.token};
-
-    
     try {
       
       const data = {
         idmovie: 5,
         title: "miau",
-        accounts_idaccount: 2,
-        poster_url:posterPath
+        accounts_idaccount: 20,
+        poster_url: posterUrl,
 
 
       };
+      console.log(data)
 
       
       
