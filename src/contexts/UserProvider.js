@@ -52,7 +52,7 @@ export default function UserProvider({children}) {
         const headers = {headers: {Authorization: user.token}}
         try{
             await axios.get(url + `/user/delete/${user.id}`,headers)   
-            setUser({email: "", password: ""});
+            logOut();
             alert("Account has been deleted");
         } catch(error){
             throw error.response.data;
