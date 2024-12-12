@@ -81,6 +81,18 @@ const insertGroupCreate = async ({ owner, name, description }) => {
   }
 };
 
+const insertHighlightCreate = async(groups_idgroup, accounts_idaccount, poster_url, title, idmovie_or_event, description, source_link_url) =>{
+  try{
+    const groupResult = await pool.query("INSERT INTO group_highlights (groups_idgroup, accounts_idaccount, poster_url, title, idmovie_or_event, description, source_link_url, highlight_creation_timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7,NOW() ) RETURNING *",[groups_idgroup, accounts_idaccount, poster_url, title, idmovie_or_event, description, source_link_url]);
+    return groupResult;
+  }catch(error){
+    console.error("Error creating highlight", error);
+    throw error;
+  }
+
+
+}
+
 const deleteGroupLeave = async (groupId, userId) => {
   try {  
     const result = await pool.query("DELETE FROM group_members WHERE groups_idgroup = $1 AND accounts_idaccount = $2 RETURNING *", [groupId, userId]);
@@ -174,7 +186,7 @@ const insertGroupReply = async (groups_idgroup, accounts_idaccount,reply) => {
 
 
 export {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, selectAllGroupJoinRequesters, 
-  insertGroupCreate, 
+  insertGroupCreate, insertHighlightCreate, 
   deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin, insertGroupJoinRequest, insertGroupReply};
 
 

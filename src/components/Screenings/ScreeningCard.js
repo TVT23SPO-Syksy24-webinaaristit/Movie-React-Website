@@ -1,16 +1,9 @@
 import React from "react";
 import "./ScreeningCard.css"
 import { Link } from 'react-router-dom'
-
+import AddToGroupHighlightDropdown from "../AddToGroupHighlightDropdown";
 
 const ScreeningCard = (props) => {
-
-    const handleChange = (groupid)=>{
-        if(groupid !== '0'){
-        alert("Shared to group!")
-        console.log(groupid)
-        }
-    }
     return (
         <div className="screeningCard">
             <Link className="link" to={props.finnkinoUrl}>
@@ -23,18 +16,8 @@ const ScreeningCard = (props) => {
             <div className="screeningPoster">
                 <img src={props.image} alt="Screening" className="poster"></img>
             </div> 
+            <AddToGroupHighlightDropdown />
             
-            <select onChange={(group) => handleChange(group.target.value,"Date")}>
-                <option value={0}>Share screening to group</option>
-                {
-                    props.groups.map(group=>(
-                        
-                        <option key={group.id} value={group.id}>{group.name}</option>
-                        
-                    ))
-                }
-
-                </select>
         </div>
     )
 }

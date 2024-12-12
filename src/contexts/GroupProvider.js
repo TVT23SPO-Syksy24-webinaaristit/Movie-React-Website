@@ -109,6 +109,46 @@ export const GroupProvider = ({ children }) => {
     }
   };
 
+  const createHighlight = async(groupId,poster,titletext,idevent,descriptiontext,source_link) =>{
+    const headers = {Authorization: user.token};
+    try {
+    const data = {
+      groups_idgroup: groupId,
+      accounts_idaccount: user.id,
+      poster_url: poster,
+      title: titletext,
+      idmovie_or_event: idevent,
+      description: descriptiontext,
+      source_link_url: source_link
+    };
+    console.log(data)
+
+    
+      const response = await axios.post(`${API_URL}/groups/highlightcreate`, data, { headers });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating a highlight:', error);
+      throw error;
+    }
+  };
+
+  const deleteHighlight = async (highlightId) => {
+    const headers = {
+        Authorization: user.token,
+    };
+    console.log(highlightId)
+    try {
+      const response = await axios.delete(`${API_URL}/groups/${highlightId}/highlight`,
+        { headers });
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting highlight:', error);
+      throw error;
+    }
+  };
+
+  //NOT IN USE.
   const replyGroup = async(groupId,accountId,reply) => {
     const headers = {
       
@@ -212,7 +252,8 @@ export const GroupProvider = ({ children }) => {
   }
 
   return (
-    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, sendGroupJoinRequest, replyGroup, leaveGroup, createGroup, deleteGroup, 
+    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, sendGroupJoinRequest, replyGroup, leaveGroup, createGroup, createHighlight, 
+    deleteHighlight, deleteGroup, 
     fetchGroupDetails, fetchHighlightDetails, fetchGroupMemberDetails, fetchrequesterDetails }}>
       {children}
     </GroupContext.Provider>

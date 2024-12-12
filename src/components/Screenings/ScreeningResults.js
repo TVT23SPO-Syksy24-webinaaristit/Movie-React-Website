@@ -1,17 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ScreeningCard from "./ScreeningCard"
 import "./ScreeningResults.css"
-import { useGroups } from "../../contexts/GroupProvider"
-import { useUser } from "../../contexts/useUser";
 const ScreeningResults = () =>{
-    const { fetchAllGroups } = useGroups();
     const [areas, setAreas] = useState([]);
     const [selectedArea, setSelectedArea] = useState([]);
     const [screenings, setScreenings] = useState([]);
     const [dates, setDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState([]);
-    const [groups, setGroups] = useState([]); // State to store the fetched groups
-    const { user } = useUser();// Get the user object from the context
 
 const xmlToJson = useCallback((node) =>{
         const json = {}
@@ -106,24 +101,8 @@ const xmlToJson = useCallback((node) =>{
         .catch(error =>{
             errorHandler(error);
         })
-
-        const fetchGroups = async() =>{
-            try{
-                const response = await fetchAllGroups(user.id); // Pass user ID to fetchAllGroups
-                if (response && Array.isArray(response)) {
-                  setGroups(response); // Set the groups array
-                    setGroups(grouplist=>grouplist.filter(item => item.isMember > 0)) //Update groups to only show groups the user is a member of
-                } else{
-                    setGroups([])
-                }
-                    
-                
-            }catch(error){
-                errorHandler(error);
-            } 
-          };
-        fetchGroups(); 
-    }, [parseXML,user.id])
+        
+    }, [parseXML])
 
     const errorHandler = (error)=>{
         error===null ? (console.log("unknown error")) : (console.log(error.response))
@@ -149,7 +128,7 @@ const xmlToJson = useCallback((node) =>{
         }
 
     }
-    console.log(groups);
+    
     return(
         <div className="screeningResults">
             <h1>Finnkino Screenings</h1>
@@ -185,8 +164,6 @@ const xmlToJson = useCallback((node) =>{
                             <ScreeningCard  key={screenings.ID} 
                             title={screenings.Title} 
                             finnkinoUrl={screenings.EventURL}
-                            groups={groups}
-                            userid={user.id}
                             hours={new Date(screenings.dttmShowStart).getHours()} 
                             minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
                             image={screenings.Images.EventMediumImagePortrait}
@@ -196,8 +173,6 @@ const xmlToJson = useCallback((node) =>{
                         <ScreeningCard  key={screenings.ID} 
                             title={screenings.Title} 
                             finnkinoUrl={screenings.EventURL}
-                            groups={groups}
-                            userid={user.id}
                             hours={new Date(screenings.dttmShowStart).getHours()} 
                             minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
                             image={screenings.Images.EventMediumImagePortrait}

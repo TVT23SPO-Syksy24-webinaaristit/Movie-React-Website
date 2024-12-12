@@ -23,9 +23,7 @@ const GroupDetailsResults = () => {
 
       const fetchGroupInfo = async() =>{
         try{
-          console.log("fetchGroupInfo")
           const response = await fetchGroupDetails(id);
-          console.log(response.rows[0]);
           setGroup(response.rows[0])
         }catch(error){
           console.log(error);
@@ -72,8 +70,6 @@ const GroupDetailsResults = () => {
   console.log(member);
   console.log(joinRequester);
   console.log(user);
-  console.log(parseInt(group.owner))
-  console.log(user.id)
 
   return (
     <div className="groupDetails">
@@ -95,6 +91,7 @@ const GroupDetailsResults = () => {
             link_url={highlight.source_link_url}
             image={highlight.poster_url}
             account={highlight.username}
+            highlightid={highlight.idgroup_highlight}
           />
         ))
 
@@ -104,6 +101,7 @@ const GroupDetailsResults = () => {
           link_url={highlight.source_link_url}
           image={highlight.poster_url}
           account={highlight.username}
+          highlightid={highlight.idgroup_highlight}
         />
       ) : (
         <p>Loading highlights...</p>
