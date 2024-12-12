@@ -5,6 +5,7 @@ import LogOutButton from './LogOutButton';
 import { ThemeContext } from '../contexts/ThemeContext';
 import user_icon from './Assets/person.png';
 import Flag from 'react-world-flags';
+import { useUser } from '../contexts/useUser';
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -12,11 +13,11 @@ const Navbar = () => {
   const [isPfpDropDownOpen, setIsPfpDropDownOpen] = useState(false);
   const { theme, toggleTheme} = useContext(ThemeContext);
   const [username, setUsername] = useState(null);
-
+  const { user } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
+    const storedUsername = user.username;
     if (storedUsername) {
     setUsername(storedUsername);
   } else {
