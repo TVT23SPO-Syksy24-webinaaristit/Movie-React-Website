@@ -5,11 +5,15 @@ import MovieCard from "./MovieCard";
 import { useFilters } from "../contexts/useFilters";
 import useDebounce from "../contexts/useDebounce";
 import FavoriteButton from "./FavoriteButton";
+import { useFavorites } from "../contexts/FavoriteProvider";
+import { useUser } from "../contexts/useUser";
 
 const MovieResults = () => {
     const {search, filters, searchToggle, page, totalPages, setTotalPages} = useFilters();
     const [movies, setMovies] = useState([]);
     const [favoriteMovies, setFavoriteMovies] = useState(new Set());
+    const {user } = useUser();
+    const {getFavorites} = useFavorites();
 
 
     const debouncedSearch = useDebounce(search,1000);
@@ -67,6 +71,19 @@ const MovieResults = () => {
         });
     };
 
+    const fetchFavorites = async () => {
+        try {
+          const favorites = await getFavorites();
+          setFavoriteMovies(new Set(favorites.map(fav => fav.idmovie)));
+        } catch (error) {
+          console.error("Error fetching favorites:", error);
+        }
+      };
+    
+      useEffect(() => {
+        fetchFavorites();
+      }, [getFavorites]);
+
     const isFavorite = (id) => favoriteMovies.has(id);
 
     console.log("Movie Data:",movies);
@@ -74,7 +91,13 @@ const MovieResults = () => {
         <div className="MovieResults">
         {movies && movies.length > 0 ? (
         movies.map(movie => (
-            <MovieCard key={movie.id} movieId={movie.id} title={movie.title} posterPath={movie.poster_path} />
+            <MovieCard
+            key={movie.id}
+            movieId={movie.id}
+            title={movie.title}
+            posterPath={movie.poster_path}
+            onFavoriteAdded={fetchFavorites}
+            />
         ))
         
         ) : (
