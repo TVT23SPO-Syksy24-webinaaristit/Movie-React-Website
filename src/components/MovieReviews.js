@@ -7,7 +7,7 @@ const MovieReviews = (props) => {
     const url = process.env.REACT_APP_API_URL;
     const { user } = useUser();
     const [reviews, setReviews] = useState([]);
-    const [stars, setStars] = useState([]);
+    const [stars, setStars] = useState(null);
     const [reviewText, setReviewText] = useState("");
     const hasRun = useRef(false);
     const reviewSubmitted = false;
@@ -49,11 +49,13 @@ const MovieReviews = (props) => {
             Authorization: user.token,
         };
         try{
-            const response = axios.post(url+"/reviews/add",json,{ headers });
-            console.log(response);
-            return response;
+            const response = await axios.post(url+"/reviews/add",json,{ headers });
+            if(response.status === 200){
+                document.getElementsByClassName("reviewsubmit")[0].innerHTML=`<h3>Review submitted successfully</h3>`;
+            }
         } catch(error) {
-            throw error.response.data;
+            console.error(error.response);
+            alert(error.response.data.error);
         }
     }
 
@@ -66,10 +68,9 @@ const MovieReviews = (props) => {
       };
 
     const submitHandler = () => {
-        const response = postReview();
-        document.getElementsByClassName("reviewsubmit")[0].innerHTML=`<h3>Review submitted</h3>`;
+        postReview();
     }
-    
+
     return(
         <div className="moviereviews">
             <div className="reviewresults">
@@ -105,7 +106,8 @@ const MovieReviews = (props) => {
                     rows={5} 
                     columns={50}
                     onChange={inputHandler}
-                    placeholder="Review text here..."
+                    placeholder="Review text here...(max. 1000 characters)"
+                    maxLength={1000}
                     />
     
                     <button className="reviewsubmitbutton" onClick={submitHandler}>Submit</button></>)
