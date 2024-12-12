@@ -1,7 +1,6 @@
-import axios from 'axios';
 import React, { createContext, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
-
+import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
@@ -16,71 +15,47 @@ export function useFavorites() {
 }
 
 export const FavoriteProvider = ({ children }) => {
-  const { user } = useContext(UserContext); 
+  const { user } = useContext(UserContext);
 
-  const addToFavorites = async (idmovie, title, posterUrl,  ) => {
-    
-
+  const getFavorites = async () => {
     if (!user || !user.id) {
       throw new Error("User is not logged in or user ID is missing.");
     }
-    const headers = {Authorization: user.token};
+    const headers = { Authorization: user.token };
     try {
-      
-      const data = {
-        idmovie: idmovie,
-        title: title,
-        accounts_idaccount: user.id,
-        poster_url: posterUrl,
-
-
-      };
-      const response = await axios.post(`${API_URL}/favorites/postfavorites`, data, { headers });
+      const response = await axios.get(`${API_URL}favorites/getfavorites`, { headers });
       return response.data;
     } catch (error) {
-      console.error("Error adding favorites:", error.response.data.error);
+      console.error("Error fetching favorites:", error.response?.data?.error || error.message);
       throw error;
     }
   };
 
-  const getFavorites = async (idmovie, title, posterUrl, idfavorite) => {
-    const headers = {Authorization: user.token};
+  const addToFavorites = async (idmovie, title, posterUrl) => {
+    if (!user || !user.id) {
+      throw new Error("User is not logged in or user ID is missing.");
+    }
+    const headers = { Authorization: user.token };
     try {
-
       const data = {
-        idmovie: idmovie,
-        title: title,
+        idmovie,
+        title,
         accounts_idaccount: user.id,
         poster_url: posterUrl,
-        idfavorite: idfavorite
       };
-      
+      console.log(data); // Log data to ensure posterUrl is correct
 
-      const response = await axios.get(`${API_URL}/favorites/postfavorites`, data, { headers });
+      const response = await axios.post(`${API_URL}/favorites/postfavorites`, data, { headers });
       return response.data;
     } catch (error) {
-      console.error('Error fetching favorites:', error);
-      alert('An error occurred while fetching your favorites. Please try again later.');
+      console.error("Error adding favorites:", error.response?.data?.error || error.message);
+      throw error;
     }
   };
 
-  // const removeFromFavorites = (idmovie) => {
-  //   const headers = { headers: { Authorization: user.token } }
-
-    
-  //   axios.delete(url + "/favorites/remove/" + idmovie, headers) 
-  //     .then(response => {
-  //       setFavorites(favorites.filter(movie => movie.id !== movieId)) 
-  //     })
-  //     .catch(error => {
-  //       alert(error.response.data.error ? error.response.data.error : error)
-  //     })
-  // }
   return (
-    <FavoriteContext.Provider value={{ addToFavorites, getFavorites }}>
+    <FavoriteContext.Provider value={{ getFavorites, addToFavorites }}>
       {children}
     </FavoriteContext.Provider>
   );
 };
-
-

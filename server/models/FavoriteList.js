@@ -2,7 +2,7 @@ import { pool } from "../helpers/db.js";
 
 
 const selectFavorites = async () => {
-    return await pool.query('select * from favorites')
+    return await pool.query('select * from favorites WHERE accounts_idaccount = $1', [accounts_idaccount])
 }
 
 const insertFavorites = async (idmovie, title, accounts_idaccount, poster_url) => {
