@@ -43,9 +43,9 @@ export const FavoriteProvider = ({ children }) => {
         accounts_idaccount: user.id,
         poster_url: posterUrl,
       };
-      console.log(data); // Log data to ensure posterUrl is correct
+      
 
-      const response = await axios.post(`${API_URL}/favorites/postfavorites`, data, { headers });
+      const response = await axios.get(`${API_URL}/favorites/getfavorites`, data, { headers });
       return response.data;
     } catch (error) {
       console.error("Error adding favorites:", error.response?.data?.error || error.message);
