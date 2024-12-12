@@ -9,17 +9,14 @@ const FavoriteButton = ({ isFavorited, idmovie, title, posterUrl }) => {
   const { addToFavorites } = useFavorites();
   const [error, setError] = useState(null);
 
+
+
   const handleNewFavorite = async () => {
     if (!user || !user.id) {
         setError("User is not logged in or user ID is missing.");
         console.error("User or user ID is undefined:", user);
         return;
     }
-
-    // if (isFavorite){
-    //   setError("This movie is already in your favorites.");
-    //   return;
-    // }
     try {
         const response = await addToFavorites(idmovie, title, posterUrl);
         if (!response) {
@@ -34,18 +31,7 @@ const FavoriteButton = ({ isFavorited, idmovie, title, posterUrl }) => {
     }
 };
 
-    useEffect(() => {
-        const getFavorites = async () => {
-          try {
-          
-          } catch (error) {
-            console.error('Error fetching favorites:', error);
-            alert('An error occurred while fetching your favorites. Please try again later.');
-          }
-        };
     
-        getFavorites();
-      }, []);
 
   return (
     <>

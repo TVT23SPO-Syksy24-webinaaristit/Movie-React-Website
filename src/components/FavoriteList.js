@@ -8,24 +8,31 @@ import MovieCard from '../components/MovieCard.js';
 
 
 
-function FavoriteList() {
+function FavoriteList({ idmovie, title, posterUrl }) {
   
   const [movies, ] = useState([]);
   const [favorites, ] = useState([]);
   const {getFavorites} = useState();
+  const [error, setError] = useState(null);
+  const { user } = useUser();
 
   useEffect(() => {
-    const getFavorites = async () => {
+    const getFavorites = async ( ) => {
       try {
-      
-      } catch (error) {
-        console.error('Error fetching favorites:', error);
-        alert('An error occurred while fetching your favorites. Please try again later.');
+         const response = await getFavorites(user.id);
+        if (response && Array.isArray(response)) {
+          console.log("response", response);
+      } else {
+        setError("No favorites available or invalid data.");
       }
+    } catch (err) {
+      console.error("Error fetching favorites:", err);
+      setError("Failed to load favorites. Please try again later.");
+    } 
     };
-
     getFavorites();
-  }, []);
+    console.log("getFavorites", idmovie, title, posterUrl)
+  },);
 
   console.log(favorites)
 
