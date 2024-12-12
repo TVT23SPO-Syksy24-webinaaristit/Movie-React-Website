@@ -51,6 +51,7 @@ const MovieReviews = (props) => {
         try{
             const response = axios.post(url+"/reviews/add",json,{ headers });
             console.log(response);
+            return response;
         } catch(error) {
             throw error.response.data;
         }
@@ -65,9 +66,10 @@ const MovieReviews = (props) => {
       };
 
     const submitHandler = () => {
-        postReview();
+        const response = postReview();
+        document.getElementsByClassName("reviewsubmit")[0].innerHTML=`<h3>Review submitted</h3>`;
     }
-
+    
     return(
         <div className="moviereviews">
             <div className="reviewresults">
