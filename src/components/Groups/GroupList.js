@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useUser } from "../../contexts/useUser"; // Import the user context
 import { useGroups } from "../../contexts/GroupProvider";
 import "./GroupStyles.css"; // Import styles (if applicable)
+import { useNavigate } from "react-router-dom";
 
 const GroupList = ({ refresh, setRefresh }) => {
   const { fetchAllGroups, joinGroup, leaveGroup, deleteGroup } = useGroups(); // Import the group context
@@ -10,6 +11,8 @@ const GroupList = ({ refresh, setRefresh }) => {
   const [loading, setLoading] = useState(true); // State to handle the loading state
   const [error, setError] = useState(null); // State to handle errors
   const { user } = useUser(); // Get the user object from the context
+
+  const navigate = useNavigate();
 
   // Fetch groups from the backend when the component mounts or refresh changes
   useEffect(() => {
@@ -69,6 +72,15 @@ const GroupList = ({ refresh, setRefresh }) => {
     }
   };
 
+  const handleGroupPageNavigate = async(groupId)=>{
+    try{
+      navigate(`/groupdetails/${groupId}`);
+    } catch(err){
+      console.error("Error navigating to group page:", err);
+      alert("Failed to go to group page. Please try again.");
+    }
+  };
+
   // Render the loading spinner, error message, or group list
   if (loading) return <p>Loading groups...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -79,7 +91,8 @@ const GroupList = ({ refresh, setRefresh }) => {
         <ul className="group-list">
           {groups.map((group) => (
             <li key={group.id} className="group-item">
-              <div className="group-content">
+              <div className="group-content" onClick={()=>
+                group.isMember ? (handleGroupPageNavigate(group.id)):(alert("Not a group member"))}>
                 <h3>{group.name}</h3>
                 <p>{group.description}</p>
                 <p>
@@ -92,7 +105,8 @@ const GroupList = ({ refresh, setRefresh }) => {
                 ) : (
                   <button
                     className="join-button"
-                    onClick={() => handleJoinGroup(group.id)} // Pass the group ID
+                    onClick={()=>
+                      handleJoinGroup(group.id)} // Pass the group ID
                   >
                     ➕ Join
                   </button>

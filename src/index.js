@@ -7,7 +7,7 @@ import MovieDetailsPage from './screens/MovieDetailsPage.js';
 import ScreeningsPage from './screens/ScreeningsPage.js';
 import { GroupProvider } from './contexts/GroupProvider.js';
 import GroupPage from './screens/GroupPage.js';
-import GroupDetails from './screens/GroupDetails.js';
+import GroupDetailsPage from './screens/GroupDetailsPage.js';
 import ProfilePage from './screens/ProfilePage.js';
 import LoginPage from './screens/LoginPage.js';
 import { Navigate } from 'react-router-dom';
@@ -55,8 +55,13 @@ const router = createBrowserRouter([
   )
   },
   {
-  path: "/groups/:id",
-  element: <GroupDetails />
+    
+  path: "/groupdetails/:id",
+  element: (
+  <GroupProvider>
+    <GroupDetailsPage />
+  </GroupProvider>
+  )
   },
   {
     element: <ProtectedRoute />,
