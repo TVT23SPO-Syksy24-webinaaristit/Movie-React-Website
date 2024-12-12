@@ -56,7 +56,7 @@ export const FavoriteProvider = ({ children }) => {
       };
       
 
-      const response = await axios.get(`${API_URL}/favorites/postfavorites`, data, { headers });
+      const response = await axios.get(`${API_URL}/favorites/getfavorites`, data, { headers });
       return response.data;
     } catch (error) {
       console.error('Error fetching favorites:', error);
