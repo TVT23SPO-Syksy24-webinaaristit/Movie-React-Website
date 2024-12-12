@@ -4,21 +4,23 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MovieCarousel from '../components/MovieCarousel';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../contexts/useUser';
 
 
 
 const HomePage = () => {
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
+  const { user } = useUser();
   
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
+    const storedUsername = user.username
     if (storedUsername) {
     setUsername(storedUsername);
   } else {
     setUsername(null);
   }
-  }, []);
+  }, [user.username]);
 
 
   return (

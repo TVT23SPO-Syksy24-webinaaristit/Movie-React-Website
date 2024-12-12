@@ -9,7 +9,7 @@ const { sign } = jwt;
 dotenv.config();
 
 // Generate a test token
-const testUserId = 1;
+const testUserId = 50;
 
 beforeAll(async () => {
   // Insert a test user into the database
