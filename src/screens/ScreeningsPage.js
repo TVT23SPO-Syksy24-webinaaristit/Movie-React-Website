@@ -33,8 +33,9 @@ function ScreeningsPage() {
   };
 
   return (
+  <div>
+    <Navbar />
     <div className="ScreeningsPage">
-      <Navbar />
       <div className="content">
         <ScreeningResults />
       {showButton && (
@@ -43,8 +44,9 @@ function ScreeningsPage() {
         </button>
       )}
         </div>
-      <Footer />
     </div>
+  <Footer />
+  </div>
   );
 }
 
