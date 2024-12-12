@@ -4,7 +4,7 @@ import {selectFavorites, insertFavorites, deleteFavoritesById} from "../models/F
 const getFavorites = async (req,res,next) => {
     try {
         const result = await selectFavorites()
-        return res.status(200).json(emptyOrRows(result))
+        return res.status(200)
     } catch (error) {
         return next(error)
     }
