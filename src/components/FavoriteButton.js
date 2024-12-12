@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useFavorites } from "../contexts/FavoriteProvider";
 import { useUser } from "../contexts/useUser";
+import { getFavorites } from "../contexts/FavoriteProvider";
 
 const FavoriteButton = ({ isFavorited, idmovie, title, posterUrl }) => {
   const { user } = useUser();
@@ -33,6 +34,19 @@ const FavoriteButton = ({ isFavorited, idmovie, title, posterUrl }) => {
         setError("Failed adding favorites. Please try again later.");
     }
 };
+
+    useEffect(() => {
+        const getFavorites = async () => {
+          try {
+          
+          } catch (error) {
+            console.error('Error fetching favorites:', error);
+            alert('An error occurred while fetching your favorites. Please try again later.');
+          }
+        };
+    
+        getFavorites();
+      }, []);
 
   return (
     <>

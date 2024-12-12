@@ -51,15 +51,26 @@ export const FavoriteProvider = ({ children }) => {
     }
   };
 
-  // const getFavorites = async () => {
-  //   try {
-  //     const response = await axios.get(url + "/api/getfavorites", { idmovie: movie.id }, headers);
-  //     setMovies(response.data);
-  //   } catch (error) {
-  //     console.error('Error fetching favorites:', error);
-  //     alert('An error occurred while fetching your favorites. Please try again later.');
-  //   }
-  // };
+  const getFavorites = async (idmovie, title, posterUrl, idfavorite) => {
+    const headers = {Authorization: user.token};
+    try {
+
+      const data = {
+        idmovie: idmovie,
+        title: title,
+        accounts_idaccount: user.id,
+        poster_url: posterUrl,
+        idfavorite: idfavorite
+      };
+      
+
+      const response = await axios.get(`${API_URL}/favorites/postfavorites`, data, { headers });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+      alert('An error occurred while fetching your favorites. Please try again later.');
+    }
+  };
 
   // const removeFromFavorites = (idmovie) => {
   //   const headers = { headers: { Authorization: user.token } }
@@ -74,7 +85,7 @@ export const FavoriteProvider = ({ children }) => {
   //     })
   // }
   return (
-    <FavoriteContext.Provider value={{ addToFavorites }}>
+    <FavoriteContext.Provider value={{ addToFavorites, getFavorites }}>
       {children}
     </FavoriteContext.Provider>
   );

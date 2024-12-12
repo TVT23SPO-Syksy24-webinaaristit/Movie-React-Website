@@ -1,32 +1,33 @@
 import './FavoriteList.css';
 import { useEffect, useState } from 'react';
+import { getFavorites } from "../contexts/FavoriteProvider";
 import { useUser } from '../contexts/useUser';
-import axios from 'axios';
+
 
 import MovieCard from '../components/MovieCard.js';
 
-const url = 'http://localhost:3001/api/favorites/getfavorites';
+
 
 function FavoriteList() {
-  const { User } = useUser();
-  const [movies, setMovies] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  
+  const [movies, ] = useState([]);
+  const [favorites, ] = useState([]);
+  const {getFavorites} = useState();
 
   useEffect(() => {
-    const fetchFavorites = async () => {
+    const getFavorites = async () => {
       try {
-        const response = await axios.get(url);
-        setMovies(response.data);
+      
       } catch (error) {
         console.error('Error fetching favorites:', error);
         alert('An error occurred while fetching your favorites. Please try again later.');
       }
     };
 
-    fetchFavorites();
+    getFavorites();
   }, []);
 
-  
+  console.log(favorites)
 
   return (
     <div id="container">

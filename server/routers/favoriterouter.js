@@ -6,7 +6,7 @@ import {getFavorites, postFavorites, deleteFavorites} from '../controllers/Favor
 const router = Router()
 
 
-router.get('/getfavorites', getFavorites);
+router.get('/getfavorites', auth,  getFavorites);
 
 router.post('/postfavorites', auth,  postFavorites);
 
