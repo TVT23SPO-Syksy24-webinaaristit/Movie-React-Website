@@ -39,6 +39,8 @@ const FavoriteButton = ({ refresh, setRefresh, idmovie, title, posterUrl, isFavo
       return;
     }
 
+    setLoading(true);
+
     try {
       const response = await addToFavorites(idmovie, title, posterUrl);
       if (!response) {
