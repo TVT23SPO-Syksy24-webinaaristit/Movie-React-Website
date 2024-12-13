@@ -1,14 +1,24 @@
 import {selectFavorites, insertFavorites, deleteFavoritesById} from "../models/FavoriteList.js";
 
 
-const getFavorites = async (req,res,next) => {
+const getFavorites = async (req, res, next) => {
     try {
-        const result = await selectFavorites()
-        return res.status(200)
+        // Extract accounts_idaccount from query parameters
+        const { accounts_idaccount } = req.query;
+
+        if (!accounts_idaccount) {
+            return res.status(400).json({ error: "Missing accounts_idaccount in query parameters." });
+        }
+
+        // Pass accounts_idaccount to the selectFavorites function
+        const result = await selectFavorites(accounts_idaccount);
+
+        return res.status(200).json(result);
     } catch (error) {
-        return next(error)
+        return next(error);
     }
-}
+};
+
 
 const postFavorites = async (req, res, next) => {
     try {

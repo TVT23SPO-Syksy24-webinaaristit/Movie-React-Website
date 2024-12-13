@@ -23,14 +23,16 @@ export const FavoriteProvider = ({ children }) => {
     }
     const headers = { Authorization: user.token };
     try {
-      const response = await axios.get(`${API_URL}favorites/getfavorites`, { headers });
+      const response = await axios.get(`${API_URL}/favorites/getfavorites`, {
+        headers,
+        params: { accounts_idaccount: user.id }, // Pass accounts_idaccount as a query parameter
+      });
       return response.data;
     } catch (error) {
       console.error("Error fetching favorites:", error.response?.data?.error || error.message);
       throw error;
     }
   };
-
   const addToFavorites = async (idmovie, title, posterUrl) => {
     if (!user || !user.id) {
       throw new Error("User is not logged in or user ID is missing.");
@@ -43,15 +45,15 @@ export const FavoriteProvider = ({ children }) => {
         accounts_idaccount: user.id,
         poster_url: posterUrl,
       };
-      
-
-      const response = await axios.get(`${API_URL}/favorites/getfavorites`, data, { headers });
+  
+      const response = await axios.post(`${API_URL}/favorites/postfavorites`, data, { headers }); // Use POST for creating new resources
       return response.data;
     } catch (error) {
-      console.error("Error adding favorites:", error.response?.data?.error || error.message);
+      console.error("Error adding to favorites:", error.response?.data?.error || error.message);
       throw error;
     }
   };
+  
 
   return (
     <FavoriteContext.Provider value={{ getFavorites, addToFavorites }}>

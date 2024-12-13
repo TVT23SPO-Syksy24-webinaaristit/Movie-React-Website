@@ -14,6 +14,7 @@ const MovieResults = () => {
     const [favoriteMovies, setFavoriteMovies] = useState(new Set());
     const {user } = useUser();
     const {getFavorites} = useFavorites();
+    const [refresh, setRefresh] = useState(false);
 
 
     const debouncedSearch = useDebounce(search,1000);
@@ -96,7 +97,10 @@ const MovieResults = () => {
             movieId={movie.id}
             title={movie.title}
             posterPath={movie.poster_path}
+            isFavorited={isFavorite(movie.id)}
             onFavoriteAdded={fetchFavorites}
+            refresh={refresh}
+            setRefresh={setRefresh}
             />
         ))
         

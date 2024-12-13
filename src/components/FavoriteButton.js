@@ -1,14 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFavorites } from "../contexts/FavoriteProvider";
 import { useUser } from "../contexts/useUser";
 
-const FavoriteButton = ({ idmovie, title, posterUrl, isFavorited, onFavoriteAdded }) => {
+const FavoriteButton = ({ refresh, setRefresh, idmovie, title, posterUrl, isFavorited, onFavoriteAdded }) => {
+  const { getFavorites, addToFavorites } = useFavorites();
   const { user } = useUser();
-  const { addToFavorites } = useFavorites();
   const [error, setError] = useState(null);
   const [isFavorite, setIsFavorite] = useState(isFavorited);
+  const [loading, setLoading] = useState(true);
 
-  const handleNewFavorite = async () => {
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (!user || !user.id) {
+        setError("User is not logged in or user ID is missing.");
+        console.error("User or user ID is undefined:", user);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const favorites = await getFavorites();
+        const isAlreadyFavorite = favorites.some((fav) => fav.idmovie === idmovie);
+        setIsFavorite(isAlreadyFavorite);
+      } catch (err) {
+        console.error("Error fetching favorites:", err);
+        setError("Failed to load favorites. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFavorites();
+  }, [refresh, user, idmovie, getFavorites]);
+
+  const handleAddNewFavorite = async () => {
     if (!user || !user.id) {
       setError("User is not logged in or user ID is missing.");
       console.error("User or user ID is undefined:", user);
@@ -26,6 +50,7 @@ const FavoriteButton = ({ idmovie, title, posterUrl, isFavorited, onFavoriteAdde
         if (onFavoriteAdded) {
           onFavoriteAdded(); // Call the callback to fetch favorites again
         }
+        setRefresh((prev) => !prev); // Trigger a refresh
       }
     } catch (err) {
       console.error("Error adding to favorites:", err);
@@ -33,20 +58,26 @@ const FavoriteButton = ({ idmovie, title, posterUrl, isFavorited, onFavoriteAdde
     }
   };
 
-  if (isFavorite) {
-    return null;
+  if (loading) {
+    return <p>Loading...</p>;
   }
 
   return (
-    <>
-      <button
-        onClick={handleNewFavorite}
-        className={`favorite-button ${isFavorite ? "active" : ""}`}
-      >
-        Favorite
-      </button>
+    <div>
+      {isFavorite ? (
+        <button className="favorite-button" disabled>
+          ✅ Favorited
+        </button>
+      ) : (
+        <button
+          className="favorite-button"
+          onClick={handleAddNewFavorite}
+        >
+          ➕ Add to Favorites
+        </button>
+      )}
       {error && <p className="error-message">{error}</p>}
-    </>
+    </div>
   );
 };
 
