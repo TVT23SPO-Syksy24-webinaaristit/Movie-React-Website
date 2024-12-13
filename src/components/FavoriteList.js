@@ -36,7 +36,7 @@ function FavoriteList() {
 
   return (
     <div id="container-favorites">
-      <h3>Movies</h3>
+      <h3>Favorite Movies</h3>
       {error && <p className="error">{error}</p>}
       <ul>
         {favorites.map((fav) => (
