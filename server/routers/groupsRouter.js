@@ -2,7 +2,7 @@
 import { Router } from "express"
 import { auth } from "../helpers/auth.js";
 import { getAllGroups, getGroupDetails, getGroupHighlights, getGroupMembers, getGroupJoinRequesters, 
-    postGroupCreate, postGroupJoin, postJoinRequestReply,
+    postGroupCreate, postGroupHighlight, postGroupJoin, postJoinRequest, postJoinRequestReply,
     deleteGroup, leaveGroup, deleteHighlight } from "../controllers/GroupsController.js";
 
 const router = Router();
@@ -21,7 +21,11 @@ router.get("/:id/requesters", getGroupJoinRequesters);
 
 router.post("/create", auth, postGroupCreate);
 
+router.post("/highlightcreate", postGroupHighlight);
+
 router.post("/join", auth, postGroupJoin);
+
+router.post("/sendjoinrequest",auth, postJoinRequest);
 
 router.post("/requestreply", postJoinRequestReply);
 
@@ -29,7 +33,7 @@ router.delete("/:id/", auth, deleteGroup);
 
 router.delete("/:id/leave", auth, leaveGroup);
 
-router.delete(":id/highlight", deleteHighlight);
+router.delete("/:id/highlight", auth, deleteHighlight);
 
 
 
