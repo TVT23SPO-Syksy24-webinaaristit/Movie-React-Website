@@ -9,7 +9,7 @@ const MovieCard = ({ movieId, title, posterPath, isFavorited ,onFavoriteAdded, r
 
 
     useEffect(() => {
-        console.log("Url:", posterPath);
+        
     }, [posterPath]);
 
     return (
