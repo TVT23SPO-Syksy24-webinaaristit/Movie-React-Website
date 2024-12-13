@@ -17,7 +17,7 @@ function FavoriteList({ idmovie, title, posterUrl }) {
   const { user } = useUser();
 
   useEffect(() => {
-    const getFavorites = async ( ) => {
+    const fetchFavorites = async ( ) => {
       try {
          const response = await getFavorites(user.id);
         if (response && Array.isArray(response)) {
@@ -30,7 +30,7 @@ function FavoriteList({ idmovie, title, posterUrl }) {
       setError("Failed to load favorites. Please try again later.");
     } 
     };
-    getFavorites();
+    fetchFavorites();
     console.log("getFavorites", idmovie, title, posterUrl)
   },);
 
