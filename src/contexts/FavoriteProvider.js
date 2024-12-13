@@ -58,16 +58,31 @@ export const FavoriteProvider = ({ children }) => {
     if (!user || !user.id) {
       throw new Error("User is not logged in or user ID is missing.");
     }
+  
     const headers = { Authorization: user.token };
+  
+    if (!idmovie) {
+      console.error("Error: idmovie is not provided!");
+      return;
+    }
+  
+    console.log("Sending delete request with:", { idmovie, userId: user.id });
+  
     try {
-      const response = await axios.delete(`${API_URL}/favorites/delete/${idmovie}`, { headers }); // Use DELETE for removing resources
+      // Construct the API URL correctly
+      const response = await axios.delete(
+        `${API_URL}/favorites/delete/${idmovie}?accounts_idaccount=${user.id}`,
+        { headers }
+      );
       return response.data;
     } catch (error) {
-      console.error("Error removing from favorites:", error.response?.data?.error || error.message);
+      console.error("Error removing from favorites:", error.response?.data || error.message);
       throw error;
     }
-  }
-
+  };
+  
+  
+  
   return (
     <FavoriteContext.Provider value={{ getFavorites, addToFavorites, removeFromFavorites }}>
       {children}

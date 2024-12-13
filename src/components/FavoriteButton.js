@@ -43,7 +43,7 @@ const FavoriteButton = ({ idmovie, title, posterUrl, isFavorited, onFavoriteAdde
 
     setLoading(true);
     try {
-      const response = await removeFromFavorites(idmovie, title, posterUrl);
+      const response = await removeFromFavorites(idmovie);
       if (!response) {
         setError("Failed to remove favorite.");
         console.error("Unexpected response from backend:", response);

@@ -1,4 +1,4 @@
-import {selectFavorites, insertFavorites, deleteFavoritesById} from "../models/FavoriteList.js";
+import {selectFavorites, insertFavorites, removeFavorites} from "../models/FavoriteList.js";
 
 
 const getFavorites = async (req, res, next) => {
@@ -42,16 +42,34 @@ const postFavorites = async (req, res, next) => {
     }
 };
 
-
-const deleteFavorites = async(req,res,next) => {
+const deleteFavorites = async (req, res, next) => {
     try {
-        if (!/^\d+$/.test(req.params.id)) return next(new ApiError("Invalid favorites ID. ID must be a positive integer",400))
-        const id = parseInt(req.params.id)
-        const result = await deleteFavoritesById(id)
-        return res.status(200).json({id: id})
+      console.log("Received params:", req.params);
+      console.log("Received query:", req.query);
+  
+      const { idmovie } = req.params;
+      const { accounts_idaccount } = req.query;
+  
+      if (!idmovie || !accounts_idaccount) {
+        return res.status(400).json({ error: "Invalid idmovie or accounts_idaccount." });
+      }
+  
+      // Call the database query function
+      const result = await removeFavorites(parseInt(idmovie), parseInt(accounts_idaccount));
+  
+      console.log("Query result:", result);
+  
+      if (result.rowCount === 0) {
+        return res.status(404).json({ error: "Favorite not found." });
+      }
+  
+      return res.status(200).json({ idmovie });
     } catch (error) {
-        return next(error)
+      console.error("Error in deleteFavorites:", error);
+      return next(error);
     }
-}
+  };
+  
+  
 
 export { getFavorites, postFavorites, deleteFavorites}

@@ -27,8 +27,20 @@ const insertFavorites = async (idmovie, title, accounts_idaccount, poster_url) =
         return newFavorite.rows[0];
     }
 };
-const deleteFavoritesById = async(id) => {
-    return await pool.query("delete from favorites where id = $1",[id])
-}
+const removeFavorites = async (idmovie, accounts_idaccount) => {
+    console.log("Attempting to delete with:", { idmovie, accounts_idaccount });
+  
+    const query = `
+      DELETE FROM favorites 
+      WHERE idmovie = $1 AND accounts_idaccount = $2
+      RETURNING *`;
+    const values = [idmovie, accounts_idaccount];
+    const result = await pool.query(query, values);
+  
+    console.log("Deletion result:", result);
+  
+    return result;
+  };
+  
 
-export {selectFavorites, insertFavorites, deleteFavoritesById}
+export {selectFavorites, insertFavorites, removeFavorites}

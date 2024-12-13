@@ -10,7 +10,7 @@ router.get('/getfavorites', auth,  getFavorites);
 
 router.post('/postfavorites', auth,  postFavorites);
 
-router.delete("/delete/:id", deleteFavorites);
+router.delete("/delete/:idmovie", deleteFavorites);
 
 
 export default router;
