@@ -6,10 +6,10 @@ const LeaveGroupButton = (props) =>{
     const handleLeaveGroup = async (groupId) => {
         try {
           await leaveGroup(groupId); // Call the API to delete a group
-          alert(`You successfully deleted the group: ${groupId}`);
+          alert(`You successfully left from group: ${groupId}`);
         } catch (err) {
-          console.error("Error deleting group:", err);
-          alert("Failed to delete the group. Please try again.");
+          console.error("Error leaving from group:", err);
+          alert("Failed to leave from group. Please try again.");
         }
       };
     
