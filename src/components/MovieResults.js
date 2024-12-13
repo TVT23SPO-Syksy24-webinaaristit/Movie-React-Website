@@ -149,6 +149,7 @@ const MovieResults = () => {
             posterPath={movie.poster_path}
             isFavorited={isFavorite(movie.id)}
             onFavoriteAdded={fetchFavorites} // Refresh favorites after adding
+            showFavoriteButton={true}
           />
         ))
       ) : (

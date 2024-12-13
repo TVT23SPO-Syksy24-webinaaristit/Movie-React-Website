@@ -35,14 +35,17 @@ function FavoriteList() {
   }, [user, getFavorites]); // Ensure the effect runs when user or getFavorites changes
 
   return (
-    <div id="container">
+    <div id="container-favorites">
       <h3>Movies</h3>
       {error && <p className="error">{error}</p>}
       <ul>
         {favorites.map((fav) => (
           <li key={fav.id}>
             <p>{fav.title}</p>
-            <p>Account ID: {fav.accounts_idaccount}</p> {/* Debug display */}
+            <MovieCard
+            posterPath
+             showFavoriteButton={false}
+            />
           </li>
         ))}
       </ul>

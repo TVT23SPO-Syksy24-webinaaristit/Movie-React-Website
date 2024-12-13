@@ -5,7 +5,7 @@ import MoviePoster from "./MoviePoster";
 import FavoriteButton from "./FavoriteButton";
 import { Link } from "react-router-dom";
 
-const MovieCard = ({ movieId, title, posterPath, isFavorited, onFavoriteAdded }) => {
+const MovieCard = ({ movieId, title, posterPath, isFavorited, showFavoriteButton, onFavoriteAdded }) => {
   return (
     <div className="MovieCard">
       <div className="moviecardposter">
@@ -16,6 +16,8 @@ const MovieCard = ({ movieId, title, posterPath, isFavorited, onFavoriteAdded })
       <Link className="detailsLink" to={`:${movieId}`}>
         <h3>{title}</h3>
       </Link>
+      
+      {showFavoriteButton && (
       <FavoriteButton
         idmovie={movieId}
         title={title}
@@ -23,6 +25,7 @@ const MovieCard = ({ movieId, title, posterPath, isFavorited, onFavoriteAdded })
         isFavorited={isFavorited}
         onFavoriteAdded={onFavoriteAdded} // Callback to refresh favorites
       />
+      )}
     </div>
   );
 };
