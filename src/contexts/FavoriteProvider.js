@@ -54,9 +54,22 @@ export const FavoriteProvider = ({ children }) => {
     }
   };
   
+  const removeFromFavorites = async (idmovie) => {
+    if (!user || !user.id) {
+      throw new Error("User is not logged in or user ID is missing.");
+    }
+    const headers = { Authorization: user.token };
+    try {
+      const response = await axios.delete(`${API_URL}/favorites/delete/${idmovie}`, { headers }); // Use DELETE for removing resources
+      return response.data;
+    } catch (error) {
+      console.error("Error removing from favorites:", error.response?.data?.error || error.message);
+      throw error;
+    }
+  }
 
   return (
-    <FavoriteContext.Provider value={{ getFavorites, addToFavorites }}>
+    <FavoriteContext.Provider value={{ getFavorites, addToFavorites, removeFromFavorites }}>
       {children}
     </FavoriteContext.Provider>
   );
