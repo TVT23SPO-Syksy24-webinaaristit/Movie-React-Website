@@ -21,7 +21,7 @@ const GroupDetailsHighlightCard = (props) =>{
     return(
         <div className="highlightCard">
             <div className="poster">
-                <img src="/imageplaceholder.jpg" alt="movie poster" />
+                <img src={props.image} alt="movie poster" />
             </div>
             <div className="title">
                 <Link className="link" to={props.link_url}>
@@ -30,6 +30,9 @@ const GroupDetailsHighlightCard = (props) =>{
             
                 
                 <p> Posted by: {props.account}</p>
+            </div>
+            <div>
+                <p>{props.description}</p>
             </div>
             <button onClick={()=>{deleteHighlightHandler(props.highlightid)}}>
             ❌

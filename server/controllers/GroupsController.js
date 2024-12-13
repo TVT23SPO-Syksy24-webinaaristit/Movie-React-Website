@@ -41,9 +41,6 @@ const postGroupHighlight = async(req,res,next)=>{
     idmovie_or_event, 
     description, 
     source_link_url } = req.body;
-    console.log(groups_idgroup)
-    console.log(accounts_idaccount)
-    console.log(idmovie_or_event)
   try {
     const newHighlight = await insertHighlightCreate( 
       groups_idgroup, 

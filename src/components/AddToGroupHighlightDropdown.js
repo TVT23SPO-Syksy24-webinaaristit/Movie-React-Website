@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import { useGroups } from "../contexts/GroupProvider";
 import { useUser } from "../contexts/useUser";
-const AddToGroupHighlightDropdown =()=> {
+const AddToGroupHighlightDropdown =(props)=> {
     const { createHighlight, fetchAllGroups } = useGroups();
     const { user } = useUser();
     const [groups, setGroups] = useState([]);
@@ -29,7 +29,7 @@ const AddToGroupHighlightDropdown =()=> {
     const handleChange = async (groupid) => {
         if (groupid !== '0') {
             try {
-                await createHighlight(groupid, "postaus", "titlemies", "12345", "descimies", "linkkimies")
+                await createHighlight(groupid, props.image, props.title, props.idevent, props.description, props.sourceUrl)
             } catch (error) {
 
             }

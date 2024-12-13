@@ -114,11 +114,11 @@ export const GroupProvider = ({ children }) => {
       Authorization: user.token};
     try {
     const data = {
-      groups_idgroup: 24,
-      accounts_idaccount: 73,
+      groups_idgroup: groupId,
+      accounts_idaccount: user.id,
       poster_url: poster,
       title: titletext,
-      idmovie_or_event: 1234254,
+      idmovie_or_event: idevent,
       description: descriptiontext,
       source_link_url: source_link
     };

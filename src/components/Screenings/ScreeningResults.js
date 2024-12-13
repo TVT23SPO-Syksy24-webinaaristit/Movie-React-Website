@@ -164,10 +164,13 @@ const xmlToJson = useCallback((node) =>{
                             <ScreeningCard  key={screenings.ID} 
                             title={screenings.Title} 
                             finnkinoUrl={screenings.EventURL}
-                            hours={new Date(screenings.dttmShowStart).getHours()} 
+                            day={new Date(screenings.dttmShowStart).getDate()}
+                            month={new Date(screenings.dttmShowStart).getMonth()+1} // jostain syystä näytti ilman +1 edeltävän kuukauden 11???
+                            hours={new Date(screenings.dttmShowStart).getHours()}       //Ei kuitenkaan jostain syystä päde muihin kuin date haussa, timezonen takia(?).
                             minutes={new Date(screenings.dttmShowStart).getMinutes().toString().padStart(2, '0')}
                             image={screenings.Images.EventMediumImagePortrait}
-                            auditorium={screenings.TheatreAndAuditorium} />
+                            auditorium={screenings.TheatreAndAuditorium}
+                            idevent={screenings.EventID} />
                             ))
                     ) : (typeof(screenings) === "object" && !Array.isArray(screenings)) ? (
                         <ScreeningCard  key={screenings.ID} 

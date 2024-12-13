@@ -92,6 +92,7 @@ const GroupDetailsResults = () => {
           <GroupDetailsHighlightCard key={highlight.idgroup_highlight}
             title={highlight.title}
             link_url={highlight.source_link_url}
+            description={highlight.description}
             image={highlight.poster_url}
             account={highlight.username}
             highlightid={highlight.idgroup_highlight}
@@ -102,6 +103,7 @@ const GroupDetailsResults = () => {
         <GroupDetailsHighlightCard key={highlight.idgroup_highlight}
           title={highlight.title}
           link_url={highlight.source_link_url}
+          description={highlight.description}
           image={highlight.poster_url}
           account={highlight.username}
           highlightid={highlight.idgroup_highlight}
