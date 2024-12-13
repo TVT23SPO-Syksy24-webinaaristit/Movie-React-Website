@@ -7,6 +7,7 @@ import GroupDetailsJoinRequesterCard from "./GroupDetailsJoinRequesterCard";
 import { useGroups } from "../../contexts/GroupProvider";
 import { useUser } from "../../contexts/useUser"
 import DeleteGroupButton from "./DeleteGroupButton";
+import "./GroupDetailsResults.css";
 
 
 const GroupDetailsResults = () => {
@@ -74,6 +75,7 @@ const GroupDetailsResults = () => {
   return (
     <div className="groupDetails">
       
+      
       {group && group.length !== null ? (
           <div>
             <h1>{group.group_name}</h1>
@@ -83,7 +85,8 @@ const GroupDetailsResults = () => {
         <p>Loading group details...</p>
         
       )}
-      
+      <div className="highlightList">
+      <h3>Group highlights</h3>
       {highlight && highlight.length > 0 ? (
         highlight.map(highlight => (
           <GroupDetailsHighlightCard key={highlight.idgroup_highlight}
@@ -106,8 +109,8 @@ const GroupDetailsResults = () => {
       ) : (
         <p>Loading highlights...</p>
       )}
-      
-      <p><b>Group members</b></p> 
+      </div>
+      <h3>Group members</h3> 
       {member && member.length > 0 ? (      // Group member can be kicked using the already existing groupLeave routing and front end implementation.
 
         member.map(member => (
@@ -124,8 +127,9 @@ const GroupDetailsResults = () => {
         <p>Loading memberlist...</p>
       )}
 
+      <div className="requesterList">
 {user.id == group.owner ?(
-       <p><b>Pending join requests:</b></p> 
+       <h3>Pending join requests:</h3> 
       ):(
         <br />
       )}
@@ -165,6 +169,7 @@ joinRequester.map(joinRequester => (
 ) : (
   <br />
 )}
+</div>
   {user.id == group.owner ?(
        <DeleteGroupButton groupid={group.idgroup}/>
       ):(

@@ -110,14 +110,15 @@ export const GroupProvider = ({ children }) => {
   };
 
   const createHighlight = async(groupId,poster,titletext,idevent,descriptiontext,source_link) =>{
-    const headers = {Authorization: user.token};
+    const headers = {'Content-Type': 'application/json',
+      Authorization: user.token};
     try {
     const data = {
-      groups_idgroup: groupId,
-      accounts_idaccount: user.id,
+      groups_idgroup: 24,
+      accounts_idaccount: 73,
       poster_url: poster,
       title: titletext,
-      idmovie_or_event: idevent,
+      idmovie_or_event: 1234254,
       description: descriptiontext,
       source_link_url: source_link
     };

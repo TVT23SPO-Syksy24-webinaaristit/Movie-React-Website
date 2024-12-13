@@ -34,10 +34,25 @@ const postGroupCreate = async (req, res, next) => {
 };
 
 const postGroupHighlight = async(req,res,next)=>{
-  const { groups_idgroup, accounts_idaccount, poster_url, title, idmovie_or_event, description, source_link_url } = req.body;
-
+  const { groups_idgroup, 
+    accounts_idaccount, 
+    poster_url, 
+    title, 
+    idmovie_or_event, 
+    description, 
+    source_link_url } = req.body;
+    console.log(groups_idgroup)
+    console.log(accounts_idaccount)
+    console.log(idmovie_or_event)
   try {
-    const newHighlight = await insertHighlightCreate({ groups_idgroup, accounts_idaccount, poster_url, title, idmovie_or_event, description, source_link_url }); // Pass an object with named properties
+    const newHighlight = await insertHighlightCreate( 
+      groups_idgroup, 
+      accounts_idaccount, 
+      poster_url, 
+      title, 
+      idmovie_or_event, 
+      description, 
+      source_link_url ); // Pass an object with named properties
     return res.status(201).json(newHighlight); // Return the new highlight details
   } catch (error) {
     console.error("Error in controller (creating highlight):", error);

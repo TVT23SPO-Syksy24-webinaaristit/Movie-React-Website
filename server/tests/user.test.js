@@ -19,7 +19,7 @@ describe("User authentication", () => {
 
     await request(server)
       .post("/user/register")
-      .send({ email: "kirjautumistesti2@foo.com", password: "asd213easde" });
+      .send({ email: "kirjautumistesti2@foo.com", password: "asd213easde" })
   });
 
   afterAll(async () => {

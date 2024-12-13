@@ -32,7 +32,7 @@ const GroupDetailsHighlightCard = (props) =>{
                 <p> Posted by: {props.account}</p>
             </div>
             <button onClick={()=>{deleteHighlightHandler(props.highlightid)}}>
-            delete highlight
+            ❌
             </button>
 
         </div>
