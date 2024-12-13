@@ -8,6 +8,7 @@ import { useGroups } from "../../contexts/GroupProvider";
 import { useUser } from "../../contexts/useUser"
 import DeleteGroupButton from "./DeleteGroupButton";
 import "./GroupDetailsResults.css";
+import LeaveGroupButton from "./LeaveGroupButton";
 
 
 const GroupDetailsResults = () => {
@@ -172,6 +173,8 @@ joinRequester.map(joinRequester => (
   <br />
 )}
 </div>
+<LeaveGroupButton groupid={group.idgroup}/>
+
   {user.id == group.owner ?(
        <DeleteGroupButton groupid={group.idgroup}/>
       ):(

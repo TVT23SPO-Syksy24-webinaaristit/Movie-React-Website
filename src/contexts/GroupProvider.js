@@ -169,6 +169,10 @@ export const GroupProvider = ({ children }) => {
 
   // Leave a group
   const leaveGroup = async (groupId,accountId) => {
+    if(accountId==null){
+      accountId = user.id;
+    }
+    console.log(accountId)
     const headers = {
         Authorization: user.token, 
     };

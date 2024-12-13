@@ -102,12 +102,20 @@ const insertHighlightCreate = async(groups_, accounts_idaccount, poster_url, tit
 
 const deleteGroupLeave = async (groupId, userId) => {
   try {  
+    const checkownership = await pool.query("select * from groups where owner = $1",[userId]);
     const result = await pool.query("DELETE FROM group_members WHERE groups_idgroup = $1 AND accounts_idaccount = $2 RETURNING *", [groupId, userId]);
+    
+    
     //also remove -1 from member count
+    
     console.log(result.rows[0].is_a_member);
     if(result.rows[0].is_a_member > 0){
       console.log("member count altered");
     await pool.query("UPDATE groups SET member_count = member_count - 1 WHERE idgroup = $1",[groupId]);
+    }
+    //transfer ownership if the owner is trying to leave the group
+    for(let i=0; checkownership.rowCount > i; i++){
+      await pool.query("CALL transfer_group_ownership(0,$1)",[groupId]);  // transfers ownership to earliest user in the group; deletes group if alone
     }
     console.log('User removed from group successfully.');
   } catch (error) {
