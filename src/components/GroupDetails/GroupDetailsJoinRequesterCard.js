@@ -19,10 +19,10 @@ const GroupDetailsJoinRequesterCard = (props) =>{
     const handleDenyToGroup = async (groupid,accountid) => {
       try {
         await leaveGroup(groupid, accountid); // Call the API to leave a group
-        alert(`You successfully left the group`);
+        alert(`User join request denied`);
       } catch (err) {
-        console.error("Error leaving group:", err);
-        alert("Failed to leave the group. Please try again.");
+        console.error("Error denying join request:", err);
+        alert("Failed to deny join request. Please try again.");
       }
     };
     
@@ -31,7 +31,7 @@ const GroupDetailsJoinRequesterCard = (props) =>{
 
             <p>requester: {props.username}</p>
             <p>Time of request: {props.date}</p>
-
+            
             {
             }
             {props.showAnswerButtons === 1 ? (

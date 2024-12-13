@@ -118,13 +118,19 @@ const GroupDetailsResults = () => {
 
         member.map(member => (
           <GroupDetailsMemberCard key={member.id}
-            username={member.username}
+          idgroup={member.groups_idgroup}
+          idaccount={member.accounts_idaccount}
+          username={member.username}
+          showKickButton={user.id == group.owner ?(1):(0)}
 
           />
         ))
       ) : (typeof (member) === "object" && !Array.isArray(member)) ? (
         <GroupDetailsMemberCard key={member.id}
-          username={member.username}
+        idgroup={member.groups_idgroup}
+        idaccount={member.accounts_idaccount}
+        username={member.username}
+        showKickButton={user.id == group.owner ?(1):(0)}
         />
       ) : (
         <p>Loading memberlist...</p>
@@ -195,8 +201,6 @@ joinRequester.map(joinRequester => (
 remove a member from group
 
 add highlights from movies 
-
-remove highlight
 
 
 */
