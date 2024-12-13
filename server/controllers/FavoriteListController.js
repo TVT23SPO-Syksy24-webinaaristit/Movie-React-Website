@@ -26,19 +26,22 @@ const postFavorites = async (req, res, next) => {
 
         // Validate required fields
         if (!idmovie || !title || !accounts_idaccount || !poster_url) {
-            const error = new Error("Missing required fields: idmovie, title, or accounts_idaccount");
+            const error = new Error("Missing required fields: idmovie, title, accounts_idaccount, or poster_url");
             error.statusCode = 400;
             return next(error);
         }
 
         // Call the model
-        const result = await insertFavorites( idmovie, title, accounts_idaccount, poster_url);
-        return res.status(200)
+        const result = await insertFavorites(idmovie, title, accounts_idaccount, poster_url);
+
+        // Return the inserted favorite or a confirmation message
+        return res.status(200).json(result);
     } catch (error) {
         console.error("Error in postFavorites:", error);
         return next(error);
     }
 };
+
 
 const deleteFavorites = async(req,res,next) => {
     try {
