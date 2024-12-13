@@ -191,7 +191,7 @@ joinRequester.map(joinRequester => (
 
 remove a member from group
 
-add highlights from movies and from screenings
+add highlights from movies 
 
 remove highlight
 

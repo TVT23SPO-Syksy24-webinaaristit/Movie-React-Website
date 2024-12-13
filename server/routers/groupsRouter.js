@@ -33,7 +33,7 @@ router.delete("/:id/", auth, deleteGroup);
 
 router.delete("/:id/leave", auth, leaveGroup);
 
-router.delete(":id/highlight", deleteHighlight);
+router.delete("/:id/highlight", auth, deleteHighlight);
 
 
 

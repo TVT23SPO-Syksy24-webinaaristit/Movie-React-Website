@@ -13,9 +13,7 @@ const GroupDetailsHighlightCard = (props) =>{
         }catch(error){
             console.log(error);
         }
-
-    alert("Shared to group!")
-    console.log(highlightId)
+    alert("Highlight removed")
     }
 
     return(
@@ -27,17 +25,13 @@ const GroupDetailsHighlightCard = (props) =>{
                 <Link className="link" to={props.link_url}>
                     <p><b>{props.title}</b></p><br />
                 </Link>
-            
+                <p>{props.description}</p>
                 
                 <p> Posted by: {props.account}</p>
-            </div>
-            <div>
-                <p>{props.description}</p>
             </div>
             <button onClick={()=>{deleteHighlightHandler(props.highlightid)}}>
             ❌
             </button>
-
         </div>
     )
 }
