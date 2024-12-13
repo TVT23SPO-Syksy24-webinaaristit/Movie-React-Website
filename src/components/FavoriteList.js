@@ -1,53 +1,50 @@
 import './FavoriteList.css';
 import { useEffect, useState } from 'react';
-import { getFavorites } from "../contexts/FavoriteProvider";
+import { useFavorites } from "../contexts/FavoriteProvider"; // Use the hook
 import { useUser } from '../contexts/useUser';
-
 
 import MovieCard from '../components/MovieCard.js';
 
-
-
-function FavoriteList({ idmovie, title, posterUrl }) {
-  
-  const [movies, ] = useState([]);
-  const [favorites, ] = useState([]);
-  const {getFavorites} = useState();
+function FavoriteList() {
+  const [movies, setMovies] = useState([]); // Replace with actual movie fetching logic if needed
+  const [favorites, setFavorites] = useState([]);
   const [error, setError] = useState(null);
-  const { user } = useUser();
+  const { getFavorites } = useFavorites(); // Access getFavorites via the hook
+  const { user } = useUser(); // Assuming this provides the logged-in user
 
   useEffect(() => {
-    const getFavorites = async ( ) => {
+    const fetchFavorites = async () => {
       try {
-         const response = await getFavorites(user.id);
+        if (!user || !user.id) {
+          setError("User not logged in.");
+          return;
+        }
+        const response = await getFavorites();
         if (response && Array.isArray(response)) {
-          console.log("response", response);
-      } else {
-        setError("No favorites available or invalid data.");
+          setFavorites(response);
+        } else {
+          setError("No favorites available or invalid data.");
+        }
+      } catch (err) {
+        console.error("Error fetching favorites:", err);
+        setError("Failed to load favorites. Please try again later.");
       }
-    } catch (err) {
-      console.error("Error fetching favorites:", err);
-      setError("Failed to load favorites. Please try again later.");
-    } 
     };
-    getFavorites();
-    console.log("getFavorites", idmovie, title, posterUrl)
-  },);
 
-  console.log(favorites)
+    fetchFavorites();
+  }, [user, getFavorites]); // Ensure the effect runs when user or getFavorites changes
 
   return (
     <div id="container">
       <h3>Movies</h3>
+      {error && <p className="error">{error}</p>}
       <ul>
         {movies.map((movie) => (
           <MovieCard
             key={movie.id}
             movie={movie}
             isFavorite={favorites.some((favMovie) => favMovie.id === movie.id)}
-          >
-      
-          </MovieCard>
+          />
         ))}
       </ul>
     </div>

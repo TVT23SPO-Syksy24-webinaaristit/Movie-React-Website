@@ -3,21 +3,29 @@ import {selectFavorites, insertFavorites, deleteFavoritesById} from "../models/F
 
 const getFavorites = async (req, res, next) => {
     try {
-        // Extract accounts_idaccount from query parameters
-        const { accounts_idaccount } = req.query;
-
-        if (!accounts_idaccount) {
-            return res.status(400).json({ error: "Missing accounts_idaccount in query parameters." });
-        }
-
-        // Pass accounts_idaccount to the selectFavorites function
-        const result = await selectFavorites(accounts_idaccount);
-
-        return res.status(200).json(result);
-    } catch (error) {
+      // Ensure the user is authenticated and their ID is available
+      const userId = req.user.id;  // Assuming the auth middleware sets req.user.id
+      if (!userId) {
+        const error = new Error("User is not logged in.");
+        error.statusCode = 401;
         return next(error);
+      }
+  
+      // Pass the user ID to the model to fetch favorites
+      const result = await selectFavorites(userId);
+      
+      if (result.rows.length > 0) {
+        // Return the fetched favorites
+        return res.status(200).json(result.rows);
+      } else {
+        // Handle case where no favorites are found
+        return res.status(404).json({ message: "No favorites found for this user." });
+      }
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+      return next(error);
     }
-};
+  };
 
 
 const postFavorites = async (req, res, next) => {
