@@ -3,6 +3,7 @@ import cors from 'cors';
 import userRouter from "./routers/userRouter.js";
 import testRouter from "./routers/testRouter.js";
 import groupsRouter from './routers/groupsRouter.js'
+import favoriterouter from './routers/favoriterouter.js';
 import reviewsRouter from "./routers/reviewsRouter.js"
 
 
@@ -23,6 +24,7 @@ app.use("/groups", groupsRouter);
 
 app.use("/test", testRouter);//TEST
 
+app.use("/favorites", favoriterouter)
 app.use("/reviews", reviewsRouter);
 
 

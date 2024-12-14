@@ -8,7 +8,7 @@ import MovieResults from "../components/MovieResults";
 import MoviePagination from "../components/MoviePagination";
 import { useFilters } from "../contexts/useFilters";
 
-function MoviesPage() {
+const MoviesPage = () => {
     const { searchToggle } = useFilters();
     return (
         <div className="Movies">
