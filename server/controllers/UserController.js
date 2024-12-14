@@ -16,7 +16,9 @@ const postRegistration = async(req,res,next) => {
         const user = userFromDb.rows[0]; //Taking the first row from database response containing info of inserted user
         return res.status(201).json(createUserObject(user.idaccount, user.email, user.username)); //returning successful status message with user object
     } catch(error) {
+        console.log(error);
         return next(error);
+
     };
 };
 

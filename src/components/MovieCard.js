@@ -1,29 +1,33 @@
-import React, { useState } from 'react';
-import "./MovieCard.css"
+
+import React from "react";
+import "./MovieCard.css";
 import MoviePoster from "./MoviePoster";
 import FavoriteButton from "./FavoriteButton";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-const MovieCard = (props) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-
-    const toggleFavorite = () => {
-        setIsFavorite(!isFavorite);
-      };
-
-    return(
-        <div className="MovieCard">
-            <div className="moviecardposter">
-                <Link className="detailsLink" to={`:${props.movieId}`}>
-                <MoviePoster size="original" posterPath={props.posterPath} /> 
-                </Link>
-            </div>
-            <Link className="detailsLink" to={`:${props.movieId}`}>
-            <h3>{props.title}</h3>
-            </Link>
-            <FavoriteButton isFavorite={isFavorite} onToggleFavorite={toggleFavorite} />
-        </div>
-    );
+const MovieCard = ({ movieId, title, posterPath, isFavorited, showFavoriteButton, onFavoriteAdded }) => {
+  return (
+    <div className="MovieCard">
+      <div className="moviecardposter">
+        <Link className="detailsLink" to={`/movies/:${movieId}`}>
+          <MoviePoster size="original" posterPath={posterPath} />
+        </Link>
+      </div>
+      <Link className="detailsLink" to={`/movies/:${movieId}`}>
+        <h3>{title}</h3>
+      </Link>
+      
+      {showFavoriteButton && (
+      <FavoriteButton
+        idmovie={movieId}
+        title={title}
+        posterUrl={posterPath}
+        isFavorited={isFavorited}
+        onFavoriteAdded={onFavoriteAdded} // Callback to refresh favorites
+      />
+      )}
+    </div>
+  );
 };
 
 export default MovieCard;
