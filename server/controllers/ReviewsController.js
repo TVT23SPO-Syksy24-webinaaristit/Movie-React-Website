@@ -1,4 +1,5 @@
 import { getReviewsById, insertReview } from "../models/Reviews.js";
+import { selectUserById } from "../models/User.js";
 import { ApiError } from "../helpers/ApiError.js";
 
 
@@ -9,7 +10,9 @@ const postReview = async(req,res,next) => {
         if (!req.body.reviewpoints) return next(new ApiError("Star rating for review required",400));
         const reviewFromDb = await insertReview(parseInt(req.body.userid), parseInt(req.body.movieid), req.body.reviewtext, parseInt(req.body.reviewpoints));
         const review = reviewFromDb.rows[0];
-        return res.status(200).json(createReviewObject(review.idreview, review.review_text, review.review_points, review.review_creation_timestamp, review.username));
+        const userFromDb = await selectUserById(review.accounts_idaccount);
+        const user = userFromDb.rows[0];
+        return res.status(201).json(createReviewObject(review.idreview, review.review_text, review.review_points, review.review_creation_timestamp, user.username));
     } catch(error) {
         return next(error);
     }
