@@ -67,13 +67,15 @@ const router = createBrowserRouter([
   )
   },
   {
-    element: <ProtectedRoute />,
-    children: [
-      {
+      
       path: "/screenings",
-      element: <ScreeningsPage />,
-      }
-    ]
+      element: (
+      <GroupProvider>
+        <ScreeningsPage />
+      </GroupProvider>
+      )
+      
+    
   },
   {
     element: <ProtectedRoute />,
