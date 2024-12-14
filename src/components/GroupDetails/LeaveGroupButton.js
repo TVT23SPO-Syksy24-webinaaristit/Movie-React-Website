@@ -1,6 +1,6 @@
 import React from "react";
 import { useGroups } from "../../contexts/GroupProvider";
-
+import "./LeaveGroupButton.css";
 const LeaveGroupButton = (props) =>{
     const { leaveGroup } = useGroups();
     const handleLeaveGroup = async (groupId) => {
@@ -14,9 +14,8 @@ const LeaveGroupButton = (props) =>{
       };
     
     return(
-        <button className="leave-group-button" onClick={() => {handleLeaveGroup(props.groupid)
-        }
-        }>Leave Group</button>
+        <button className="leave-group-button" onClick={() => {handleLeaveGroup(props.groupid)}}
+        >Leave Group</button>
     )
 }
 

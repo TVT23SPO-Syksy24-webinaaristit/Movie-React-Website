@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { Link } from 'react-router-dom';
 import { useGroups } from "../../contexts/GroupProvider";
 import { useUser } from "../../contexts/useUser";
+import user_icon from '../Assets/person.png';
 const GroupDetailsMemberCard = (props) =>{
    const {leaveGroup} = useGroups();
    const {user} = useUser();
@@ -18,7 +19,7 @@ const GroupDetailsMemberCard = (props) =>{
     console.log(props.idgroup,props.idaccount)
     return(
         <div>
-
+            <img src={user_icon}></img>
             <p>Member: {props.username}</p>
             {props.showKickButton === 1 && props.idaccount !== parseInt(user.id) ?(
             <div>

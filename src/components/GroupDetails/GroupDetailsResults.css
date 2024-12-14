@@ -1,7 +1,42 @@
 .groupDetails{
     display:grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 33vw 33vw 32vw;
+}
+.groupInfo{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    text-align: center;
+}
+.memberList{
+    grid-column-start: 1;
 }
 .highlightList{
-    border:solid;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    background-color: gray;
 }
+
+
+
+@media only screen and (max-width: 620px) {
+    .groupDetails {
+        
+        grid-template-columns: auto;
+      background-color: lightblue;
+    }
+    .groupInfo{
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+    .memberList{
+        grid-column-start: 1;
+    }
+    .highlightList{
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+
+
+  }
+  
+

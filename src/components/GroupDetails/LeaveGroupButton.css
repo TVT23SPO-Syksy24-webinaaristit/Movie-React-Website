@@ -1,0 +1,21 @@
+.leave-group-button { 
+    grid-column-start: 3;
+    grid-column-end: 4;
+    background-color: red;
+    color: white;
+    padding: 30px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    }
+    .leave-group-button:hover {
+      background-color: darkred;
+     } 
+     @media only screen and (max-width: 620px) {
+        .leave-group-button{
+        grid-column-start: 1;
+        grid-column-end: 2;
+        }
+    }
+  
