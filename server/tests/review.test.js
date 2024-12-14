@@ -97,9 +97,11 @@ describe("Reviews", () => {
             const response = await request(server)
                 .post("/reviews/add")
                 .send(json)
+
+            const responseBody = JSON.parse(response.text);
             
             expect(response.status).toBe(401);
-            expect(response.body.error).toBe("Authorization required");
+            expect(responseBody.message).toBe("Authorization required");
         });
 
         it("should not submit review when starrating is not selected", async () => {

@@ -27,6 +27,7 @@ describe("User tests", () => {
     //insert review to test data deletion
     //insert favourite to test data deletion
     //insert group to test data deletion
+    //insert group_highlights
     await insertTestUser("testi","unauthdeletetest@gmail.com","testitesti");
     await insertTestUser("testi","nulldeletetest@gmail.com","testitesti");
     
@@ -129,13 +130,15 @@ describe("User tests", () => {
       );
     const userId = idresponse.rows[0].idaccount;
       const response = await request(server)
-          .post(`/user/delete/:${userId}`)
+          .get(`/user/delete/${userId}`)
           .set("authorization", token)
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("id", userId);
+      //chect that group_highlights is deleted
       //check that review is deleted
       //check that favourite is deleted
+      //check that group is deleted
     });
 
     it("should not delete data when unauthorized", async () => {
@@ -145,20 +148,18 @@ describe("User tests", () => {
       );
     const userId = idresponse.rows[0].idaccount;
       const response = await request(server)
-        .post(`/user/delete/:${userId}`)
+        .get(`/user/delete/${userId}`)
+      
+      const responseBody = JSON.parse(response.text);
 
       expect(response.status).toBe(401);
-      expect(response.body.error).toBe("Authorization required");
+      expect(responseBody.message).toBe("Authorization required");
     });
 
     it("should not delete data when userId is null", async () => {
-      const idresponse = await pool.query(
-        "SELECT * FROM accounts WHERE email = $1",
-        ["nulldeletetest@gmail.com"]
-      );
-    const userId = idresponse.rows[0].idaccount;
+      const nullId = null;
       const response = await request(server)
-          .post(`/user/delete/:${userId}`)
+          .get(`/user/delete/${nullId}`)
           .set("authorization", token)
 
       expect(response.status).toBe(400);
