@@ -72,7 +72,7 @@ const GroupDetailsResults = () => {
   }, [id,user.id,member.owner]);
   
   return (
-    <div>
+    <div >
     {membership.length > 0 ?(
       
     
