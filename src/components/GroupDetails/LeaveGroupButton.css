@@ -7,7 +7,8 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    
+    max-width: 100px;
+    max-height: 100px;
     }
     .leave-group-button:hover {
       background-color: darkred;

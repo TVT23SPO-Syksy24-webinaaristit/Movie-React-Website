@@ -9,11 +9,18 @@
 }
 .memberList{
     grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
 }
 .highlightList{
     grid-column-start: 2;
     grid-column-end: 3;
     background-color: gray;
+    grid-row-start: 2;
+}
+.requesterList{
+    grid-column-start: 1;
+    grid-column-end: 2;
 }
 
 
@@ -27,15 +34,23 @@
     .groupInfo{
         grid-column-start: 1;
         grid-column-end: 2;
+        grid-row-start: auto;
     }
     .memberList{
         grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: auto;
     }
     .highlightList{
         grid-column-start: 1;
         grid-column-end: 2;
+        grid-row-start: auto;
     }
-
+    .requesterList{
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: auto;
+    }
 
   }
   

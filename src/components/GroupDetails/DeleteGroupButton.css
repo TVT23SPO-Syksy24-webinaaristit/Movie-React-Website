@@ -8,6 +8,7 @@
   border-radius: 5px;
   cursor: pointer;
   margin-top:10px;
+  max-width: 100px;
   }
   .delete-group-button:hover {
     background-color: darkred;

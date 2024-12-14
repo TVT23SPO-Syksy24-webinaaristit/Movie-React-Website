@@ -45,8 +45,6 @@ const GroupDetailsResults = () => {
       try {
         const response = await fetchGroupMemberDetails(id);
         setMember(response.rows);
-        console.log(response.rows)
-
         setMembership(response.rows.filter(v => v.accounts_idaccount == user.id && v.is_a_member > 0))
       } catch (error) {
         console.log(error);
