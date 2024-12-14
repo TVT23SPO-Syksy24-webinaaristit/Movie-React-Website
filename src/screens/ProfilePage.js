@@ -12,7 +12,7 @@ const ProfilePage = () => {
   return (
     <div className="ProfilePage">
       <Navbar />
-      <div className="container">
+      <div className="container-userinfo">
         <h2>User Information</h2>
         <p>Username: <span id="username">{user.username}</span></p>
       </div>
