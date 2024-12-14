@@ -2,7 +2,7 @@ import './FavoriteList.css';
 import { useEffect, useState } from 'react';
 import { useFavorites } from "../contexts/FavoriteProvider";
 import { useUser } from '../contexts/useUser';
-import MoviePoster from '../components/MoviePoster.js';
+
 import MovieCard from '../components/MovieCard.js';
 
 function FavoriteList() {
@@ -42,7 +42,7 @@ function FavoriteList() {
         {favorites.map((fav) => (
           <li key={fav.id}>
             <MovieCard
-              movieId={fav.id}
+              movieId={fav.idmovie}
               title={fav.title}
               posterPath={fav.poster_url} // Ensure this is correctly mapped
               showFavoriteButton={false}

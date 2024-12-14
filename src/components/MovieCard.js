@@ -9,11 +9,11 @@ const MovieCard = ({ movieId, title, posterPath, isFavorited, showFavoriteButton
   return (
     <div className="MovieCard">
       <div className="moviecardposter">
-        <Link className="detailsLink" to={`:${movieId}`}>
+        <Link className="detailsLink" to={`/movies/:${movieId}`}>
           <MoviePoster size="original" posterPath={posterPath} />
         </Link>
       </div>
-      <Link className="detailsLink" to={`:${movieId}`}>
+      <Link className="detailsLink" to={`/movies/:${movieId}`}>
         <h3>{title}</h3>
       </Link>
       
