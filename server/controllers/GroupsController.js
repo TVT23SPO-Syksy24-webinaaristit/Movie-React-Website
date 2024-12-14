@@ -1,16 +1,11 @@
 //server/controllers/GroupsController.js
 import {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, selectAllGroupJoinRequesters, 
-  insertGroupCreate, deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, 
-  insertGroupJoin, insertGroupReply} from '../models/Group.js'; // Import the model from /models
+  insertGroupCreate, insertHighlightCreate, deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, 
+  insertGroupJoin, insertGroupJoinRequest} from '../models/Group.js'; // Import the model from /models
 
 
 const getAllGroups = async (req, res) => {
   const userId = req.headers['user-id'];  // Access the 'x-user-id' header
-
-  if (!userId) {
-    return res.status(400).json({ message: "User ID is required" });
-  }
-
   try {
     const groups = await selectAllGroups(userId);  // Select all the available groups from the model
     return res.status(200).json(groups);  // Return the groups to the client
@@ -31,6 +26,32 @@ const postGroupCreate = async (req, res, next) => {
     console.error("Error in controller (creating group):", error);
     next(error); // Pass error to error-handling middleware
   }
+};
+
+const postGroupHighlight = async(req,res,next)=>{
+  const { groups_idgroup, 
+    accounts_idaccount, 
+    poster_url, 
+    title, 
+    idmovie_or_event, 
+    description, 
+    source_link_url } = req.body;
+  try {
+    const newHighlight = await insertHighlightCreate( 
+      groups_idgroup, 
+      accounts_idaccount, 
+      poster_url, 
+      title, 
+      idmovie_or_event, 
+      description, 
+      source_link_url ); // Pass an object with named properties
+    return res.status(201).json(newHighlight); // Return the new highlight details
+  } catch (error) {
+    console.error("Error in controller (creating highlight):", error);
+    next(error); // Pass error to error-handling middleware
+  }
+
+
 };
 
 const getGroupDetails = async (req, res, next) => {
@@ -124,7 +145,7 @@ const leaveGroup = async (req, res, next) => {
 const deleteHighlight = async(req,res,next)=>{
   const { id: highlightId } = req.params; // Extract highlightId from path params
 
-  console.log("Group ID:", highlightId);
+  console.log("highlight ID:", highlightId);
 
   try{
     const result = await deleteGroupHighlight(highlightId);
@@ -150,19 +171,21 @@ const postGroupJoin = async (req, res, next) => {
   }
 };
 
-const postJoinRequestReply = async(req,res,next)=>{
-  const{groups_idgroup,accounts_idaccount,reply} = req.body;
+const postJoinRequest = async(req,res,next)=>{
+  const{groups_idgroup,accounts_idaccount} = req.body;
   try{
-    const updatedGroup = await insertGroupReply(groups_idgroup, accounts_idaccount, reply);// Update group via model
+    const updatedGroup = await insertGroupJoinRequest(groups_idgroup, accounts_idaccount);// Update group via model
     return res.status(200).json(updatedGroup); // Return the updated group details
   }catch (error) {
-    console.error("Error in controller (replying join request):", error);
+    console.error("Error in controller (sending join request):", error);
     next(error);  // Pass error to error-handling middleware
   }
-};
+}
+
+
 
 
 
 export { getAllGroups, getGroupDetails, getGroupHighlights, getGroupMembers, getGroupJoinRequesters, 
-  postGroupCreate, postGroupJoin, postJoinRequestReply, 
+  postGroupCreate, postGroupHighlight, postGroupJoin, postJoinRequest,  
   deleteGroup, leaveGroup, deleteHighlight }; // Export the controller functions

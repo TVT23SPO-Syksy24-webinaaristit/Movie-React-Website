@@ -1,23 +1,39 @@
-import React, {useState} from "react";
+import React from "react";
 import { Link } from 'react-router-dom'
 import "./GroupDetailsHighlightCard.css"
+import { useGroups } from "../../contexts/GroupProvider";
 
 const GroupDetailsHighlightCard = (props) =>{ 
+    const {deleteHighlight} = useGroups();
+    
+    //WORK IN PROGRESS, does not work.
+    const deleteHighlightHandler = async(highlightId) =>{
+        try{
+            await deleteHighlight(highlightId);
+        }catch(error){
+            console.log(error);
+        }
+    alert("Highlight removed")
+    }
+
     return(
         <div className="highlightCard">
+            <Link className="link" to={props.link_url}>
             <div className="poster">
-                <img src="/imageplaceholder.jpg" alt="movie poster" />
+                <img src={props.image} alt="movie poster" />
             </div>
+            </Link>
             <div className="title">
                 <Link className="link" to={props.link_url}>
                     <p><b>{props.title}</b></p><br />
                 </Link>
-            
-
+                <p>{props.description}</p>
+                
                 <p> Posted by: {props.account}</p>
             </div>
-        
-
+            <button onClick={()=>{deleteHighlightHandler(props.highlightid)}}>
+            ❌
+            </button>
         </div>
     )
 }

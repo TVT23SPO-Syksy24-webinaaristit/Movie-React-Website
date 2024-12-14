@@ -11,7 +11,7 @@ const selectAllGroups = async (userId) => {
       g.member_count,
       g.group_description,
       g.owner,
-      COALESCE(m.accounts_idaccount, NULL) AS is_member
+      m.is_a_member AS is_member
     FROM groups g
     LEFT JOIN group_members m ON g.idgroup = m.groups_idgroup AND m.accounts_idaccount = $1
   `, [userId]);
@@ -22,7 +22,7 @@ const selectAllGroups = async (userId) => {
     name: row.group_name,
     members: row.member_count,
     description: row.group_description,
-    isMember: row.is_member !== null, // If 'is_member' is not null, the user is a member
+    isMember: row.is_member, // If 'is_member' is not null, the user is a member
     isOwner: parseInt(row.owner) === parseInt(userId)// If 'owner' is the same as the user ID, the user is the owner
   }));
 };
@@ -81,11 +81,42 @@ const insertGroupCreate = async ({ owner, name, description }) => {
   }
 };
 
+const insertHighlightCreate = async(groups_, accounts_idaccount, poster_url, title, idmovie_or_event, description, source_link_url) =>{
+  try{
+    console.log("groupsid pritningtgmg",groups_)
+    const groupResult = await pool.query("INSERT INTO group_highlights (groups_idgroup, accounts_idaccount, poster_url, title, idmovie_or_event, description, source_link_url, highlight_creation_timestamp) VALUES($1, $2, $3, $4, $5, $6, $7,NOW() ) ",[groups_, 
+        accounts_idaccount, 
+        poster_url, 
+        title, 
+        idmovie_or_event, 
+        description, 
+        source_link_url]);
+    return groupResult;
+  }catch(error){
+    console.error("Error creating highlight", error);
+    throw error;
+  }
+
+
+}
+
 const deleteGroupLeave = async (groupId, userId) => {
   try {  
+    const checkownership = await pool.query("select * from groups where owner = $1 AND idgroup = $2",[userId,groupId]);
     const result = await pool.query("DELETE FROM group_members WHERE groups_idgroup = $1 AND accounts_idaccount = $2 RETURNING *", [groupId, userId]);
+    
+    
     //also remove -1 from member count
+    
+    console.log(result.rows[0].is_a_member);
+    if(result.rows[0].is_a_member > 0){
+      console.log("member count altered");
     await pool.query("UPDATE groups SET member_count = member_count - 1 WHERE idgroup = $1",[groupId]);
+    }
+    //transfer ownership if the owner is trying to leave the group
+    if(checkownership.rowCount > 0){
+      await pool.query("CALL transfer_group_ownership(0,$1)",[groupId]);  // transfers ownership to earliest user in the group; deletes group if alone
+    }
     console.log('User removed from group successfully.');
   } catch (error) {
     console.error('Error removing user from group:', error);
@@ -136,38 +167,23 @@ const deleteGroupHighlight = async(highlightId) =>{
 
 
 const insertGroupJoin = async (groups_idgroup, accounts_idaccount) => {
-  const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2",[accounts_idaccount, groups_idgroup]);
+  const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2 AND is_a_member='1'",[accounts_idaccount, groups_idgroup]);
   if (existingMember.rows.length > 0) {
     throw new Error("User already in group");
   }
   //if user is added, also add a +1 to member count
   await pool.query("UPDATE groups SET member_count = member_count + 1 WHERE idgroup = $1",[groups_idgroup]);
-  return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup, is_a_member) VALUES ($1, $2, $3) RETURNING *",[accounts_idaccount, groups_idgroup, 1]);
+  return await pool.query("UPDATE group_members SET group_request_timestamp = NULL, is_a_member = '1', join_date_timestamp=NOW() WHERE accounts_idaccount = $1 AND groups_idgroup = $2",[accounts_idaccount, groups_idgroup]);
 };
 
-const insertGroupReply = async (groups_idgroup, accounts_idaccount,reply) => {
-  const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2 AND is_a_member = '1'",[accounts_idaccount, groups_idgroup]);
+const insertGroupJoinRequest = async(groups_idgroup, accounts_idaccount)=>{
+  const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2",[accounts_idaccount, groups_idgroup]);
   if (existingMember.rows.length > 0) {
-    throw new Error("User already in group or has not requested to join");
+    throw new Error("User has already sent a join request or is in the group.");
   }
-  //if user is added, also add a +1 to member count
-  if(reply === 1){
-  await pool.query("UPDATE groups SET member_count = member_count + 1 WHERE idgroup = $1",[groups_idgroup]);
-  return await pool.query("UPDATE group_members SET group_request_timestamp = NULL, is_a_member = '1', join_date_timestamp=NOW() WHERE accounts_idaccount = $1 AND groups_idgroup = $2 RETURNING *",[accounts_idaccount, groups_idgroup]);
-} else if(reply === 0){
-  return await pool.query("DELETE FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2 RETURNING *",[accounts_idaccount, groups_idgroup]);
-} else throw new Error("error replying group request");
+  return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup, group_request_timestamp, is_a_member) VALUES ($1, $2,NOW(), $3) RETURNING *",[accounts_idaccount, groups_idgroup, 0]);
 };
-
 
 export {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, selectAllGroupJoinRequesters, 
-  insertGroupCreate, 
-  deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin, insertGroupReply};
-
-
-// await pool.query(
-//   "INSERT INTO groups_members (accounts_idaccount, groups_idgroup, is_a_member, join_date_timestamp) VALUES ($1, $2, 1, NOW())",
-//   [userId, groupId]
-// );
-
-//   return { idgroup: groupId, group_name: name, owner: userId, member_count: 1, description };
+  insertGroupCreate, insertHighlightCreate, 
+  deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin, insertGroupJoinRequest};

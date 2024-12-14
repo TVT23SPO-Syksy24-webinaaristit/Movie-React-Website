@@ -125,7 +125,6 @@ ALTER TABLE IF EXISTS public.group_highlights
     NOT VALID;
 
 
-
     CREATE PROCEDURE transfer_group_ownership(idusers INT,idgroups INT)
 LANGUAGE plpgsql 
 AS $$
@@ -143,8 +142,16 @@ ELSE
 	FROM group_members
 	WHERE groups_idgroup=idgroups;
 	IF member_count<1 THEN
+		DELETE FROM group_highlights
+		WHERE groups_idgroup=idgroups;
+
+		DELETE FROM group_members
+		where groups_idgroup=idgroups;
+		
 		DELETE from groups		/* Group has no members - group will be deleted */
 		where idgroup=idgroups;
+
+		
 	ELSE
 		select accounts_idaccount
 		INTO chosen_owner

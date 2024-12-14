@@ -16,6 +16,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
 import UserProvider from './contexts/UserProvider.js';
 import ProtectedRoute from './components/Authentication/ProtectedRoute.js';
+import { FavoriteProvider } from './contexts/FavoriteProvider.js';
 import ThemeProvider from './contexts/ThemeProvider.js';
 // import dotenv from 'dotenv';
 // import routes from './routers/router.js';
@@ -37,9 +38,13 @@ const router = createBrowserRouter([
   {
     path: "/movies",
     element: (
-      <MovieFilterProvider>
-        <MoviesPage />
-      </MovieFilterProvider>
+      <GroupProvider>
+        <MovieFilterProvider>
+          <FavoriteProvider>
+            <MoviesPage />
+          </FavoriteProvider>
+        </MovieFilterProvider>
+      </GroupProvider>
     ),
   },
   {
@@ -47,37 +52,43 @@ const router = createBrowserRouter([
     element: <MovieDetailsPage />
   },
   {
-  path: "/groups", //To be moved under the protected routes once auth is ready.
-  element:(
-    <GroupProvider>
-      <GroupPage />
-    </GroupProvider>
-  )
+    path: "/groups", //To be moved under the protected routes once auth is ready.
+    element: (
+      <GroupProvider>
+        <GroupPage />
+      </GroupProvider>
+    )
   },
   {
-    
-  path: "/groupdetails/:id",
-  element: (
-  <GroupProvider>
-    <GroupDetailsPage />
-  </GroupProvider>
-  )
+
+    path: "/groupdetails/:id",
+    element: (
+      <GroupProvider>
+        <GroupDetailsPage />
+      </GroupProvider>
+    )
   },
   {
-    element: <ProtectedRoute />,
-    children: [
-      {
-      path: "/screenings",
-      element: <ScreeningsPage />,
-      }
-    ]
+
+    path: "/screenings",
+    element: (
+      <GroupProvider>
+        <ScreeningsPage />
+      </GroupProvider>
+    )
+
+
   },
   {
     element: <ProtectedRoute />,
     children: [
       {
         path: "/profile",
-        element: <ProfilePage />,
+        element: (
+          <FavoriteProvider>
+            <ProfilePage />,
+          </FavoriteProvider>
+        )
       }
     ]
   },
@@ -92,7 +103,9 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <ThemeProvider>
-      <RouterProvider router={router} />
+        <FavoriteProvider>
+          <RouterProvider router={router} />
+        </FavoriteProvider>
       </ThemeProvider>
     </UserProvider>
   </React.StrictMode>
