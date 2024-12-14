@@ -4,6 +4,7 @@ import "./MovieCard.css";
 import MoviePoster from "./MoviePoster";
 import FavoriteButton from "./FavoriteButton";
 import { Link } from "react-router-dom";
+import AddToGroupHighlightDropdown from "./AddToGroupHighlightDropdown";
 
 const MovieCard = ({ movieId, title, posterPath, isFavorited, showFavoriteButton, onFavoriteAdded }) => {
   return (
@@ -18,6 +19,7 @@ const MovieCard = ({ movieId, title, posterPath, isFavorited, showFavoriteButton
       </Link>
       
       {showFavoriteButton && (
+        <div>
       <FavoriteButton
         idmovie={movieId}
         title={title}
@@ -25,6 +27,14 @@ const MovieCard = ({ movieId, title, posterPath, isFavorited, showFavoriteButton
         isFavorited={isFavorited}
         onFavoriteAdded={onFavoriteAdded} // Callback to refresh favorites
       />
+        <AddToGroupHighlightDropdown 
+        image={"https://image.tmdb.org/t/p/"+"original"+posterPath}
+        title={title}
+        idevent={movieId}
+        description={"Have a look at this movie!"}
+        sourceUrl={"/movies/:"+movieId}
+        />
+        </div>
       )}
     </div>
   );

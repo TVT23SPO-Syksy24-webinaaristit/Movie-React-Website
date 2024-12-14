@@ -38,11 +38,13 @@ const router = createBrowserRouter([
   {
     path: "/movies",
     element: (
-      <MovieFilterProvider>
-        <FavoriteProvider>
-        <MoviesPage />
-        </FavoriteProvider>
-      </MovieFilterProvider>
+      <GroupProvider>
+        <MovieFilterProvider>
+          <FavoriteProvider>
+            <MoviesPage />
+          </FavoriteProvider>
+        </MovieFilterProvider>
+      </GroupProvider>
     ),
   },
   {
@@ -50,42 +52,42 @@ const router = createBrowserRouter([
     element: <MovieDetailsPage />
   },
   {
-  path: "/groups", //To be moved under the protected routes once auth is ready.
-  element:(
-    <GroupProvider>
-      <GroupPage />
-    </GroupProvider>
-  )
+    path: "/groups", //To be moved under the protected routes once auth is ready.
+    element: (
+      <GroupProvider>
+        <GroupPage />
+      </GroupProvider>
+    )
   },
   {
-    
-  path: "/groupdetails/:id",
-  element: (
-  <GroupProvider>
-    <GroupDetailsPage />
-  </GroupProvider>
-  )
+
+    path: "/groupdetails/:id",
+    element: (
+      <GroupProvider>
+        <GroupDetailsPage />
+      </GroupProvider>
+    )
   },
   {
-      
-      path: "/screenings",
-      element: (
+
+    path: "/screenings",
+    element: (
       <GroupProvider>
         <ScreeningsPage />
       </GroupProvider>
-      )
-      
-    
+    )
+
+
   },
   {
     element: <ProtectedRoute />,
     children: [
       {
         path: "/profile",
-        element:(
+        element: (
           <FavoriteProvider>
             <ProfilePage />,
-          </FavoriteProvider> 
+          </FavoriteProvider>
         )
       }
     ]
