@@ -184,30 +184,6 @@ const insertGroupJoinRequest = async(groups_idgroup, accounts_idaccount)=>{
   return await pool.query("INSERT INTO group_members (accounts_idaccount, groups_idgroup, group_request_timestamp, is_a_member) VALUES ($1, $2,NOW(), $3) RETURNING *",[accounts_idaccount, groups_idgroup, 0]);
 };
 
-// CURRENTLY NOT IN USE AT ALL, used join and leave seperately instead.
-const insertGroupReply = async (groups_idgroup, accounts_idaccount,reply) => {
-  const existingMember = await pool.query("SELECT * FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2 AND is_a_member = '1'",[accounts_idaccount, groups_idgroup]);
-  if (existingMember.rows.length > 0) {
-    throw new Error("User already in group or has not requested to join");
-  }
-  //if user is added, also add a +1 to member count
-  if(reply === 1){
-  await pool.query("UPDATE groups SET member_count = member_count + 1 WHERE idgroup = $1",[groups_idgroup]);
-  return await pool.query("UPDATE group_members SET group_request_timestamp = NULL, is_a_member = '1', join_date_timestamp=NOW() WHERE accounts_idaccount = $1 AND groups_idgroup = $2 RETURNING *",[accounts_idaccount, groups_idgroup]);
-} else if(reply === 0){
-  return await pool.query("DELETE FROM group_members WHERE accounts_idaccount = $1 AND groups_idgroup = $2 RETURNING *",[accounts_idaccount, groups_idgroup]);
-} else throw new Error("error replying group request");
-};
-
-
 export {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupMembers, selectAllGroupJoinRequesters, 
   insertGroupCreate, insertHighlightCreate, 
-  deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin, insertGroupJoinRequest, insertGroupReply};
-
-
-// await pool.query(
-//   "INSERT INTO groups_members (accounts_idaccount, groups_idgroup, is_a_member, join_date_timestamp) VALUES ($1, $2, 1, NOW())",
-//   [userId, groupId]
-// );
-
-//   return { idgroup: groupId, group_name: name, owner: userId, member_count: 1, description };
+  deleteGroupDelete, deleteGroupLeave, deleteGroupHighlight, insertGroupJoin, insertGroupJoinRequest};

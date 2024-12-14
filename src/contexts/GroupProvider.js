@@ -149,24 +149,6 @@ export const GroupProvider = ({ children }) => {
     }
   };
 
-  //NOT IN USE.
-  const replyGroup = async(groupId,accountId,reply) => {
-    const headers = {
-      
-    };
-    try{
-      const response = await axios.post(`${API_URL}/groups/requestreply`, {
-        groups_idgroup: groupId,
-        accounts_idaccount: accountId,
-        reply: reply
-      }, { headers });
-      return response.data;
-    }catch (error) {
-      console.error('Error replying group request:', error);
-      throw error;
-    }
-  }
-
   // Leave a group
   const leaveGroup = async (groupId,accountId) => {
     if(accountId==null){
@@ -257,7 +239,7 @@ export const GroupProvider = ({ children }) => {
   }
 
   return (
-    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, sendGroupJoinRequest, replyGroup, leaveGroup, createGroup, createHighlight, 
+    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, sendGroupJoinRequest, leaveGroup, createGroup, createHighlight, 
     deleteHighlight, deleteGroup, 
     fetchGroupDetails, fetchHighlightDetails, fetchGroupMemberDetails, fetchrequesterDetails }}>
       {children}

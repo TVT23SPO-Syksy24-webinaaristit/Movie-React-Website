@@ -19,6 +19,7 @@ const GroupDetailsResults = () => {
   const [member, setMember] = useState([]);
   const [joinRequester, setJoinRequester] = useState([]);
   const { user } = useUser();
+  const [membership, setMembership] = useState([])
 
   useEffect(() => {
     // Fetch group details by ID
@@ -44,6 +45,9 @@ const GroupDetailsResults = () => {
         try{
           const response = await fetchGroupMemberDetails(id);
           setMember(response.rows);
+          console.log(response.rows)
+          
+          setMembership(response.rows.filter(v=>v.accounts_idaccount == user.id && v.is_a_member > 0))
           }catch(error){
           console.log(error);
         }
@@ -67,13 +71,12 @@ const GroupDetailsResults = () => {
 
   }, [id,user.id,member.owner]);
   
-  console.log(group);
-  console.log(highlight);
-  console.log(member);
-  console.log(joinRequester);
-  console.log(user);
-
   return (
+    <div>
+    {membership.length > 0 ?(
+      
+    
+    
     <div className="groupDetails">
       
       
@@ -187,6 +190,10 @@ joinRequester.map(joinRequester => (
         <br />
       )}
   
+    </div>
+    ):(
+      <h1>User not in the group.</h1>
+    )}
     </div>
   )
 
