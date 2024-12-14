@@ -6,11 +6,6 @@ import {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupM
 
 const getAllGroups = async (req, res) => {
   const userId = req.headers['user-id'];  // Access the 'x-user-id' header
-
-  if (!userId) {
-    return res.status(400).json({ message: "User ID is required" });
-  }
-
   try {
     const groups = await selectAllGroups(userId);  // Select all the available groups from the model
     return res.status(200).json(groups);  // Return the groups to the client

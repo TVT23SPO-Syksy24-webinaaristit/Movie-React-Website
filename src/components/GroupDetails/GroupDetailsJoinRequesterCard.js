@@ -40,14 +40,14 @@ const GroupDetailsJoinRequesterCard = (props) =>{
                 className="join-button"
                 onClick={()=>
                   handleAcceptToGroup(props.groupid,props.accountid)} // Pass the group ID
-              >idaccount:{props.accountid}
+              >
                 ✅ Accept
               </button>
               <button
               className="join-button"
               onClick={()=>
                 handleDenyToGroup(props.groupid,props.accountid)} // Pass the group ID
-            >idaccount:{props.accountid}
+            >
               ❌ Deny
             </button>
             </div>
