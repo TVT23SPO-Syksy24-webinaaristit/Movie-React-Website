@@ -8,7 +8,7 @@ const router = Router()
 
 router.get('/getfavorites', auth,  getFavorites);
 
-router.get('/getfavorites/:userid', auth,  getFavorites);
+router.get('/getfavorites/:accounts_idaccount', auth,  getFavorites);
 
 router.post('/postfavorites', auth,  postFavorites);
 

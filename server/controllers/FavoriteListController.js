@@ -8,7 +8,7 @@ const getFavorites = async (req, res, next) => {
         console.log("Route parameters:", req.params);
 
         // Extract accounts_idaccount from query parameters
-        const accounts_idaccount = req.query.accounts_idaccount || req.params.userid;
+        const accounts_idaccount = req.query.accounts_idaccount || req.params.accounts_idaccount;
 
         if (!accounts_idaccount) {
             return res.status(400).json({ error: "Missing accounts_idaccount in query parameters." });

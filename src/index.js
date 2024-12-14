@@ -91,6 +91,19 @@ const router = createBrowserRouter([
     ]
   },
   {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/profile/:accounts_idaccount?",
+        element: (
+          <FavoriteProvider>
+            <ProfilePage />
+          </FavoriteProvider>
+        )
+      }
+    ]
+  },
+  {
     path: "/login",
     element: <LoginPage />,
   },
