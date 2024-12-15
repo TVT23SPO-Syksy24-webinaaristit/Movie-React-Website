@@ -23,6 +23,9 @@ export const GroupProvider = ({ children }) => {
   
   const fetchAllGroups = async (userId) => {
     // Pass both the Bearer token and userId correctly in the headers
+    if(userId==null){ //User is a guest
+      userId=0;
+    }
     const headers = {
       Authorization: user.token, // For Bearer token authentication
       'user-id': userId,  // Custom header for userId
@@ -76,14 +79,14 @@ export const GroupProvider = ({ children }) => {
 
 
   // Join a group
-  const joinGroup = async (groupId) => {
+  const joinGroup = async (groupId,accountid) => {
     const headers = {
         Authorization: user.token,
      };
     try {
       const response = await axios.post(`${API_URL}/groups/join`, {
         groups_idgroup: groupId,
-        accounts_idaccount: user.id,
+        accounts_idaccount: accountid,
       }, { headers });
       return response.data;
     } catch (error) {
@@ -92,13 +95,74 @@ export const GroupProvider = ({ children }) => {
     }
   };
 
+  const sendGroupJoinRequest = async (groupId) => {
+    const headers = {
+        Authorization: user.token,
+     };
+    try {
+      const response = await axios.post(`${API_URL}/groups/sendjoinrequest`, {
+        groups_idgroup: groupId,
+        accounts_idaccount: user.id,
+      }, { headers });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error requesting to join a group:', error);
+      throw error;
+    }
+  };
+
+  const createHighlight = async(groupId,poster,titletext,idevent,descriptiontext,source_link) =>{
+    const headers = {'Content-Type': 'application/json',
+      Authorization: user.token};
+    try {
+    const data = {
+      groups_idgroup: groupId,
+      accounts_idaccount: user.id,
+      poster_url: poster,
+      title: titletext,
+      idmovie_or_event: idevent,
+      description: descriptiontext,
+      source_link_url: source_link
+    };
+    console.log(data)
+
+    
+      const response = await axios.post(`${API_URL}/groups/highlightcreate`, data, { headers });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating a highlight:', error);
+      throw error;
+    }
+  };
+
+  const deleteHighlight = async (highlightId) => {
+    const headers = {
+        Authorization: user.token,
+    };
+    console.log(highlightId)
+    try {
+      const response = await axios.delete(`${API_URL}/groups/${highlightId}/highlight`,
+        { headers });
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting highlight:', error);
+      throw error;
+    }
+  };
+
   // Leave a group
-  const leaveGroup = async (groupId) => {
+  const leaveGroup = async (groupId,accountId) => {
+    if(accountId==null){
+      accountId = user.id;
+    }
+    console.log(accountId)
     const headers = {
         Authorization: user.token, 
     };
     try {
-        const response = await axios.delete(`${API_URL}/groups/${groupId}/leave?accountId=${user.id}`, {
+        const response = await axios.delete(`${API_URL}/groups/${groupId}/leave?accountId=${accountId}`, {
             headers,
         });
       return response.data;
@@ -108,9 +172,79 @@ export const GroupProvider = ({ children }) => {
     }
   };
 
+  const fetchGroupDetails = async(groupId) =>{
+    const headers = {
+      Authorization: user.token 
+    };
+    try{
+      console.log(groupId);
+      const response = await axios.get(`${API_URL}/groups/${groupId}`, {headers}
+      )
+      console.log(response.data)
+      return response.data;
+      
+    }catch(error){
+      console.error('Error fetching groupdetails:', error);
+      throw error;
+    }
+
+  }
+
+  const fetchHighlightDetails = async(groupId) =>{
+    const headers = {
+      Authorization: user.token
+    };
+    try{
+      console.log(groupId);
+      const response = await axios.get(`${API_URL}/groups/highlights/${groupId}`, {headers}
+      )
+      console.log(response.data)
+      return response.data;
+      
+    }catch(error){
+      console.error('Error fetching highlights:', error);
+      throw error;
+    }
+  }
+
+  const fetchGroupMemberDetails = async(groupId) =>{
+    const headers = {
+      Authorization: user.token
+    };
+    try{
+      console.log(groupId);
+      const response = await axios.get(`${API_URL}/groups/${groupId}/members`, {headers}
+      )
+      console.log(response.data)
+      return response.data;
+      
+    }catch(error){
+      console.error('Error fetching members:', error);
+      throw error;
+    }
+  }
+
+  const fetchrequesterDetails = async(groupId) =>{
+    const headers = {
+      Authorization: user.token
+    };
+    try{
+      console.log(groupId);
+      const response = await axios.get(`${API_URL}/groups/${groupId}/requesters`, {headers}
+      )
+      console.log(response.data)
+      return response.data;
+      
+    }catch(error){
+      console.error('Error fetching join requesters:', error);
+      throw error;
+    }
+  }
 
   return (
-    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, leaveGroup, createGroup, deleteGroup }}>
+    <GroupContext.Provider value={{ fetchAllGroups, joinGroup, sendGroupJoinRequest, leaveGroup, createGroup, createHighlight, 
+    deleteHighlight, deleteGroup, 
+    fetchGroupDetails, fetchHighlightDetails, fetchGroupMemberDetails, fetchrequesterDetails }}>
       {children}
     </GroupContext.Provider>
   );

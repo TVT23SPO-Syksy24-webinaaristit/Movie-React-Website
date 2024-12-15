@@ -7,7 +7,7 @@ import MovieDetailsPage from './screens/MovieDetailsPage.js';
 import ScreeningsPage from './screens/ScreeningsPage.js';
 import { GroupProvider } from './contexts/GroupProvider.js';
 import GroupPage from './screens/GroupPage.js';
-import GroupDetails from './screens/GroupDetails.js';
+import GroupDetailsPage from './screens/GroupDetailsPage.js';
 import ProfilePage from './screens/ProfilePage.js';
 import LoginPage from './screens/LoginPage.js';
 import { Navigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MovieFilterProvider from './contexts/MovieFilterProvider.js';
 import UserProvider from './contexts/UserProvider.js';
 import ProtectedRoute from './components/Authentication/ProtectedRoute.js';
+import { FavoriteProvider } from './contexts/FavoriteProvider.js';
 import ThemeProvider from './contexts/ThemeProvider.js';
 // import dotenv from 'dotenv';
 // import routes from './routers/router.js';
@@ -37,9 +38,13 @@ const router = createBrowserRouter([
   {
     path: "/movies",
     element: (
-      <MovieFilterProvider>
-        <MoviesPage />
-      </MovieFilterProvider>
+      <GroupProvider>
+        <MovieFilterProvider>
+          <FavoriteProvider>
+            <MoviesPage />
+          </FavoriteProvider>
+        </MovieFilterProvider>
+      </GroupProvider>
     ),
   },
   {
@@ -47,23 +52,43 @@ const router = createBrowserRouter([
     element: <MovieDetailsPage />
   },
   {
-  path: "/groups", //To be moved under the protected routes once auth is ready.
-  element:(
-    <GroupProvider>
-      <GroupPage />
-    </GroupProvider>
-  )
+    path: "/groups", //To be moved under the protected routes once auth is ready.
+    element: (
+      <GroupProvider>
+        <GroupPage />
+      </GroupProvider>
+    )
   },
   {
-  path: "/groups/:id",
-  element: <GroupDetails />
+
+    path: "/groupdetails/:id",
+    element: (
+      <GroupProvider>
+        <GroupDetailsPage />
+      </GroupProvider>
+    )
+  },
+  {
+
+    path: "/screenings",
+    element: (
+      <GroupProvider>
+        <ScreeningsPage />
+      </GroupProvider>
+    )
+
+
   },
   {
     element: <ProtectedRoute />,
     children: [
       {
-      path: "/screenings",
-      element: <ScreeningsPage />,
+        path: "/profile",
+        element: (
+          <FavoriteProvider>
+            <ProfilePage />,
+          </FavoriteProvider>
+        )
       }
     ]
   },
@@ -71,8 +96,12 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
-        path: "/profile",
-        element: <ProfilePage />,
+        path: "/profile/:accounts_idaccount?",
+        element: (
+          <FavoriteProvider>
+            <ProfilePage />
+          </FavoriteProvider>
+        )
       }
     ]
   },
@@ -87,7 +116,9 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <ThemeProvider>
-      <RouterProvider router={router} />
+        <FavoriteProvider>
+          <RouterProvider router={router} />
+        </FavoriteProvider>
       </ThemeProvider>
     </UserProvider>
   </React.StrictMode>

@@ -8,17 +8,19 @@ import MovieResults from "../components/MovieResults";
 import MoviePagination from "../components/MoviePagination";
 import { useFilters } from "../contexts/useFilters";
 
-function MoviesPage() {
+const MoviesPage = () => {
     const { searchToggle } = useFilters();
     return (
         <div className="Movies">
             <Navbar />
+            <div >
             <div className="moviefiltersearch">
             {searchToggle ? <MovieSearch /> : null}
             {!searchToggle ? <MovieFilters /> : null}
             </div>
             <MovieResults />
             <MoviePagination />
+            </div>
             <Footer />
         </div>
     );

@@ -1,62 +1,74 @@
 .ProfilePage {
-    min-height: 100%; 
-    display: flex;
-    flex-direction: column;
-    
-  }
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color); /* Matches theme */
+  color: var(--text-color); /* Matches theme */
+  transition: background-color 0.3s, color 0.3s; /* Smooth theme transition */
+}
+
+.container-userinfo {
+  background-color: var(--container-bg-color); /* Themed container */
+  color: var(--button-bg-color); /* Themed text */
+  padding: 3%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 15px;
+  margin-right: 20%;
+  margin-left: 20%;
+  margin-bottom: 2%;
+  transition: background-color 0.3s, color 0.3s; /* Smooth theme transition */
+}
+
+.favorite-list {
+  position: absolute;
+  bottom: 50%;
+  right: 10%;
+  background-color: var(--button-bg-color); /* Themed button */
+  color: var(--button-text-color); /* Themed button text */
+  padding: 15px 30px; /* Adjusted padding for consistency */
+  border: none;
+  border-radius: 8px; /* Slightly rounded corners */
+  cursor: pointer;
+  margin-top: 10%;
+  margin-bottom: 3%;
+  transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+.favorite-list:hover {
+  background-color: var(--forgot-password-hover); /* Themed hover state */
+  transform: translateY(-3px); /* Subtle lift effect on hover */
+}
+
+.container-deleteaccount {
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px;
+}
+
+.delete-button {
   
-  .container {
-   background-color: lightgrey;
-   padding: 5%; 
-   justify-content: center;
-   align-items: left;
-   text-align: left;
-   border-radius: 15px;
-   margin-right: 40%;
-  }
+  background-color: red;
+  color: var(--button-text-color); /* Keeps button text consistent */
+  padding: 30px 40px; /* Wider padding */
+  border: none;
+  border-radius: 8px; /* Slightly rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
 
-  .containerlistbutton {
-  }
+.delete-button:hover {
+  background-color: darkred;
+  transform: translateY(-3px); /* Hover lift effect for consistency */
+}
 
-  .favorite-list {
-    position: absolute;
-    bottom: 50%; 
-    right: 10%; 
-    color: white;
-    padding: 40px 40px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .favorite-gallery:hover{
-    border: 3px solid orange;
-    cursor: pointer;
-  }
-
-  .favorite-gallery img{
-    width: 100%;
-    height: auto;
-  }
-  .delete-button {
-    position: absolute;
-    bottom: 50%; 
-    right: 10%; 
-    background-color: red;
-    color: white;
-    padding: 40px 40px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .delete-button:hover {
-   background-color: darkred;
-  }
-
-
-
-
-  footer {
-    flex-shrink: 0; 
-  }
+footer {
+  flex-shrink: 0;
+  background-color: var(--container-bg-color); /* Matches container theme */
+  color: var(--text-color); /* Themed footer text */
+  padding: 20px;
+  text-align: center;
+  margin-top: 2%;
+  transition: background-color 0.3s, color 0.3s; /* Smooth theme transition */
+}

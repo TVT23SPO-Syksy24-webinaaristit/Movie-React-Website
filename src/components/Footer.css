@@ -1,10 +1,14 @@
 /* Footer styles */
-.footer {
+footer {
     background-color: #222;
     color: #fff;
     padding: 20px 0;
     font-family: Arial, sans-serif;
     flex-shrink: 0; /* Prevents footer from shrinking */
+    flex-wrap: wrap;
+    z-index: 1; /* Ensures footer is above other elements */
+    position: relative;
+    bottom: 0;
   }
   
   .footer-container {
@@ -13,6 +17,10 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    text-align: center;
+
   }
   
   .footer-branding, .footer-links, .footer-social {
@@ -20,13 +28,15 @@
   }
   
   .footer-branding h3, .footer-links h4, .footer-social h4 {
-    font-size: 18px;
+    font-size: 1.2em;
     margin-bottom: 10px;
   }
   
   .footer-links ul {
     list-style: none;
     padding: 0;
+    flex: 1;
+    flex-wrap: wrap;
   }
   
   .footer-links ul li {
@@ -50,24 +60,10 @@
   .footer-copyright {
     text-align: center;
     margin-top: 20px;
-    font-size: 14px;
+    font-size: 1em;
   }
-  
-  /* Body and Layout for footer positioning */
-  body, html {
-    height: 100%; /* Ensure the body takes up full height */
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  #root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ensures the app takes the full screen height */
-  }
-  
-  main {
-    flex: 1; /* Main content grows to take available space */
+  .footer-links img {
+    width: 10rem;
+    
   }
   

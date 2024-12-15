@@ -34,7 +34,6 @@ export default function UserProvider({children}) {
             setUser(response.data);
             sessionStorage.setItem("user", JSON.stringify(response.data));
             //console.log(response.data);
-            localStorage.setItem("username", response.data.username);
         } catch(error) {
             setUser({email: "", password: "", id: null});
             throw error
@@ -44,7 +43,6 @@ export default function UserProvider({children}) {
     const logOut = async () => {
         setUser({email: "", password: ""});
         sessionStorage.setItem("user", JSON.stringify({"email": "","username": ""}));
-        localStorage.removeItem("username");
         window.location.reload();
     }
 
@@ -52,18 +50,26 @@ export default function UserProvider({children}) {
         const headers = {headers: {Authorization: user.token}}
         try{
             await axios.get(url + `/user/delete/${user.id}`,headers)   
-            setUser({email: "", password: ""});
+            logOut();
             alert("Account has been deleted");
         } catch(error){
             throw error.response.data;
         }
-
-        
     }
 
+    const fetchUserDetails = async (userId) => {
+        try {
+          const response = await axios.get(`${url}/user/${userId}`);
+          return response.data.rows[0];
+        } catch (error) {
+          console.error("Error fetching user details:", error);
+          throw error;
+        }
+      };
+    
 
     return (
-        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut,deleteAccount}}>
+        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut,deleteAccount, fetchUserDetails}}>
             {children}
         </UserContext.Provider>
     )

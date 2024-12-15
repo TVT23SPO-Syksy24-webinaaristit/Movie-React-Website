@@ -1,27 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './ProfilePage.css';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FavoriteList from "../components/FavoriteList";
 import DeleteAccountButton from "../components/DeleteAccountButton";
+import { useParams } from "react-router-dom";
+import { useUser } from "../contexts/useUser";
 
+const ProfilePage = () => {
+  const {accounts_idaccount} = useParams();
+  const { user, fetchUserDetails } = useUser();
+  const [profileUser, setProfileUser] = useState(null);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userId = accounts_idaccount || user.id;
+        const userDetails = await fetchUserDetails(userId);
+        setProfileUser(userDetails);
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
 
-function ProfilePage() {
+    fetchUser();
+  }, [accounts_idaccount, user.id, fetchUserDetails]);
+
   return (
     <div className="ProfilePage">
       <Navbar />
-      <div class="container">
-  <h2>User Information</h2>
-  <p>Username: <span id="username"></span></p>
-  </div>
-  <div class="containerlistbutton">
-    <FavoriteList />
-    <DeleteAccountButton />
-  </div>
+      <div className="container-userinfo">
+        <h2>Viewing {profileUser ? `${profileUser.username}'s` : 'your'} profile</h2>
+        <p>Username: <span id="username">{profileUser ? profileUser.username : user.username}</span></p>
+      </div>
+      <div className="containerlistbutton">
+        <FavoriteList accounts_idaccount={accounts_idaccount} />
+      </div>
+      <div className="container-deleteaccount">
+      <DeleteAccountButton />
+      </div>
       <Footer />
     </div>
   );
 }
+
+
 
 export default ProfilePage;
