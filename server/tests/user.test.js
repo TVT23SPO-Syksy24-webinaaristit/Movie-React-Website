@@ -2,11 +2,17 @@ import request from "supertest";
 import app from "../app.js";
 import { pool } from "../helpers/db.js";
 import { hash } from "bcrypt";
-import { deleteTestUser, insertTestUser , getToken} from "../helpers/testhelper.js";
+import { deleteTestUser, insertTestUser , getToken, insertTestReview} from "../helpers/testhelper.js";
+import { selectUserByEmail } from "../models/User.js";
+import { insertFavorites } from "../models/FavoriteList.js";
+import { insertGroupCreate } from "../models/Group.js";
+import { insertHighlightCreate } from "../models/Group.js";
 
 describe("User tests", () => {
   let server;
   let token;
+  let reviewText = "reviewtesting";
+  let movieId = 550;
 
   beforeAll(async () => {
     server = app.listen(4000, () => {
@@ -128,7 +134,16 @@ describe("User tests", () => {
         "SELECT * FROM accounts WHERE email = $1",
         ["okdeletetest@gmail.com"]
       );
-    const userId = idresponse.rows[0].idaccount;
+      const userId = idresponse.rows[0].idaccount;
+
+      await insertTestReview("okdeletetest@gmail.com", movieId, reviewText, 1);
+      await insertFavorites(movieId, "testmovie", userId, "testurl");
+      const groupName = "testgroup";
+      const groupDesc = "testdesc";
+      const groupInfo = await insertGroupCreate({userId, groupName, groupDesc});
+      const groupId = groupInfo.idgroup;
+      await insertHighlightCreate(groupId, userId, "testurl", "testhl", 550, "testdesc", "testsrc");
+
       const response = await request(server)
           .get(`/user/delete/${userId}`)
           .set("authorization", token)
