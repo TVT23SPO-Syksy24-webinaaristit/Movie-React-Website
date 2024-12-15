@@ -19,6 +19,7 @@ footer {
     padding: 0 20px;
     padding-bottom: 0;
     margin-bottom: 0;
+    text-align: center;
 
   }
   
@@ -27,7 +28,7 @@ footer {
   }
   
   .footer-branding h3, .footer-links h4, .footer-social h4 {
-    font-size: 18px;
+    font-size: 1.2em;
     margin-bottom: 10px;
   }
   
@@ -59,6 +60,10 @@ footer {
   .footer-copyright {
     text-align: center;
     margin-top: 20px;
-    font-size: 14px;
+    font-size: 1em;
+  }
+  .footer-links img {
+    width: 10rem;
+    
   }
   
