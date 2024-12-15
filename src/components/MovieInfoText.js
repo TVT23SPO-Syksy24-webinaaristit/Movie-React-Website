@@ -14,7 +14,8 @@ const MovieInfoText = (props) => {
         <div className="movieinfotext">
         <h1>{details?.title}</h1>
         <h4>{details?.release_date?.slice(0,4)} · {details?.genres?.map(titleObject => titleObject.name).join(", ")}</h4>
-        
+        <br></br>
+        <p>{details?.overview}</p>
         
         </div>
     )
