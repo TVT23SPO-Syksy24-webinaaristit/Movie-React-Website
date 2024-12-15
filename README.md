@@ -7,7 +7,7 @@ This is a repository of a react based website that you can use to browse your fa
 https://app.moqups.com/yl22vqTrG2scMCDsQTgphkuRkO06VITh/view/page/adfd21877
 
 
-Database diagram
+# Database diagram
 ![image](https://github.com/user-attachments/assets/5a333b77-2528-45c5-975e-fcd4e2781576)
 
 
