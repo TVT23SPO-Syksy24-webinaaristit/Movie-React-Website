@@ -9,8 +9,8 @@
 
 .container-userinfo {
   background-color: var(--container-bg-color); /* Themed container */
-  color: var(--text-color); /* Themed text */
-  padding: 5%;
+  color: var(--button-bg-color); /* Themed text */
+  padding: 3%;
   justify-content: center;
   align-items: center;
   text-align: center;

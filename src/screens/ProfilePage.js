@@ -29,14 +29,16 @@ const ProfilePage = () => {
   return (
     <div className="ProfilePage">
       <Navbar />
-      <div className="container">
+      <div className="container-userinfo">
         <h2>Viewing {profileUser ? `${profileUser.username}'s` : 'your'} profile</h2>
         <p>Username: <span id="username">{profileUser ? profileUser.username : user.username}</span></p>
         <p>Email: <span id="email">{profileUser ? profileUser.email : user.email}</span></p>
       </div>
       <div className="containerlistbutton">
         <FavoriteList accounts_idaccount={accounts_idaccount} />
-        <DeleteAccountButton />
+      </div>
+      <div className="container-deleteaccount">
+      <DeleteAccountButton />
       </div>
       <Footer />
     </div>
