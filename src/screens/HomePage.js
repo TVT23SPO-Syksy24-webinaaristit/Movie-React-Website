@@ -39,7 +39,6 @@ const HomePage = () => {
             </p>
         )}
         </div>
-      <MovieCarousel />
       </div>
       <Footer />
     </div>
