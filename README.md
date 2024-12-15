@@ -4,7 +4,7 @@ This is a repository of a react based website that you can use to browse your fa
 
 
 # Moqup UI Plan
-https://app.moqups.com/yl22vqTrG2scMCDsQTgphkuRkO06VITh/view/page/adfd21877
+https://app.moqups.com/yl22vqTrG2scMCDsQTgphkuRkO06VITh/view/page/a62f25017
 
 
 # Database diagram
