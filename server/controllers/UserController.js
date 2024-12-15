@@ -39,7 +39,8 @@ const postLogin = async(req,res,next) => {
 
 const deleteAccount = async(req,res,next) =>{
     try{
-        if(!req.params.id === null) return next(new ApiError("User id not found",400))
+        console.log(req.params.id)
+        if(!req.params.id || req.params.id == null || req.params.id === undefined || req.params.id === "null") return next(new ApiError("User id not found",400))
         const userid = req.params.id;
         await deleteUserById(req.params.id);
         return res.status(200).json({id: userid});

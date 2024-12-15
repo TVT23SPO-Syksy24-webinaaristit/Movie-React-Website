@@ -50,7 +50,7 @@ const MovieReviews = (props) => {
         };
         try{
             const response = await axios.post(url+"/reviews/add",json,{ headers });
-            if(response.status === 200){
+            if(response.status === 201){
                 document.getElementsByClassName("reviewsubmit")[0].innerHTML=`<h3>Review submitted successfully</h3>`;
             }
         } catch(error) {

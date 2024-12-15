@@ -24,3 +24,13 @@ li.selected {
 .moviepagination{
     margin-bottom: 2em;
 }
+
+@media (max-width: 768px) {
+    ul {
+        gap: 0.1em;
+    }
+    ul li {
+        padding-left: 0.3em;
+        padding-right: 0.3em;
+    }
+  }
