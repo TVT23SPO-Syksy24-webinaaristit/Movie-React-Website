@@ -17,15 +17,15 @@ export function useFavorites() {
 export const FavoriteProvider = ({ children }) => {
   const { user } = useContext(UserContext);
 
-  const getFavorites = async () => {
-    if (!user || !user.id) {
+  const getFavorites = async (accounts_idaccount) => {
+    const userId = accounts_idaccount || (user && user.id);
+    if (!userId) {
       throw new Error("User is not logged in or user ID is missing.");
     }
     const headers = { Authorization: user.token };
     try {
-      const response = await axios.get(`${API_URL}/favorites/getfavorites`, {
+      const response = await axios.get(`${API_URL}/favorites/getfavorites/${userId}`, {
         headers,
-        params: { accounts_idaccount: user.id }, // Pass accounts_idaccount as a query parameter
       });
       return response.data;
     } catch (error) {

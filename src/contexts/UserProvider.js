@@ -55,13 +55,21 @@ export default function UserProvider({children}) {
         } catch(error){
             throw error.response.data;
         }
-
-        
     }
 
+    const fetchUserDetails = async (userId) => {
+        try {
+          const response = await axios.get(`${url}/user/${userId}`);
+          return response.data.rows[0];
+        } catch (error) {
+          console.error("Error fetching user details:", error);
+          throw error;
+        }
+      };
+    
 
     return (
-        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut,deleteAccount}}>
+        <UserContext.Provider value={{user,setUser,signUp,signIn,logOut,deleteAccount, fetchUserDetails}}>
             {children}
         </UserContext.Provider>
     )

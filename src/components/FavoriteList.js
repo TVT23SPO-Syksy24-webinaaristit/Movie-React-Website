@@ -2,10 +2,9 @@ import './FavoriteList.css';
 import { useEffect, useState } from 'react';
 import { useFavorites } from "../contexts/FavoriteProvider";
 import { useUser } from '../contexts/useUser';
-
 import MovieCard from '../components/MovieCard.js';
 
-function FavoriteList() {
+function FavoriteList({ accounts_idaccount }) {
   const [movies, setMovies] = useState([]); // Replace with actual movie fetching logic if needed
   const [favorites, setFavorites] = useState([]);
   const [error, setError] = useState(null);
@@ -15,11 +14,12 @@ function FavoriteList() {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        if (!user || !user.id) {
+        const userId = accounts_idaccount || (user && user.id);
+        if (!userId) {
           setError("User not logged in.");
           return;
         }
-        const response = await getFavorites();
+        const response = await getFavorites(userId); // Pass the user ID as a parameter
         if (response && Array.isArray(response)) {
           setFavorites(response);
         } else {
