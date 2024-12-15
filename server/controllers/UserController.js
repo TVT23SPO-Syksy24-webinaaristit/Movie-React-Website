@@ -57,4 +57,17 @@ const createUserObject = (id, email, username, token = undefined) => {
     };
 };
 
+export const getUserById = async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const user = await selectUserById(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ error: 'Server error' });
+    }
+  };
+
 export { postRegistration, postLogin, deleteAccount };
