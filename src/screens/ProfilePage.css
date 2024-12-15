@@ -41,17 +41,19 @@
   transform: translateY(-3px); /* Subtle lift effect on hover */
 }
 
-
+.container-deleteaccount {
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px;
+}
 
 .delete-button {
-  position: absolute;
-  bottom: 50%;
-  right: 10%;
+  
   background-color: red;
   color: var(--button-text-color); /* Keeps button text consistent */
-  padding: 15px 30px;
+  padding: 30px 40px; /* Wider padding */
   border: none;
-  border-radius: 8px;
+  border-radius: 8px; /* Slightly rounded corners */
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s ease-in-out;
 }

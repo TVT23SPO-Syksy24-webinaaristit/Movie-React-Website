@@ -18,7 +18,9 @@ const ProfilePage = () => {
       </div>
       <div className="containerlistbutton">
         <FavoriteList />
-        <DeleteAccountButton />
+         </div>
+        <div className="container-deleteaccount">
+      <DeleteAccountButton />
       </div>
       <Footer />
     </div>
