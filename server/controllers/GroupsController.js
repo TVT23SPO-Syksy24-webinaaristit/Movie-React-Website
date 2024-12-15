@@ -4,7 +4,7 @@ import {selectAllGroups, selectGroupById, selectGroupHighlights, selectAllGroupM
   insertGroupJoin, insertGroupJoinRequest} from '../models/Group.js'; // Import the model from /models
 
 
-const getAllGroups = async (req, res) => {
+const getAllGroups = async (req, res, next) => {
   const userId = req.headers['user-id'];  // Access the 'x-user-id' header
   try {
     const groups = await selectAllGroups(userId);  // Select all the available groups from the model
