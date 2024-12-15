@@ -41,7 +41,13 @@ const AddToGroupHighlightDropdown =(props)=> {
     return (
         <div>
             <select onChange={(group) => handleChange(group.target.value, "Date")}>
-                <option value={0}>Share screening to group</option>
+                {props.dropdownlocation > 0 ?(
+                    <option value={0}>Share movie to group</option>
+                ):(
+                    <option value={0}>Share screening to group</option>
+                    
+                )}
+                
                 {
                     groups.map(group => (
                         <option key={group.id} value={group.id}>{group.name}</option>
