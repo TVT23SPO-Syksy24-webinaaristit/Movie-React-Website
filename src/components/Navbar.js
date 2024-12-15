@@ -59,23 +59,6 @@ const Navbar = () => {
         {theme === "light" ? "☀️" : "🌙"}
         </button>
         
-        <div
-          className="flag-dropdown" 
-          onClick={toggleFlagDropdown}
-          onMouseLeave={() => setIsFlagDropdownOpen(false)}
-        >
-          <Flag code="gb" height="16"
-          />
-          {isFlagDropdownOpen && (
-            <div className="flag-options">
-              <Flag code="gb" height="16" onClick={() => navigate("/en")} />
-              <Flag code="es" height="16" onClick={() => navigate("/es")} />
-              <Flag code="fr" height="16" onClick={() => navigate("/fr")} />
-              <Flag code="de" height="16" onClick={() => navigate("/de")} />
-            </div>
-          )}
-        </div>
-        
         <div className="user-icon"  onClick={togglePfpDropdown}>
           <img src={user_icon} alt="user_icon"/>
           <span></span>
