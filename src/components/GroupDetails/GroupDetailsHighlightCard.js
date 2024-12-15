@@ -18,9 +18,11 @@ const GroupDetailsHighlightCard = (props) =>{
 
     return(
         <div className="highlightCard">
+            <Link className="link" to={props.link_url}>
             <div className="poster">
                 <img src={props.image} alt="movie poster" />
             </div>
+            </Link>
             <div className="title">
                 <Link className="link" to={props.link_url}>
                     <p><b>{props.title}</b></p><br />

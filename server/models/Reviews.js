@@ -5,7 +5,7 @@ const insertReview = async (userId, movieId, reviewText, reviewPoints) => {
 }
 
 const getReviewsById = async (movieId) => {
-    return await pool.query("SELECT reviews.idreview, reviews.review_text, reviews.review_points, reviews.review_creation_timestamp, accounts.username FROM reviews JOIN accounts ON reviews.accounts_idaccount = accounts.idaccount WHERE reviews.idmovie = $1",[movieId])
+    return await pool.query("SELECT reviews.idreview, reviews.review_text, reviews.review_points, reviews.review_creation_timestamp, accounts.username, accounts.idaccount AS accountid FROM reviews JOIN accounts ON reviews.accounts_idaccount = accounts.idaccount WHERE reviews.idmovie = $1",[movieId])
 }
 
 export { insertReview, getReviewsById };
