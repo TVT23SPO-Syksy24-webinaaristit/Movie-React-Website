@@ -10,7 +10,6 @@ import { insertHighlightCreate } from "../models/Group.js";
 
 describe("User tests", () => {
   let server;
-  let token;
   let reviewText = "reviewtesting";
   let movieId = 550;
 
@@ -19,28 +18,20 @@ describe("User tests", () => {
       console.log("Test server is running on http://localhost:4000");
     });
 
+    //delete all testusers
     await deleteTestUser("testi15@gmail.com");
     await deleteTestUser("testi50@gmail.com");
     await deleteTestUser("okdeletetest@gmail.com");
     await deleteTestUser("unauthdeletetest@gmail.com");
     await deleteTestUser("nulldeletetest@gmail.com");
     
-    //Login testuser
+    //create login testuser
     await insertTestUser("testi15","testi15@gmail.com","testitesti"); 
     
-    //Delete testusers
+    //create delete testusers
     await insertTestUser("testi","okdeletetest@gmail.com","testitesti");
-    //insert review to test data deletion
-    //insert favourite to test data deletion
-    //insert group to test data deletion
-    //insert group_highlights
     await insertTestUser("testi","unauthdeletetest@gmail.com","testitesti");
     await insertTestUser("testi","nulldeletetest@gmail.com","testitesti");
-    
-
-    //await request(server)
-    //  .post("/user/register")
-    //  .send({ email: "kirjautumistesti2@foo.com", password: "asd213easde" });
   });
 
   afterAll(async () => {
@@ -136,13 +127,20 @@ describe("User tests", () => {
       );
       const userId = idresponse.rows[0].idaccount;
 
+      //insert review to test data deletion
       await insertTestReview("okdeletetest@gmail.com", movieId, reviewText, 1);
+
+      //insert favourite to test data deletion
       await insertFavorites(movieId, "testmovie", userId, "testurl");
-      const groupName = "testgroup";
-      const groupDesc = "testdesc";
-      const groupInfo = await insertGroupCreate({userId, groupName, groupDesc});
+
+      //insert group to test data deletion
+      const groupName = 'testgroup';
+      const groupDesc = 'testdesc';
+      const groupInfo = await insertGroupCreate({owner: userId, name: groupName, description: groupDesc});
       const groupId = groupInfo.idgroup;
-      await insertHighlightCreate(groupId, userId, "testurl", "testhl", 550, "testdesc", "testsrc");
+
+      //insert group_highlights to test data deletion
+      await insertHighlightCreate(groupId, userId, 'testurl', 'testhl', 550, 'testdesc', 'testsrc');
 
       const response = await request(server)
           .get(`/user/delete/${userId}`)
@@ -150,10 +148,23 @@ describe("User tests", () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("id", userId);
-      //chect that group_highlights is deleted
+      
+    
       //check that review is deleted
+      const testReviewsResult = await pool.query('SELECT * FROM reviews WHERE review_text = $1', [reviewText]);
+      expect(testReviewsResult.rows.length).toBe(0);
+
       //check that favourite is deleted
+      const favoritesResult = await pool.query('SELECT * FROM favorites WHERE accounts_idaccount = $1', [userId]);
+      expect(favoritesResult.rows.length).toBe(0);
+
       //check that group is deleted
+      const groupsResult = await pool.query('SELECT * FROM groups WHERE owner = $1', [userId]);
+      expect(groupsResult.rows.length).toBe(0);
+
+      //check that group_highlights is deleted
+      const groupHLResult = await pool.query('SELECT * FROM group_highlights WHERE accounts_idaccount = $1', [userId]);
+      expect(groupHLResult.rows.length).toBe(0);
     });
 
     it("should not delete data when unauthorized", async () => {
