@@ -2,8 +2,9 @@
 .screeningCard{
     margin-bottom: 50px;
     width: 25rem;
-    border: solid;
-    background-color:aliceblue;
+    
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
 .screeningPoster{
     width: 200px;
@@ -16,7 +17,8 @@
     object-fit: cover;
 }
 .link{
-    color: black;
+    text-decoration: none;
+    color:inherit;
 }
 
 

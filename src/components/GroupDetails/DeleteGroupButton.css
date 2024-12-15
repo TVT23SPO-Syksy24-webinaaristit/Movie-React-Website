@@ -1,15 +1,23 @@
-.delete-group-button {
-    bottom: 50%; 
-    right: 10%; 
-    background-color: red;
-    color: white;
-    padding: 40px 40px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 100;
-    position: absolute;
+ .delete-group-button { 
+  grid-column-start: 3;
+  grid-column-end: 4;
+   grid-row-start: 2;
+  background-color: red;
+  color: white;
+  padding: 30px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top:10px;
+  max-width: 100px;
+  margin: 20px;
   }
   .delete-group-button:hover {
     background-color: darkred;
-   }
+   } 
+   @media only screen and (max-width: 620px) {
+    .delete-group-button{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    }
+}

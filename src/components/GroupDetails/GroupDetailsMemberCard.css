@@ -1,0 +1,13 @@
+.memberCard p{
+    display:inline-block;
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+}
+.memberCard img{
+    display:inline-block;
+    
+}
+.kickbutton{
+    display:inline-block;
+    padding-left: 0.5em;
+}

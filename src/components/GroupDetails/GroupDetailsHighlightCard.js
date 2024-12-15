@@ -28,8 +28,10 @@ const GroupDetailsHighlightCard = (props) =>{
                     <p><b>{props.title}</b></p><br />
                 </Link>
                 <p>{props.description}</p>
-                
-                <p> Posted by: {props.account}</p>
+                <p>Posted by: </p>
+                <Link to={`/profile/${props.accountid}`}>
+                <p>{props.account}</p>
+                </Link>
             </div>
             <button onClick={()=>{deleteHighlightHandler(props.highlightid)}}>
             ❌
