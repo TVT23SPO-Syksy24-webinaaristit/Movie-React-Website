@@ -167,6 +167,7 @@ const GroupDetailsResults = () => {
                   description={highlight.description}
                   image={highlight.poster_url}
                   account={highlight.username}
+                  accountid={highlight.accounts_idaccount}
                   highlightid={highlight.idgroup_highlight}
                 />
               ))

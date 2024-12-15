@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Link } from 'react-router-dom';
 import { useGroups } from "../../contexts/GroupProvider";
-
+import "./GroupDetailsJoinRequesterCard.css";
 
 
 const GroupDetailsJoinRequesterCard = (props) =>{
@@ -27,9 +27,12 @@ const GroupDetailsJoinRequesterCard = (props) =>{
     };
     
     return(
-        <div>
+        <div className="requesterCard">
 
-            <p>requester: {props.username}</p>
+            <p>requester: </p> 
+          <Link className="linke" to={`/profile/${props.accountid}`}>
+            <p>{props.username}</p>
+          </Link>
             <p>Time of request: {props.date}</p>
             
             {

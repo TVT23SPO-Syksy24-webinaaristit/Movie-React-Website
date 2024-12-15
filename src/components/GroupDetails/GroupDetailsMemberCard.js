@@ -21,7 +21,10 @@ const GroupDetailsMemberCard = (props) =>{
     return(
         <div className="memberCard">
             <img src={user_icon}></img>
-            <p>Member: {props.username}</p>
+            <p>Member:</p>
+            <Link to={`/profile/${props.idaccount}`}>
+            <p> {props.username}</p>
+            </Link>
             {props.showKickButton === 1 && props.idaccount !== parseInt(user.id) ?(
             <div className="kickbutton">
                 <button onClick={()=>handleKickFromGroup(props.idgroup,props.idaccount)}>
