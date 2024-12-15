@@ -28,11 +28,12 @@ const MovieCard = ({ movieId, title, posterPath, isFavorited, showFavoriteButton
         onFavoriteAdded={onFavoriteAdded} // Callback to refresh favorites
       />
         <AddToGroupHighlightDropdown 
-        image={"https://image.tmdb.org/t/p/"+"original"+posterPath}
+        image={`https://image.tmdb.org/t/p/original${posterPath}`}
         title={title}
         idevent={movieId}
         description={"Have a look at this movie!"}
-        sourceUrl={"/movies/:"+movieId}
+        sourceUrl={`/movies/:${movieId}`}
+        dropdownlocation={1}
         />
         </div>
       )}
