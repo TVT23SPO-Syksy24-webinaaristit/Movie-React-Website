@@ -13,7 +13,7 @@ const MoviePagination = () => {
             breakLabel="..."
             nextLabel=">"
             onPageChange={(e) => setPage(e.selected+1)}
-            pageRangeDisplayed={5}
+            pageRangeDisplayed={1}
             pageCount={totalPages}
             previousLabel="<"
             renderOnZeroPageCount={null}
