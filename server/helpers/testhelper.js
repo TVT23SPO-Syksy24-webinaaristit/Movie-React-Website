@@ -1,9 +1,6 @@
 import { hash } from "bcrypt"
 import { pool } from "./db.js"
 import jwt from "jsonwebtoken"
-import { insertFavorites } from "../models/FavoriteList.js"
-import { insertGroupCreate } from "../models/Group.js"
-import { insertHighlightCreate } from "../models/Group.js"
 
 
 const { sign } = jwt
@@ -34,33 +31,6 @@ const insertTestReview = async (email, movieId, reviewText, reviewPoints) => {
       );
     const userId = response.rows[0].idaccount;
     await pool.query("INSERT INTO reviews (idmovie,review_text,review_points,review_creation_timestamp,accounts_idaccount) VALUES ($1,$2,$3,NOW(),$4) RETURNING *",[movieId,reviewText,reviewPoints,userId]);
-}
-
-const insertTestFavorite = async(idmovie, title, accounts_idaccount, poster_url) =>{
-    const response = await pool.query(
-        "SELECT * FROM accounts WHERE email = $1",
-        [email]
-      );
-    const userId = response.rows[0].idaccount;
-    await insertFavorites(idmovie, title, accounts_idaccount, poster_url);
-}
-
-const insertTestGroup = async() =>{
-    const response = await pool.query(
-        "SELECT * FROM accounts WHERE email = $1",
-        [email]
-      );
-    const userId = response.rows[0].idaccount;
-    
-}
-
-const insertTestGroupHL = async() =>{
-    const response = await pool.query(
-        "SELECT * FROM accounts WHERE email = $1",
-        [email]
-      );
-    const userId = response.rows[0].idaccount;
-    
 }
 
 export { insertTestUser, insertTestReview, deleteTestUser, getToken }

@@ -10,7 +10,6 @@ const MovieInfoText = (props) => {
         }
     }, [props.details]);
 
-
     return(
         <div className="movieinfotext">
         <h1>{details?.title}</h1>

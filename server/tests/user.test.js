@@ -146,10 +146,10 @@ describe("User tests", () => {
           .get(`/user/delete/${userId}`)
           .set("authorization", token)
 
+      //check for successful response
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("id", userId);
       
-    
       //check that review is deleted
       const testReviewsResult = await pool.query('SELECT * FROM reviews WHERE review_text = $1', [reviewText]);
       expect(testReviewsResult.rows.length).toBe(0);
