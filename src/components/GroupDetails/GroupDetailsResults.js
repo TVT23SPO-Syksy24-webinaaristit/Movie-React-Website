@@ -113,6 +113,7 @@ const GroupDetailsResults = () => {
           )}
           </div>
           <div className="requesterList">
+
             {user.id == group.owner ? (
               <h3>Pending join requests:</h3>
             ) : (
@@ -144,10 +145,17 @@ const GroupDetailsResults = () => {
                 />
               </div>
             ) : (user.id == group.owner) ? (
-              <p>Loading join requester list...</p>
+              <p>No join requests</p>
             ) : (
               <br />
             )}
+            <LeaveGroupButton groupid={group.idgroup} />
+
+{user.id == group.owner ? (
+  <DeleteGroupButton groupid={group.idgroup} />
+) : (
+  <br />
+)}
           </div>
           <div className="highlightList">
             <h3>Group highlights</h3>
@@ -173,19 +181,13 @@ const GroupDetailsResults = () => {
                 highlightid={highlight.idgroup_highlight}
               />
             ) : (
-              <p>Loading highlights...</p>
+              <p>No highlights shown</p>
             )}
           </div>
 
 
 
-          <LeaveGroupButton groupid={group.idgroup} />
-
-          {user.id == group.owner ? (
-            <DeleteGroupButton groupid={group.idgroup} />
-          ) : (
-            <br />
-          )}
+          
 
         </div>
       ) : (

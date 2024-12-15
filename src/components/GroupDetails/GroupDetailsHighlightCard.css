@@ -6,27 +6,27 @@
     row-gap: 10px;
     column-gap: 50px;
     margin-bottom:10px;
-    
+    padding: 10px;
     border:solid;
     min-width: 40%;
     max-width: 40%;
-
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
 .title p{
-    display: inline-block;
-    
-    
+    display: inline-block;  
+}
+.link{
+    text-decoration: none;
+    color:inherit;
 }
 .title{
-    border:solid;
     flex-grow: 1;
     overflow:wrap;
     word-break:break-word;
 }
 .poster{
     height: 200px;
-    border:solid;
-    
 }
 .poster img{
     height: 100%;

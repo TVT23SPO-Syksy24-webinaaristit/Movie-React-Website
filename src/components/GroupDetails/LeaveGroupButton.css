@@ -1,6 +1,7 @@
 .leave-group-button { 
     grid-column-start: 3;
     grid-column-end: 4;
+    grid-row-start: 2;
     background-color: red;
     color: white;
     padding: 30px 30px;
@@ -9,6 +10,7 @@
     cursor: pointer;
     max-width: 100px;
     max-height: 100px;
+    margin: 20px;
     }
     .leave-group-button:hover {
       background-color: darkred;

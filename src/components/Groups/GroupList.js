@@ -39,7 +39,6 @@ const GroupList = ({ refresh, setRefresh }) => {
   const handleJoinGroupRequest = async (groupId) => {
     try {
       await sendGroupJoinRequest(groupId, user.id); // Call the API to join a group
-      alert(`Successfully sent join request to group`);
       setRefresh(prev => !prev); // Toggle refresh to trigger a re-fetch
     } catch (err) {
       console.error("Error joining group:", err);
